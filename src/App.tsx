@@ -1,6 +1,14 @@
 import { useLocation } from './router';
 import { AppShell } from './shell/AppShell';
+import { Appointments } from './screens/Appointments';
 import { BuildingBlocks } from './screens/BuildingBlocks';
+import { Changes } from './screens/Changes';
+import { Contacts } from './screens/Contacts';
+import { Costs } from './screens/Costs';
+import { Documents } from './screens/Documents';
+import { Impact } from './screens/Impact';
+import { Track } from './screens/Track';
+import { Treatment } from './screens/Treatment';
 import { Home } from './screens/Home';
 import { NotFound } from './screens/NotFound';
 import { Privacy } from './screens/Privacy';
@@ -17,6 +25,22 @@ function Screen({ location }: { location: ReturnType<typeof useLocation> }) {
       return <Home />;
     case 'what':
       return <WhatHappened />;
+    case 'impact':
+      return <Impact />;
+    case 'changes':
+      return <Changes />;
+    case 'track':
+      return <Track />;
+    case 'appointments':
+      return <Appointments />;
+    case 'treatment':
+      return <Treatment />;
+    case 'costs':
+      return <Costs />;
+    case 'documents':
+      return <Documents />;
+    case 'contacts':
+      return <Contacts />;
     case 'quick-notes':
       return <QuickNotes />;
     case 'records':
