@@ -234,6 +234,42 @@ export class Store {
     return rows.map((row) => upgrade(row).item as Item<T>);
   }
 
+  /** Every item in a record. */
+  async listAll(recordId: string): Promise<Item[]> {
+    const rows = await this.db.items.where('recordId').equals(recordId).toArray();
+    return rows.map((row) => upgrade(row).item);
+  }
+
+  /**
+   * Remembers that an entry was opened from Find, on this device only
+   * (docs/architecture.md, "Device-only data"). The row names its record and
+   * item, so deleting either removes it (D12).
+   */
+  async noteOpened(recordId: string, itemId: string): Promise<void> {
+    const key = `opened:${recordId}:${itemId}`;
+    await this.queue.run(() =>
+      this.db.transaction('rw', this.db.local, async () => {
+        const previous = (await this.db.local.get(key))?.value as { count: number } | undefined;
+        await this.db.local.put({ key, recordId, itemId, value: { count: (previous?.count ?? 0) + 1, at: now() } });
+      }),
+    );
+  }
+
+  /** Entries opened from Find in this record: the most recent, and the most often. */
+  async openedHistory(recordId: string): Promise<{ recent: string[]; often: string[] }> {
+    const rows = await this.db.local.where('recordId').equals(recordId).toArray();
+    const opened = rows
+      .filter((r) => r.key.startsWith('opened:') && r.itemId)
+      .map((r) => ({ itemId: r.itemId as string, ...(r.value as { count: number; at: string }) }));
+    const recent = [...opened].sort((a, b) => b.at.localeCompare(a.at)).slice(0, 5).map((o) => o.itemId);
+    const often = [...opened]
+      .filter((o) => o.count > 1)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5)
+      .map((o) => o.itemId);
+    return { recent, often };
+  }
+
   async countItems(recordId: string): Promise<number> {
     return this.db.items.where('recordId').equals(recordId).count();
   }

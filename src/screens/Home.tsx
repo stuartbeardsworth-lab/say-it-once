@@ -7,6 +7,7 @@ import { QuickNoteCard } from '../features/quickNotes/QuickNoteCard';
 import { useQuickNoteDialogs } from '../features/quickNotes/useQuickNoteDialogs';
 import { AppointmentDialog } from '../features/track/AppointmentDialog';
 import { navigate, RouteLink, type Route } from '../router';
+import { AddToPhonePrompt } from '../shell/AddToPhonePrompt';
 import { DeviceOnlyBanner } from '../shell/DeviceOnlyBanner';
 import { useItems } from '../store/hooks';
 
@@ -46,6 +47,9 @@ export function Home() {
         </Button>
         <Button variant="primary" onPress={write}>
           Quick Note
+        </Button>
+        <Button variant="primary" onPress={() => navigate('find')}>
+          Find in my record
         </Button>
       </nav>
       <p role="status" className="quiet-status">
@@ -93,6 +97,12 @@ export function Home() {
           </li>
         </ul>
       </section>
+
+      <AddToPhonePrompt />
+
+      <p>
+        <RouteLink to="support">Find support</RouteLink>: helplines and charities, including urgent help.
+      </p>
 
       <Dialog isOpen={choosing} onOpenChange={setChoosing} title="Add something">
         {(close, { finish }) => (

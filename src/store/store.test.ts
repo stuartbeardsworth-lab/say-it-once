@@ -307,3 +307,20 @@ describe('appointments and documents with files', () => {
     expect(await (await store.getFile(second.data.file?.fileId ?? ''))?.blob.text()).toBe('new');
   });
 });
+
+describe('Find history', () => {
+  it('remembers opened entries, most recent and most often, and forgets them when deleted', async () => {
+    const store = await freshStore();
+    const recordId = await store.ensureRecord();
+    const a = await store.save('contact', recordId, blank('contact', { organisation: 'A' }));
+    const b = await store.save('contact', recordId, blank('contact', { organisation: 'B' }));
+    await store.noteOpened(recordId, a.id);
+    await store.noteOpened(recordId, a.id);
+    await store.noteOpened(recordId, b.id);
+    const history = await store.openedHistory(recordId);
+    expect(history.recent.sort()).toEqual([a.id, b.id].sort());
+    expect(history.often).toEqual([a.id]);
+    await store.deleteItem(a.id);
+    expect((await store.openedHistory(recordId)).recent).toEqual([b.id]);
+  });
+});
