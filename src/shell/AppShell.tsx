@@ -1,6 +1,7 @@
 import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react';
 import { TextSizeControl } from '../components/TextSizeControl';
 import { RouteLink, routes, type Location } from '../router';
+import { StorageBanner } from './StorageBanner';
 
 interface AppShellProps {
   location: Location;
@@ -46,6 +47,7 @@ export function AppShell({ location, children }: AppShellProps) {
         </div>
       </header>
       <main id="main" ref={mainRef} tabIndex={-1} className="container main">
+        <StorageBanner />
         {children}
       </main>
       <footer className="site-footer">

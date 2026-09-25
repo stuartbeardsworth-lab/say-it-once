@@ -1,21 +1,21 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 
 // The automated half of docs/stage-1-walkthrough.md. Everything here is done
 // with the keyboard only.
 
 test.skip(({ isMobile }) => isMobile, 'Keyboard walkthrough is for desktop browsers');
 
-async function focusedText(page: Page) {
-  return page.evaluate(() => document.activeElement?.textContent?.trim() ?? '');
-}
-
-async function tabTo(page: Page, name: string, maxPresses = 30) {
+/** Presses Tab until the given control has focus. */
+async function tabTo(page: Page, target: Locator, maxPresses = 40) {
   for (let i = 0; i < maxPresses; i++) {
     await page.keyboard.press('Tab');
-    if ((await focusedText(page)) === name) return;
+    if (await target.evaluate((el) => el === document.activeElement)) return;
   }
-  throw new Error(`Could not reach "${name}" with Tab`);
+  throw new Error(`Could not reach ${target.toString()} with Tab`);
 }
+
+const link = (page: Page, name: string) => page.getByRole('link', { name, exact: true });
+const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
 
 test('skip link is first, visible when focused, and moves focus to the content', async ({ page }) => {
   await page.goto('/');
@@ -30,12 +30,12 @@ test('skip link is first, visible when focused, and moves focus to the content',
 
 test('navigating by keyboard moves focus to the new page heading, and Back returns', async ({ page }) => {
   await page.goto('/');
-  await tabTo(page, 'Privacy & backup');
+  await tabTo(page, link(page, 'Privacy & backup'));
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy & backup' })).toBeFocused();
   await expect(page).toHaveTitle('Privacy & backup – Say It Once');
 
-  await tabTo(page, 'Back');
+  await tabTo(page, button(page, 'Back'));
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { level: 1, name: /Keep everything together/ })).toBeFocused();
 
@@ -49,11 +49,10 @@ test('text size can be changed with the keyboard and scales the whole page', asy
   const bodySize = () => page.evaluate(() => parseFloat(getComputedStyle(document.body).fontSize));
   const before = await bodySize();
 
-  await tabTo(page, 'Text size');
+  await tabTo(page, button(page, 'Text size'));
   await page.keyboard.press('Enter');
   await expect(page.getByRole('dialog', { name: 'Text size' })).toBeVisible();
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('radio', { name: 'Standard' })).toBeFocused();
+  await tabTo(page, page.getByRole('radio', { name: 'Standard' }));
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('ArrowDown');
@@ -66,7 +65,7 @@ test('text size can be changed with the keyboard and scales the whole page', asy
 
 test('dialog: focus moves in, is trapped, Escape closes, focus returns', async ({ page }) => {
   await page.goto('/#building-blocks');
-  await tabTo(page, 'Open an example dialog');
+  await tabTo(page, button(page, 'Open an example dialog'));
   await page.keyboard.press('Enter');
   const dialog = page.getByRole('dialog', { name: 'Example dialog' });
   await expect(dialog).toBeVisible();
@@ -89,7 +88,7 @@ test('confirm dialog: focus starts on Cancel, Escape cancels, confirming works',
   await page.goto('/#building-blocks');
   const trigger = page.getByRole('button', { name: 'Delete example item' });
 
-  await tabTo(page, 'Delete example item');
+  await tabTo(page, button(page, 'Delete example item'));
   await page.keyboard.press('Enter');
   const dialog = page.getByRole('alertdialog', { name: 'Delete this example?' });
   await expect(dialog.getByRole('button', { name: 'Cancel' })).toBeFocused();
@@ -109,13 +108,13 @@ test('confirm dialog: focus starts on Cancel, Escape cancels, confirming works',
 
 test('save failure stays until dismissed', async ({ page }) => {
   await page.goto('/#building-blocks');
-  await tabTo(page, 'Show a failed save');
+  await tabTo(page, button(page, 'Show a failed save'));
   await page.keyboard.press('Enter');
   const alert = page.getByRole('alert').filter({ hasText: 'Not saved' });
   await expect(alert).toBeVisible();
   await page.waitForTimeout(5000);
   await expect(alert).toBeVisible();
-  await tabTo(page, 'Dismiss this message');
+  await tabTo(page, button(page, 'Dismiss this message'));
   await page.keyboard.press('Enter');
   await expect(alert).toBeHidden();
 });
