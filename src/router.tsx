@@ -6,6 +6,9 @@ import { useSyncExternalStore, type MouseEvent, type ReactNode } from 'react';
 
 export const routes = {
   home: { title: 'Home' },
+  what: { title: 'What happened' },
+  'quick-notes': { title: 'Quick Notes' },
+  records: { title: 'My records' },
   privacy: { title: 'Privacy & backup' },
   'building-blocks': { title: 'Building blocks' },
 } as const;

@@ -3,6 +3,9 @@ import { expect, type Page } from '@playwright/test';
 
 export const screens = [
   { hash: '#home', heading: /Keep everything together/ },
+  { hash: '#what', heading: 'What happened' },
+  { hash: '#quick-notes', heading: 'Quick Notes' },
+  { hash: '#records', heading: 'My records' },
   { hash: '#privacy', heading: 'Privacy & backup' },
   { hash: '#building-blocks', heading: 'Building blocks' },
   { hash: '#nowhere', heading: 'Page not found' },

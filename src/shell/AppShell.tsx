@@ -55,6 +55,15 @@ export function AppShell({ location, children }: AppShellProps) {
           <nav aria-label="More">
             <ul className="footer-links">
               <li>
+                <RouteLink to="what">What happened</RouteLink>
+              </li>
+              <li>
+                <RouteLink to="quick-notes">Quick Notes</RouteLink>
+              </li>
+              <li>
+                <RouteLink to="records">My records</RouteLink>
+              </li>
+              <li>
                 <RouteLink to="privacy">Privacy &amp; backup</RouteLink>
               </li>
               <li>

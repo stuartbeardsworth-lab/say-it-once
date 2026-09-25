@@ -97,3 +97,21 @@ Done when:
 - A written keyboard-only walkthrough of both screens and every building block
   passes, and a VoiceOver check has been done on a real iPhone.
 - Stop and report back before starting stage 2.
+
+## Decisions made during the build
+
+- 25 September 2026, Stage 3 is built in three parts, each with its own
+  preview and checklist: 3a Home, Quick Notes and filing, My records, What
+  happened; 3b How it affects me and Keep track; 3c Find, Find support,
+  FAQ, How to use, Add to phone.
+- FAQ and How to use text is drafted by Claude to describe only what the
+  new app does, and reviewed by the owner before release.
+- "Listen to this section" is left out for now; phones' own Speak Screen
+  and Select to Speak cover it. Reports keep Read aloud (Stage 4).
+- Find is plain search plus a few fixed answers computed from structured
+  data (money spent, current medication, next appointment). No question
+  parsing.
+- Find support lists only phone numbers known to be right (999, NHS 111,
+  Samaritans 116 123) and links to each organisation's own website. The
+  owner checks the list before release.
+- Print contact list leaves out private contacts.

@@ -53,3 +53,17 @@ export type SectionKey = (typeof sections)[number];
 
 /** A choice that has not been made yet is stored as ''. */
 export type Choice<T extends readonly string[]> = T[number] | '';
+
+export const sectionLabels: Record<SectionKey, string> = {
+  what: 'What happened',
+  impact: 'How it affects me',
+  appointments: 'Appointments',
+  treatment: 'Treatment & medication',
+  documents: 'Letters & documents',
+  costs: 'Costs & lost income',
+  contacts: 'Contacts',
+};
+
+export function impactAreaLabel(key: string): string {
+  return impactAreas.find((a) => a.key === key)?.label ?? 'Something else';
+}
