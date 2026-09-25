@@ -5,6 +5,7 @@ import { Dialog } from '../components/Dialog';
 import { SaveStatus, type SaveState } from '../components/SaveStatus';
 import { TextArea, TextField } from '../components/TextField';
 import { PageTop } from '../shell/PageTop';
+import { StorageReview } from './StorageReview';
 
 // A review page for the Stage 1 building blocks, so each can be tried with a
 // keyboard and a screen reader before real screens use them. Nothing here
@@ -109,6 +110,8 @@ export function BuildingBlocks() {
         </div>
         <SaveStatus status={saveStatus} onDismiss={() => setSaveStatus({ kind: 'idle' })} />
       </section>
+
+      <StorageReview />
     </>
   );
 }

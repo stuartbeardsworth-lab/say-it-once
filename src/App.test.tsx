@@ -1,8 +1,14 @@
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
 import { parseHash } from './router';
+import { StorageProblem } from './store/problems';
+import { Store } from './store/store';
+
+function renderApp() {
+  return render(<App store={new Store(`app-${crypto.randomUUID()}`)} />);
+}
 
 beforeEach(() => {
   window.history.replaceState(null, '', '/');
@@ -25,14 +31,14 @@ describe('parseHash', () => {
 
 describe('App shell', () => {
   it('opens on Home', () => {
-    render(<App />);
+    renderApp();
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Keep everything together');
     expect(document.title).toBe('Home – Say It Once');
   });
 
   it('shows the device-only warning on Home and Privacy & backup', async () => {
     const user = userEvent.setup();
-    render(<App />);
+    renderApp();
     expect(screen.getByRole('complementary', { name: 'Where your record is kept' })).toHaveTextContent(
       'If the phone or browser data is lost, so is your record.',
     );
@@ -42,7 +48,7 @@ describe('App shell', () => {
 
   it('moves focus to the page heading after navigating', async () => {
     const user = userEvent.setup();
-    render(<App />);
+    renderApp();
     await user.click(screen.getByRole('link', { name: 'Privacy & backup' }));
     const heading = screen.getByRole('heading', { level: 1, name: 'Privacy & backup' });
     expect(heading).toHaveFocus();
@@ -52,7 +58,7 @@ describe('App shell', () => {
 
   it('Back returns to the previous screen and focuses its heading', async () => {
     const user = userEvent.setup();
-    render(<App />);
+    renderApp();
     await user.click(screen.getByRole('link', { name: 'Privacy & backup' }));
     await user.click(screen.getByRole('button', { name: 'Back' }));
     // history.back() is asynchronous in jsdom.
@@ -63,14 +69,14 @@ describe('App shell', () => {
   it('Back goes Home when the person arrived directly', async () => {
     window.history.replaceState(null, '', '/#privacy');
     const user = userEvent.setup();
-    render(<App />);
+    renderApp();
     await user.click(screen.getByRole('button', { name: 'Back' }));
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Keep everything together');
   });
 
   it('the skip link moves focus to the main content without changing screen', async () => {
     const user = userEvent.setup();
-    render(<App />);
+    renderApp();
     await user.tab();
     const skip = screen.getByRole('link', { name: 'Skip to main content' });
     expect(skip).toHaveFocus();
@@ -81,16 +87,39 @@ describe('App shell', () => {
 
   it('shows a calm not-found page for unknown addresses', () => {
     window.history.replaceState(null, '', '/#nowhere');
-    render(<App />);
+    renderApp();
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Page not found');
   });
 
   it('follows the address when it is changed outside the app', () => {
-    render(<App />);
+    renderApp();
     act(() => {
       window.location.hash = '#privacy';
       window.dispatchEvent(new HashChangeEvent('hashchange'));
     });
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Privacy & backup');
+  });
+});
+
+describe('storage', () => {
+  it('creates "My record" quietly on first open', async () => {
+    const store = new Store(`app-${crypto.randomUUID()}`);
+    render(<App store={store} />);
+    await waitFor(async () => expect(await store.findRecord()).not.toBeNull());
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
+  it('shows a clear message on every screen when nothing can be saved, and can try again', async () => {
+    const store = new Store(`app-${crypto.randomUUID()}`);
+    vi.spyOn(store, 'open').mockResolvedValueOnce({ ok: false, problem: new StorageProblem('blocked') });
+    const user = userEvent.setup();
+    render(<App store={store} />);
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('can’t save on this device');
+    expect(alert).toHaveTextContent('private window');
+    await user.click(screen.getByRole('link', { name: 'Privacy & backup' }));
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Try again' }));
+    await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
   });
 });

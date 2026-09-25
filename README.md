@@ -27,3 +27,14 @@ Before running `test:e2e` for the first time, install the browsers with
 `npx playwright install chromium webkit`.
 
 All of these run on every push in GitHub Actions (`.github/workflows/ci.yml`).
+
+## Where things live
+
+| Folder | What's in it |
+| --- | --- |
+| `src/domain/` | The item types, fixed wording lists, validation, money and dates. No storage code. |
+| `src/store/` | The only code that touches the database on the device (Dexie). One write queue, honest errors, deleting everywhere. |
+| `src/forms/` | Form helpers, such as saving as the person types. |
+| `src/components/` | Accessible building blocks: dialogs, fields, save status, text size. |
+| `src/shell/`, `src/screens/` | The app's frame and its screens. |
+| `docs/` | The specification, architecture, and a walkthrough for each stage. |

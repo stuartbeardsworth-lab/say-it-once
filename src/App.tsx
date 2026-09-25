@@ -4,6 +4,8 @@ import { BuildingBlocks } from './screens/BuildingBlocks';
 import { Home } from './screens/Home';
 import { NotFound } from './screens/NotFound';
 import { Privacy } from './screens/Privacy';
+import { StoreProvider } from './store/StoreContext';
+import { Store } from './store/store';
 import { TextSizeProvider } from './textSize';
 
 function Screen({ location }: { location: ReturnType<typeof useLocation> }) {
@@ -19,13 +21,17 @@ function Screen({ location }: { location: ReturnType<typeof useLocation> }) {
   }
 }
 
-export function App() {
+const defaultStore = new Store();
+
+export function App({ store = defaultStore }: { store?: Store }) {
   const location = useLocation();
   return (
-    <TextSizeProvider>
-      <AppShell location={location}>
-        <Screen location={location} />
-      </AppShell>
-    </TextSizeProvider>
+    <StoreProvider store={store}>
+      <TextSizeProvider>
+        <AppShell location={location}>
+          <Screen location={location} />
+        </AppShell>
+      </TextSizeProvider>
+    </StoreProvider>
   );
 }

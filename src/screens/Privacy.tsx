@@ -1,5 +1,6 @@
 import { DeviceOnlyBanner } from '../shell/DeviceOnlyBanner';
 import { PageTop } from '../shell/PageTop';
+import { StorageSpace } from '../shell/StorageSpace';
 
 export function Privacy() {
   return (
@@ -19,6 +20,9 @@ export function Privacy() {
         Anyone who can open this device and this browser can read your record. Keeping your phone locked keeps
         your record private.
       </p>
+
+      <h2>Space on this device</h2>
+      <StorageSpace />
 
       <h2>Backup and deleting</h2>
       <p>Saving a backup copy and deleting your record will be added here in a later stage of the build.</p>

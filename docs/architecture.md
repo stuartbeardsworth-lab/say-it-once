@@ -159,6 +159,8 @@ A change is "saved" only when the IndexedDB transaction that holds it has commit
 
 **Tables (Dexie)** — `items` (decrypted payload, item ID, record ID, type, base version, sync state `clean` / `dirty` / `conflict`), `files` (Blob, file ID, upload/download state), `outbox` (ordered item IDs awaiting push), `keys` (wrapped account key, device key handle), `local` (drafts, search history, preferences).
 
+*Build note (Stage 2, agreed 25 September 2026):* the device-only app has `items`, `files` and `local`. The `outbox` and `keys` tables, the sync fields on items (base version, sync state) and the file upload/download state are added with a tested database upgrade when encryption and sync are built (Stages 7 to 9), so nothing sits empty or queues changes that nothing will send.
+
 **The write path**
 
 1. Every change goes through one queue, one transaction at a time, so writes never complete out of order (D6).
