@@ -62,7 +62,10 @@ describe('Text size', () => {
     const user = userEvent.setup();
     const store = renderControl();
     await user.click(screen.getByRole('button', { name: 'Text size' }));
-    await waitFor(() => expect(screen.getByRole('radio', { name: 'Standard' })).toBeChecked());
+    // Wait until start-up has finished writing, so the pretend failure hits
+    // the text size save and not the start-up.
+    await waitFor(async () => expect(await store.findRecord()).not.toBeNull());
+    await store.queue.settled();
     store.queue.simulateNextFailure('full');
     await user.click(screen.getByRole('radio', { name: 'Largest' }));
     expect(await screen.findByText(/run out of space/)).toBeInTheDocument();
