@@ -454,7 +454,7 @@ The reasoning for the split: stages 1–6 fix every known defect and the privacy
 
 | Stage | Delivers | You review | Size |
 | --- | --- | --- | --- |
-| 0. Hotfix (optional, separate) | Done 25 September 2026: patch for D1, D2 and D3 with a privacy test; deploying is optional as no live users hold data | The patch and a before/after test | S |
+| 0. Hotfix (optional, separate) | Done 25 September 2026, outside this repository: a patch to the old app for D1, D2 and D3 with a privacy test. It does not belong in this repository and is not part of the rebuild. Deploying it is optional as no live users hold data | The patch and a before/after test | S |
 | 1. Foundations | Repository, TypeScript, Vite, React, React Aria; CI with type checks, lint, tests, the reports-import rule and axe; accessible dialog, field, status-message and confirm components; text size scaling from the root | App shell with Home and Privacy screens; a keyboard and VoiceOver walkthrough | M |
 | 2. Domain and local store | All item types from the data model; validation; the single write queue; visible save and failure states; persistent storage request | Unit tests; forcing storage failures and seeing honest errors | M |
 | 3. Screens | Every screen and dialog from the spec, device-only: What happened, How it affects me with snapshots, Keep track sections, Quick Notes and filing, Find, contacts and calendar export, support directory, FAQ, How to use | Clickable app against the spec, screen by screen | L |
