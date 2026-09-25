@@ -773,6 +773,40 @@ td {
   align-self: center;
 }
 
+.link-button {
+  font: inherit;
+  color: var(--colour-link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.answers {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+}
+
+.answers div {
+  border-left: 0.25rem solid var(--colour-brand);
+  padding: var(--space-1) var(--space-3);
+  background: var(--colour-surface);
+}
+
+.answers dt {
+  color: var(--colour-text-muted);
+}
+
+.answers dd {
+  margin: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Notices */
 
 .notice {
@@ -847,6 +881,29 @@ td {
 
   .dialog {
     padding: var(--space-4);
+  }
+}
+
+.steps {
+  padding-left: 1.5rem;
+}
+
+.steps h2 {
+  margin-top: var(--space-4);
+}
+
+.faq-item > summary {
+  color: var(--colour-text);
+}
+
+/* Printing: only the page content, never the header, footer or buttons. */
+@media print {
+  .skip-link,
+  .site-header,
+  .site-footer,
+  .page-top-wrap,
+  .no-print {
+    display: none !important;
   }
 }
 

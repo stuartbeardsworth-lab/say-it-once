@@ -70,6 +70,21 @@ export function AppShell({ location, children }: AppShellProps) {
                 <RouteLink to="records">My records</RouteLink>
               </li>
               <li>
+                <RouteLink to="find">Find in my record</RouteLink>
+              </li>
+              <li>
+                <RouteLink to="support">Find support</RouteLink>
+              </li>
+              <li>
+                <RouteLink to="how-to-use">How to use</RouteLink>
+              </li>
+              <li>
+                <RouteLink to="faq">Questions and answers</RouteLink>
+              </li>
+              <li>
+                <RouteLink to="add-to-phone">Add to phone</RouteLink>
+              </li>
+              <li>
                 <RouteLink to="privacy">Privacy &amp; backup</RouteLink>
               </li>
               <li>

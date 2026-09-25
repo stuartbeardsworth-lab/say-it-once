@@ -38,4 +38,12 @@ All of these run on every push in GitHub Actions (`.github/workflows/ci.yml`).
 | `src/features/` | Pieces of screens grouped by topic: Quick Notes, How it affects me, Keep track. |
 | `src/components/` | Accessible building blocks: dialogs, fields, save status, text size. |
 | `src/shell/`, `src/screens/` | The app's frame and its screens. |
+| `src/content/` | Words the owner can change without touching code: the Find support list (`support.json`) and the FAQ (`faq.ts`). |
 | `docs/` | The specification, architecture, and a walkthrough for each stage. |
+
+## Changing the Find support list
+
+Open `src/content/support.json` on GitHub, press the pencil icon, edit, and
+commit. Netlify publishes the change in a few minutes. A check on every push
+makes sure each entry has a name, a description, a secure website and a
+phone number written as digits.
