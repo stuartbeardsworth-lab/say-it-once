@@ -1,0 +1,397 @@
+/*
+ * Every size is in rem, so the Text size setting (which changes the root
+ * font size) scales the whole app. Media queries use em, which follows the
+ * browser's own default size.
+ */
+
+:root {
+  color-scheme: light;
+  --colour-text: #1b1f23;
+  --colour-text-muted: #4a5159;
+  --colour-background: #faf8f5;
+  --colour-surface: #ffffff;
+  --colour-border: #6b737c;
+  --colour-brand: #1d4f5c;
+  --colour-brand-dark: #133741;
+  --colour-link: #1a5d8f;
+  --colour-focus: #ffbf47;
+  --colour-focus-text: #0b0c0c;
+  --colour-danger: #a4262c;
+  --colour-danger-dark: #7d1d22;
+  --colour-error-background: #fcf0f0;
+  --colour-info-background: #eef5f7;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --radius: 0.375rem;
+  --border-thin: 0.0625rem;
+  --border-thick: 0.1875rem;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--colour-background);
+  color: var(--colour-text);
+  font-size: 1.125rem;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-size: 1.875rem;
+  line-height: 1.2;
+  margin: var(--space-4) 0 var(--space-3);
+}
+
+h2 {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+p {
+  margin: 0 0 var(--space-3);
+}
+
+a {
+  color: var(--colour-link);
+  text-underline-offset: 0.15em;
+}
+
+/* One strong focus style everywhere: yellow with a dark edge, visible on any background. */
+:focus-visible,
+[data-focus-visible] {
+  outline: var(--border-thick) solid var(--colour-focus-text);
+  outline-offset: 0;
+  box-shadow: 0 0 0 calc(var(--border-thick) * 2) var(--colour-focus);
+}
+
+a:focus-visible {
+  background: var(--colour-focus);
+  color: var(--colour-focus-text);
+  text-decoration: none;
+  box-shadow: 0 calc(var(--border-thick) * -1) var(--colour-focus), 0 var(--border-thick) var(--colour-focus-text);
+  outline: none;
+}
+
+/* Headings and main receive focus from code, not from the person tabbing. */
+h1:focus,
+main:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.container {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+}
+
+/* Skip link: off screen until focused. */
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -10rem;
+  z-index: 10;
+  padding: var(--space-2) var(--space-3);
+  background: var(--colour-focus);
+  color: var(--colour-focus-text);
+}
+
+.skip-link:focus {
+  top: var(--space-2);
+}
+
+.site-header {
+  background: var(--colour-brand);
+  color: #fff;
+}
+
+.site-header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+.site-name {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.main {
+  padding-bottom: var(--space-5);
+}
+
+.site-footer {
+  border-top: var(--border-thin) solid var(--colour-border);
+  padding: var(--space-4) 0;
+  color: var(--colour-text-muted);
+}
+
+.footer-links {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.page-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+/* Buttons */
+
+.button {
+  font: inherit;
+  font-weight: 600;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  border: var(--border-thin) solid transparent;
+  cursor: pointer;
+}
+
+.button-primary {
+  background: var(--colour-brand);
+  color: #fff;
+}
+
+.button-primary[data-hovered] {
+  background: var(--colour-brand-dark);
+}
+
+.button-secondary {
+  background: var(--colour-surface);
+  color: var(--colour-brand-dark);
+  border-color: var(--colour-brand);
+}
+
+.button-secondary[data-hovered] {
+  background: var(--colour-info-background);
+}
+
+.button-danger {
+  background: var(--colour-danger);
+  color: #fff;
+}
+
+.button-danger[data-hovered] {
+  background: var(--colour-danger-dark);
+}
+
+.button[data-pending] {
+  cursor: progress;
+}
+
+.button-row,
+.dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+}
+
+.dialog-actions {
+  justify-content: flex-end;
+  margin-bottom: 0;
+}
+
+/* Fields */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: var(--space-3) 0;
+}
+
+.field-label {
+  font-weight: 700;
+}
+
+.field-hint {
+  color: var(--colour-text-muted);
+}
+
+.field-error {
+  color: var(--colour-danger);
+  font-weight: 700;
+}
+
+.field-input {
+  font: inherit;
+  width: 100%;
+  padding: var(--space-2);
+  border: var(--border-thin) solid var(--colour-border);
+  border-radius: var(--radius);
+  background: var(--colour-surface);
+  color: var(--colour-text);
+}
+
+.field-input[data-invalid] {
+  border: var(--border-thick) solid var(--colour-danger);
+}
+
+.field-textarea {
+  resize: vertical;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+}
+
+.checkbox-row input {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Radios (text size) */
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: 0 var(--space-2);
+  border: var(--border-thin) solid var(--colour-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.radio::before {
+  content: '';
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  border: var(--border-thick) solid var(--colour-border);
+  background: var(--colour-surface);
+}
+
+.radio[data-selected] {
+  border-color: var(--colour-brand);
+  background: var(--colour-info-background);
+  font-weight: 700;
+}
+
+.radio[data-selected]::before {
+  border-color: var(--colour-brand);
+  background: radial-gradient(var(--colour-brand) 40%, var(--colour-surface) 45%);
+}
+
+/* Notices */
+
+.notice {
+  border-left: 0.375rem solid var(--colour-brand);
+  background: var(--colour-info-background);
+  padding: var(--space-3);
+  margin: var(--space-3) 0;
+  border-radius: var(--radius);
+}
+
+.notice > :last-child {
+  margin-bottom: 0;
+}
+
+.notice-title {
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.notice-error {
+  border-left-color: var(--colour-danger);
+  background: var(--colour-error-background);
+}
+
+.save-status-quiet {
+  color: var(--colour-text-muted);
+  min-height: 1.5em;
+  margin: var(--space-2) 0 0;
+}
+
+/* Dialogs */
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgb(0 0 0 / 0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-2);
+  overflow-y: auto;
+}
+
+.dialog-modal {
+  width: 100%;
+  max-width: 34rem;
+  margin: auto 0;
+}
+
+.dialog {
+  background: var(--colour-surface);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  outline: none;
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 0 0 var(--space-3);
+}
+
+.dialog-body > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 40em) {
+  .dialog-overlay {
+    padding: var(--space-3);
+  }
+
+  .dialog {
+    padding: var(--space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
