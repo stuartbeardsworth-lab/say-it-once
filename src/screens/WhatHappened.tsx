@@ -15,10 +15,10 @@ import { useRecordId, useStore } from '../store/StoreContext';
 export function WhatHappened() {
   const { store } = useStore();
   const recordId = useRecordId();
-  const { draft, setData } = useItemDraft<'incident'>(
+  const { draft, updateData } = useItemDraft<'incident'>(
     async () => (recordId ? store.getSingleton(recordId, 'incident') : undefined),
     () => blank('incident'),
-    `incident:${recordId ?? ''}`,
+    recordId ? `incident:${recordId}` : null,
   );
 
   return (
@@ -33,7 +33,7 @@ export function WhatHappened() {
         <IncidentForm
           key={draft.id}
           data={draft.data}
-          onChange={setData}
+          onChange={updateData}
           save={async (data) => {
             if (!recordId) throw new StorageProblem('unavailable');
             await store.save('incident', recordId, data, { id: draft.id });
@@ -49,7 +49,7 @@ export function WhatHappened() {
 
 interface IncidentFormProps {
   data: IncidentData;
-  onChange: (data: IncidentData) => void;
+  onChange: (update: (data: IncidentData) => IncidentData) => void;
   save: (data: IncidentData) => Promise<void>;
 }
 
@@ -57,7 +57,7 @@ function IncidentForm({ data, onChange, save }: IncidentFormProps) {
   const autosave = useAutosave(data, save);
   const field = (name: keyof IncidentData) => ({
     value: data[name],
-    onChange: (value: string) => onChange({ ...data, [name]: value }),
+    onChange: (value: string) => onChange((d) => ({ ...d, [name]: value })),
     onBlur: () => void autosave.flush(),
   });
 

@@ -126,6 +126,9 @@ describe('saving', () => {
     const row = await store.getFile(ref.fileId);
     expect(row?.name).toBe('letter.pdf');
     expect(await row?.blob.text()).toBe('%PDF-1.7 letter');
+    expect(row?.blob.type).toBe('application/pdf');
+    // Stored as plain bytes, which Safari accepts even in private browsing.
+    expect((await store.db.files.get(ref.fileId))?.bytes).toBeInstanceOf(ArrayBuffer);
   });
 
   it('remembers device preferences', async () => {

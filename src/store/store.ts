@@ -47,6 +47,15 @@ export interface StorageSpace {
   persisted: boolean | null;
 }
 
+/** Reads a file's bytes, turning a failure into a plain explanation. */
+async function readBytes(file: Blob): Promise<ArrayBuffer> {
+  try {
+    return await file.arrayBuffer();
+  } catch (error) {
+    throw new StorageProblem('unreadable', error);
+  }
+}
+
 function now() {
   return new Date().toISOString();
 }
@@ -229,8 +238,11 @@ export class Store {
     return this.db.items.where('recordId').equals(recordId).count();
   }
 
-  async getFile(fileId: string) {
-    return this.db.files.get(fileId);
+  /** A stored file, as a Blob of its original bytes and type. */
+  async getFile(fileId: string): Promise<{ id: string; name: string; type: string; size: number; blob: Blob } | undefined> {
+    const row = await this.db.files.get(fileId);
+    if (!row) return undefined;
+    return { id: row.id, name: row.name, type: row.type, size: row.size, blob: new Blob([row.bytes], { type: row.type }) };
   }
 
   // ---- Saving ---------------------------------------------------------------
@@ -360,11 +372,13 @@ export class Store {
   async saveFile(recordId: string, file: Blob, name: string): Promise<StoredFileRef> {
     if (file.size > maxFileBytes) throw new StorageProblem('too-large');
     const ref: StoredFileRef = { fileId: newId(), name, type: file.type, size: file.size };
+    // Read the bytes before the transaction: a transaction can't wait on anything else.
+    const bytes = await readBytes(file);
     await this.queue.run(() =>
       this.db.files.add({
         id: ref.fileId,
         recordId,
-        blob: file,
+        bytes,
         name,
         type: file.type,
         size: file.size,

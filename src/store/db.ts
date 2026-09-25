@@ -8,7 +8,12 @@ import type { Item } from '../domain/types';
 export interface FileRow {
   id: string;
   recordId: string;
-  blob: Blob;
+  /**
+   * The file's exact bytes, unchanged. Kept as bytes rather than a Blob
+   * because Safari refuses to store Blobs in private browsing (and in test
+   * browsers), which would make every photo fail to save there.
+   */
+  bytes: ArrayBuffer;
   name: string;
   type: string;
   size: number;

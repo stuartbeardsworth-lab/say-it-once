@@ -216,14 +216,14 @@ function NameForm({ initial, submitLabel, onSubmit, onDirtyChange, onCancel, onD
 }
 
 function PersonName() {
-  const { store } = useStore();
-  const { draft, setData } = useItemDraft<'profile'>(
+  const { store, status } = useStore();
+  const { draft, updateData } = useItemDraft<'profile'>(
     () => store.getProfile(),
     () => blank('profile'),
-    'profile',
+    status.kind === 'opening' ? null : 'profile',
   );
   if (!draft) return <p>Loading…</p>;
-  return <PersonNameField key={draft.id} id={draft.id} data={draft.data} onChange={setData} />;
+  return <PersonNameField key={draft.id} id={draft.id} data={draft.data} onChange={(d) => updateData(() => d)} />;
 }
 
 function PersonNameField({ id, data, onChange }: { id: string; data: ProfileData; onChange: (d: ProfileData) => void }) {

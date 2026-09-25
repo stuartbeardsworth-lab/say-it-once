@@ -3,7 +3,7 @@ import type { FieldErrors } from '../domain/validate';
 // Everything that can stop a save, in words for the person using the app.
 // Each message says what happened and what to do about it.
 
-export type StorageProblemKind = 'full' | 'blocked' | 'closed' | 'too-large' | 'unavailable' | 'unknown';
+export type StorageProblemKind = 'full' | 'blocked' | 'closed' | 'too-large' | 'unreadable' | 'unavailable' | 'unknown';
 
 const messages: Record<StorageProblemKind, string> = {
   full: 'This device has run out of space. Free up some space, for example by deleting photos or apps you no longer need, then try again.',
@@ -11,6 +11,7 @@ const messages: Record<StorageProblemKind, string> = {
     'This browser is not letting Say It Once keep anything. This can happen in a private window, or when website data is blocked in settings. Open Say It Once in a normal window, or allow website data, then reload the page.',
   closed:
     'The browser closed Say It Once’s storage. This sometimes happens when a phone is short of memory. Reload the page, then try again.',
+  unreadable: 'This file couldn’t be read, so nothing was saved. Try choosing it again, or try a different file.',
   'too-large': 'This file is bigger than 25 MB, which is the most Say It Once can keep. Try a smaller photo or a shorter PDF.',
   unavailable:
     'Say It Once can’t save on this device at the moment, so nothing new can be kept. Your existing record has not been changed.',
