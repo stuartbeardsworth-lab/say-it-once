@@ -17,6 +17,8 @@ interface StoreContextValue {
   reopen: () => void;
   /** For the review page only: behave as if storage had failed at start-up. */
   simulateUnavailable: () => void;
+  /** Shows another record, and remembers the choice. */
+  switchRecord: (recordId: string) => Promise<void>;
 }
 
 const StoreContext = createContext<StoreContextValue | null>(null);
@@ -59,9 +61,25 @@ export function StoreProvider({ store, children }: { store: Store; children: Rea
     setStatus((s) => ({ kind: 'unavailable', problem, recordId: s.kind === 'opening' ? null : s.recordId }));
   }, [store]);
 
-  return (
-    <StoreContext.Provider value={{ store, status, reopen, simulateUnavailable }}>{children}</StoreContext.Provider>
+  const switchRecord = useCallback(
+    async (recordId: string) => {
+      await store.setActiveRecord(recordId);
+      setStatus((s) => (s.kind === 'ready' ? { kind: 'ready', recordId } : s));
+    },
+    [store],
   );
+
+  return (
+    <StoreContext.Provider value={{ store, status, reopen, simulateUnavailable, switchRecord }}>
+      {children}
+    </StoreContext.Provider>
+  );
+}
+
+/** The record being shown, or null while storage opens or when there is none. */
+export function useRecordId(): string | null {
+  const { status } = useStore();
+  return status.kind === 'opening' ? null : status.recordId;
 }
 
 export function useStore(): StoreContextValue {

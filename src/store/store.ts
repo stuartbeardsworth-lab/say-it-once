@@ -4,6 +4,7 @@ import {
   currentSchema,
   privateCapable,
   singletonTypes,
+  type QuickNoteData,
   type Item,
   type ItemDataMap,
   type ItemType,
@@ -150,6 +151,33 @@ export class Store {
     );
   }
 
+  /** Makes another record the one shown, and remembers the choice. */
+  async setActiveRecord(recordId: string): Promise<void> {
+    const meta = await this.db.items.get(recordId);
+    if (meta?.type !== 'recordMeta') throw new Error(`No record ${recordId}`);
+    await this.setPreference('activeRecordId', recordId);
+  }
+
+  /** Every record on this device, oldest first. */
+  async listRecords(): Promise<Item<'recordMeta'>[]> {
+    const rows = await this.db.items.where('type').equals('recordMeta').sortBy('createdAt');
+    return rows as Item<'recordMeta'>[];
+  }
+
+  /** The profile (the person's name), shared by every record. */
+  async getProfile(): Promise<Item<'profile'> | undefined> {
+    return (await this.db.items.where('type').equals('profile').first()) as Item<'profile'> | undefined;
+  }
+
+  /** The one item of a type that a record has at most one of, if it exists. */
+  async getSingleton<T extends 'incident' | 'impactNote' | 'workDetails'>(
+    recordId: string,
+    type: T,
+  ): Promise<Item<T> | undefined> {
+    const row = await this.db.items.where('[recordId+type]').equals([recordId, type]).first();
+    return row && (upgrade(row).item as Item<T>);
+  }
+
   /** Finds a record to show without writing anything, for when storage is read-only. */
   async findRecord(): Promise<string | null> {
     const remembered = await this.getPreference<string>('activeRecordId');
@@ -223,7 +251,7 @@ export class Store {
     if (type !== 'profile' && recordId === null) throw new Error(`${type} items must belong to a record`);
 
     const saved = await this.queue.run(() =>
-      this.db.transaction('rw', this.db.items, async () => {
+      this.db.transaction('rw', this.db.items, this.db.files, async () => {
         const stamp = now();
         const existing = options.id ? await this.db.items.get(options.id) : undefined;
         if (existing && (existing.type !== type || existing.recordId !== recordId)) {
@@ -245,11 +273,69 @@ export class Store {
           updatedAt: stamp,
         };
         await this.db.items.put(item as Item);
+        // A photo or file taken off this item goes, unless something else uses it.
+        if (existing) await this.removeFilesNoLongerUsed(existing, item as Item);
         return item;
       }),
     );
     this.requestPersistence();
     return saved;
+  }
+
+  private async removeFilesNoLongerUsed(before: Item, after: Item) {
+    const kept = new Set(filesOf(after));
+    const dropped = filesOf(before).filter((f) => !kept.has(f));
+    if (dropped.length === 0 || before.recordId === null) return;
+    const stillUsed = new Set(
+      (await this.db.items.where('recordId').equals(before.recordId).toArray()).flatMap(filesOf),
+    );
+    await this.db.files.bulkDelete(dropped.filter((f) => !stillUsed.has(f)));
+  }
+
+  /**
+   * Files a Quick Note in a section, or unfiles it (null). Filing a note
+   * with a photo in Letters & documents or Appointments also makes the
+   * photo into a document (decision Q1), once, in the same transaction, so
+   * both happen or neither does. The document starts with the note's
+   * private setting.
+   */
+  async fileQuickNote(noteId: string, filedTo: QuickNoteData['filedTo']): Promise<void> {
+    await this.queue.run(() =>
+      this.db.transaction('rw', this.db.items, this.db.files, async () => {
+        const note = (await this.db.items.get(noteId)) as Item<'quickNote'> | undefined;
+        if (note?.type !== 'quickNote' || note.recordId === null) throw new Error(`No Quick Note ${noteId}`);
+        const data: QuickNoteData = { ...note.data, filedTo };
+        const result = validate('quickNote', data, note.private);
+        if (!result.ok) throw new ValidationProblem(result.errors);
+        const stamp = now();
+        await this.db.items.put({ ...note, data, updatedAt: stamp });
+
+        const photoId = note.data.photoFileId;
+        if (!photoId || (filedTo?.section !== 'documents' && filedTo?.section !== 'appointments')) return;
+        const docs = (await this.db.items
+          .where('[recordId+type]')
+          .equals([note.recordId, 'document'])
+          .toArray()) as Item<'document'>[];
+        if (docs.some((d) => d.data.file?.fileId === photoId)) return;
+        const file = await this.db.files.get(photoId);
+        if (!file) return;
+        await this.db.items.add({
+          id: newId(),
+          recordId: note.recordId,
+          type: 'document',
+          schema: currentSchema.document,
+          private: note.private,
+          data: blank('document', {
+            title: 'Photo from a Quick Note',
+            date: note.createdAt.slice(0, 10),
+            relatedTo: { section: filedTo.section, itemId: null },
+            file: { fileId: file.id, name: file.name, type: file.type, size: file.size },
+          }),
+          createdAt: stamp,
+          updatedAt: stamp,
+        });
+      }),
+    );
   }
 
   /** Some items are one per record, and there is one area of each kind. */

@@ -156,3 +156,58 @@ describe('several things at once', () => {
     expect(notes.map((n) => n.data.text)).toEqual(['Hello']);
   });
 });
+
+describe('Quick Notes', () => {
+  async function noteWithPhoto(isPrivate = false) {
+    const store = await freshStore();
+    const recordId = await store.ensureRecord();
+    const photo = await store.saveFile(recordId, new Blob(['jpeg'], { type: 'image/jpeg' }), 'photo.jpg');
+    const note = await store.save('quickNote', recordId, blank('quickNote', { text: 'Letter from the clinic', photoFileId: photo.fileId }), {
+      private: isPrivate,
+    });
+    return { store, recordId, photo, note };
+  }
+
+  it('filing a photo note in Letters & documents makes one document, with the note’s private setting', async () => {
+    const { store, recordId, photo, note } = await noteWithPhoto(true);
+    await store.fileQuickNote(note.id, { section: 'documents', impactArea: null });
+    await store.fileQuickNote(note.id, { section: 'documents', impactArea: null });
+    const docs = await store.list(recordId, 'document');
+    expect(docs).toHaveLength(1);
+    expect(docs[0]?.data.file?.fileId).toBe(photo.fileId);
+    expect(docs[0]?.private).toBe(true);
+    expect(((await store.get(note.id))?.item as Item<'quickNote'>).data.filedTo?.section).toBe('documents');
+  });
+
+  it('filing elsewhere makes no document, and unfiling works', async () => {
+    const { store, recordId, note } = await noteWithPhoto();
+    await store.fileQuickNote(note.id, { section: 'impact', impactArea: 'wash' });
+    expect(await store.list(recordId, 'document')).toHaveLength(0);
+    await store.fileQuickNote(note.id, null);
+    expect(((await store.get(note.id))?.item as Item<'quickNote'>).data.filedTo).toBeNull();
+  });
+
+  it('removing a photo from a note deletes the photo, unless it became a document', async () => {
+    const { store, recordId, photo, note } = await noteWithPhoto();
+    await store.save('quickNote', recordId, { ...note.data, photoFileId: null }, { id: note.id });
+    expect(await store.getFile(photo.fileId)).toBeUndefined();
+
+    const second = await noteWithPhoto();
+    await second.store.fileQuickNote(second.note.id, { section: 'documents', impactArea: null });
+    await second.store.save('quickNote', second.recordId, { ...second.note.data, photoFileId: null }, { id: second.note.id });
+    expect(await second.store.getFile(second.photo.fileId)).toBeDefined();
+  });
+});
+
+describe('records', () => {
+  it('lists records, switches between them and remembers the choice', async () => {
+    const store = await freshStore();
+    const first = await store.ensureRecord();
+    const second = await store.createRecord('Second injury');
+    expect((await store.listRecords()).map((r) => r.data.name)).toEqual(['My record', 'Second injury']);
+    await store.setActiveRecord(second);
+    expect(await store.ensureRecord()).toBe(second);
+    await store.setActiveRecord(first);
+    expect(await store.ensureRecord()).toBe(first);
+  });
+});
