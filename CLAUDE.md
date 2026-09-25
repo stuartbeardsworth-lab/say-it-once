@@ -64,7 +64,8 @@ Tests: Vitest, fast-check, Playwright (including WebKit), axe-core.
 Development-only tools (approved 25 September 2026; never shipped to users):
 ESLint (with typescript-eslint, eslint-plugin-react-hooks, globals),
 React Testing Library (react, user-event, jest-dom), jsdom,
-@axe-core/playwright, @vitejs/plugin-react.
+@axe-core/playwright, @vitejs/plugin-react, fake-indexeddb (approved 25 September
+2026; runs the database code in unit tests without a browser).
 Hosting: static client on Netlify for now; server on Hetzner (EU) from stage 8.
 
 Deliberately not used: Next.js or other SSR frameworks, Firebase, Supabase,
