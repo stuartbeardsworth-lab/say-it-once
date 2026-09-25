@@ -214,3 +214,96 @@ describe('records', () => {
     expect(await store.ensureRecord()).toBe(first);
   });
 });
+
+describe('Something has changed', () => {
+  it('keeps a snapshot of the whole position before saving the change, and moves the "since" date', async () => {
+    const store = await freshStore();
+    const recordId = await store.ensureRecord();
+    const wash = await store.save('impactArea', recordId, blank('impactArea', { areaKey: 'wash', detail: 'Need help in the shower' }));
+    const move = await store.save('impactArea', recordId, blank('impactArea', { areaKey: 'move', detail: 'Stairs are slow' }));
+    await store.save('impactNote', recordId, { text: 'Can’t drive' });
+
+    await store.recordChange(
+      recordId,
+      { type: 'impactArea', id: wash.id, data: { ...wash.data, detail: 'Can shower alone now' }, private: false },
+      '2026-09-25',
+    );
+
+    const [snapshot] = await store.list(recordId, 'impactSnapshot');
+    expect(snapshot?.data.areas.map((a) => a.data.detail).sort()).toEqual(['Need help in the shower', 'Stairs are slow']);
+    expect(snapshot?.data.note?.text).toBe('Can’t drive');
+    expect(((await store.get(wash.id))?.item as Item<'impactArea'>).data.detail).toBe('Can shower alone now');
+    expect(((await store.get(move.id))?.item as Item<'impactArea'>).data.detail).toBe('Stairs are slow');
+    expect(((await store.get(recordId))?.item as Item<'recordMeta'>).data.impactCurrentSince).toBe('2026-09-25');
+  });
+
+  it('a later change dates its snapshot from when the previous position began', async () => {
+    const store = await freshStore();
+    const recordId = await store.ensureRecord();
+    const wash = await store.save('impactArea', recordId, blank('impactArea', { areaKey: 'wash', detail: 'one' }));
+    await store.recordChange(recordId, { type: 'impactArea', id: wash.id, data: { ...wash.data, detail: 'two' }, private: false }, '2026-05-01');
+    await store.recordChange(recordId, { type: 'impactArea', id: wash.id, data: { ...wash.data, detail: 'three' }, private: false }, '2026-08-01');
+    const snapshots = await store.list(recordId, 'impactSnapshot');
+    const byDetail = Object.fromEntries(snapshots.map((s) => [s.data.areas[0]?.data.detail, s.data.date]));
+    expect(Object.keys(byDetail).sort()).toEqual(['one', 'two']);
+    expect(byDetail.two).toBe('2026-05-01');
+  });
+
+  it('a correction overwrites and keeps no history', async () => {
+    const store = await freshStore();
+    const recordId = await store.ensureRecord();
+    const wash = await store.save('impactArea', recordId, blank('impactArea', { areaKey: 'wash', detail: 'typo' }));
+    await store.save('impactArea', recordId, { ...wash.data, detail: 'fixed' }, { id: wash.id });
+    expect(await store.list(recordId, 'impactSnapshot')).toHaveLength(0);
+    expect(JSON.stringify(await store.db.items.toArray())).not.toContain('typo');
+  });
+});
+
+describe('appointments and documents with files', () => {
+  it('saves an appointment with its letter as a linked document, starting with the appointment’s private setting', async () => {
+    const store = await freshStore();
+    const recordId = await store.ensureRecord();
+    const { newItemId } = await import('./store');
+    const id = newItemId();
+    const appt = await store.saveAppointment(
+      recordId,
+      id,
+      blank('appointment', { date: '2026-10-02', organisation: 'St Mary’s Hospital' }),
+      true,
+      { blob: new Blob(['%PDF'], { type: 'application/pdf' }), name: 'letter.pdf' },
+    );
+    const doc = (await store.get(appt.data.documentId ?? ''))?.item as Item<'document'>;
+    expect(doc.data.title).toBe('Appointment letter — St Mary’s Hospital');
+    expect(doc.private).toBe(true);
+    expect(doc.data.relatedTo).toEqual({ section: 'appointments', itemId: id });
+    expect(await (await store.getFile(doc.data.file?.fileId ?? ''))?.blob.text()).toBe('%PDF');
+
+    // The letter then keeps its own private setting (Q10).
+    await store.save('document', recordId, doc.data, { id: doc.id, private: false });
+    await store.saveAppointment(recordId, id, appt.data, true);
+    expect(((await store.get(doc.id))?.item as Item<'document'>).private).toBe(false);
+  });
+
+  it('keeps neither the appointment nor the letter if the appointment isn’t valid', async () => {
+    const store = await freshStore();
+    const recordId = await store.ensureRecord();
+    const { newItemId } = await import('./store');
+    await expect(
+      store.saveAppointment(recordId, newItemId(), blank('appointment'), false, { blob: new Blob(['x']), name: 'l.pdf' }),
+    ).rejects.toBeInstanceOf(ValidationProblem);
+    expect(await store.db.files.count()).toBe(0);
+    expect(await store.db.items.where('type').equals('document').count()).toBe(0);
+  });
+
+  it('replacing a document’s file deletes the old one', async () => {
+    const store = await freshStore();
+    const recordId = await store.ensureRecord();
+    const { newItemId } = await import('./store');
+    const id = newItemId();
+    const first = await store.saveDocument(recordId, id, blank('document', { title: 'Scan' }), false, { blob: new Blob(['old']), name: 'a.pdf' });
+    const oldFile = first.data.file?.fileId ?? '';
+    const second = await store.saveDocument(recordId, id, first.data, false, { blob: new Blob(['new']), name: 'b.pdf' });
+    expect(await store.getFile(oldFile)).toBeUndefined();
+    expect(await (await store.getFile(second.data.file?.fileId ?? ''))?.blob.text()).toBe('new');
+  });
+});

@@ -58,6 +58,12 @@ export function AppShell({ location, children }: AppShellProps) {
                 <RouteLink to="what">What happened</RouteLink>
               </li>
               <li>
+                <RouteLink to="impact">How it affects me</RouteLink>
+              </li>
+              <li>
+                <RouteLink to="track">Keep track</RouteLink>
+              </li>
+              <li>
                 <RouteLink to="quick-notes">Quick Notes</RouteLink>
               </li>
               <li>

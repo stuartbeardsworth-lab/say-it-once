@@ -21,6 +21,8 @@ export interface TextFieldProps
   hint?: string | undefined;
   /** When set, the field is shown as having a problem with this message. */
   errorMessage?: string | undefined;
+  /** The id of a <datalist> of suggestions. */
+  list?: string;
 }
 
 function fieldParts({ label, hint, errorMessage }: Pick<TextFieldProps, 'label' | 'hint' | 'errorMessage'>) {
@@ -35,19 +37,19 @@ function fieldParts({ label, hint, errorMessage }: Pick<TextFieldProps, 'label' 
   };
 }
 
-export function TextField({ label, hint, errorMessage, ...props }: TextFieldProps) {
+export function TextField({ label, hint, errorMessage, list, ...props }: TextFieldProps) {
   const parts = fieldParts({ label, hint, errorMessage });
   return (
     <AriaTextField {...props} className="field" isInvalid={Boolean(errorMessage)} validationBehavior="aria">
       {parts.label}
       {parts.hint}
       {parts.error}
-      <Input className="field-input" />
+      <Input className="field-input" {...(list && { list })} />
     </AriaTextField>
   );
 }
 
-export interface TextAreaProps extends TextFieldProps {
+export interface TextAreaProps extends Omit<TextFieldProps, 'list'> {
   rows?: number;
 }
 

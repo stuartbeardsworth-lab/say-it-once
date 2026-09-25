@@ -294,6 +294,180 @@ export class Store {
     return saved;
   }
 
+  /**
+   * "Something has changed" (docs/spec.md, Impact area): keeps a snapshot of
+   * the whole current position (every area and the free-text note, as they
+   * are now), then saves the new version of one area or the note, and marks
+   * the new position as current from `today`. All in one transaction, so the
+   * history is never lost halfway. A correction ("I'm correcting what I
+   * wrote") is an ordinary save instead: it overwrites and keeps nothing (Q9).
+   */
+  async recordChange(
+    recordId: string,
+    change:
+      | { type: 'impactArea'; id: string; data: ItemDataMap['impactArea']; private: boolean }
+      | { type: 'impactNote'; id: string; data: ItemDataMap['impactNote']; private: boolean },
+    today: string,
+  ): Promise<void> {
+    const result = validate(change.type, change.data, change.private);
+    if (!result.ok) throw new ValidationProblem(result.errors);
+    await this.queue.run(() =>
+      this.db.transaction('rw', this.db.items, async () => {
+        const meta = (await this.db.items.get(recordId)) as Item<'recordMeta'> | undefined;
+        if (meta?.type !== 'recordMeta') throw new Error(`No record ${recordId}`);
+        const areas = (await this.db.items
+          .where('[recordId+type]')
+          .equals([recordId, 'impactArea'])
+          .toArray()) as Item<'impactArea'>[];
+        const note = (await this.db.items.where('[recordId+type]').equals([recordId, 'impactNote']).first()) as
+          | Item<'impactNote'>
+          | undefined;
+        const stamp = now();
+
+        if (areas.length > 0 || note) {
+          const earliest = [...areas, ...(note ? [note] : [])].map((i) => i.createdAt.slice(0, 10)).sort()[0] ?? today;
+          await this.db.items.add({
+            id: newId(),
+            recordId,
+            type: 'impactSnapshot',
+            schema: currentSchema.impactSnapshot,
+            private: false,
+            data: {
+              date: meta.data.impactCurrentSince || earliest,
+              areas: areas.map((a) => ({ itemId: a.id, data: a.data })),
+              note: note && note.data.text.trim() !== '' ? { itemId: note.id, text: note.data.text } : null,
+            },
+            createdAt: stamp,
+            updatedAt: stamp,
+          });
+        }
+
+        const existing = await this.db.items.get(change.id);
+        if (!existing && change.type === 'impactArea' && areas.some((a) => a.data.areaKey === change.data.areaKey)) {
+          throw new Error(`This record already has the ${change.data.areaKey} area; update it instead`);
+        }
+        if (!existing && change.type === 'impactNote' && note) throw new Error('This record already has a note');
+        await this.db.items.put({
+          id: change.id,
+          recordId,
+          type: change.type,
+          schema: currentSchema[change.type],
+          private: change.private,
+          data: change.data,
+          createdAt: existing?.createdAt ?? stamp,
+          updatedAt: stamp,
+        } as Item);
+        await this.db.items.put({ ...meta, data: { ...meta.data, impactCurrentSince: today }, updatedAt: stamp });
+      }),
+    );
+  }
+
+  /**
+   * Saves a document together with a new file for it, in one transaction:
+   * both are kept or neither is. Pass no file to keep the document's
+   * current one.
+   */
+  async saveDocument(
+    recordId: string,
+    id: string,
+    data: ItemDataMap['document'],
+    isPrivate: boolean,
+    newFile?: { blob: Blob; name: string },
+  ): Promise<Item<'document'>> {
+    if (newFile && newFile.blob.size > maxFileBytes) throw new StorageProblem('too-large');
+    const fileRef = newFile ? this.fileRefFor(newFile) : null;
+    const withFile = fileRef ? { ...data, file: fileRef } : data;
+    const result = validate('document', withFile, isPrivate);
+    if (!result.ok) throw new ValidationProblem(result.errors);
+    const bytes = newFile ? await readBytes(newFile.blob) : null;
+    const saved = await this.queue.run(() =>
+      this.db.transaction('rw', this.db.items, this.db.files, async () => {
+        if (bytes && fileRef) await this.addFileRow(recordId, fileRef, bytes);
+        return this.putItem('document', recordId, id, withFile, isPrivate);
+      }),
+    );
+    this.requestPersistence();
+    return saved;
+  }
+
+  /**
+   * Saves an appointment, and when a letter is attached, the letter as a
+   * document titled "Appointment letter — {organisation}", all in one
+   * transaction. A new letter starts with the appointment's private
+   * setting and then has its own (decision Q10).
+   */
+  async saveAppointment(
+    recordId: string,
+    id: string,
+    data: ItemDataMap['appointment'],
+    isPrivate: boolean,
+    letter?: { blob: Blob; name: string },
+  ): Promise<Item<'appointment'>> {
+    const result = validate('appointment', data, isPrivate);
+    if (!result.ok) throw new ValidationProblem(result.errors);
+    if (letter && letter.blob.size > maxFileBytes) throw new StorageProblem('too-large');
+    const letterBytes = letter ? await readBytes(letter.blob) : null;
+    const saved = await this.queue.run(() =>
+      this.db.transaction('rw', this.db.items, this.db.files, async () => {
+        let documentId = data.documentId;
+        if (letter && letterBytes) {
+          const ref = this.fileRefFor(letter);
+          await this.addFileRow(recordId, ref, letterBytes);
+          const existingDoc = documentId ? ((await this.db.items.get(documentId)) as Item<'document'> | undefined) : undefined;
+          const docData = blank('document', {
+            ...(existingDoc?.data ?? {}),
+            title: existingDoc?.data.title || `Appointment letter — ${data.organisation.trim()}`,
+            date: existingDoc?.data.date || data.date,
+            from: existingDoc?.data.from || data.organisation.trim(),
+            relatedTo: { section: 'appointments', itemId: id },
+            file: ref,
+          });
+          const doc = await this.putItem('document', recordId, existingDoc?.id ?? newId(), docData, existingDoc?.private ?? isPrivate);
+          documentId = doc.id;
+        }
+        return this.putItem('appointment', recordId, id, { ...data, documentId }, isPrivate);
+      }),
+    );
+    this.requestPersistence();
+    return saved;
+  }
+
+  private fileRefFor(file: { blob: Blob; name: string }): StoredFileRef {
+    return { fileId: newId(), name: file.name, type: file.blob.type, size: file.blob.size };
+  }
+
+  private async addFileRow(recordId: string, ref: StoredFileRef, bytes: ArrayBuffer) {
+    await this.db.files.add({ id: ref.fileId, recordId, bytes, name: ref.name, type: ref.type, size: ref.size, createdAt: now() });
+  }
+
+  /** Must run inside a transaction on items and files. Creates or updates. */
+  private async putItem<T extends ItemType>(
+    type: T,
+    recordId: string,
+    id: string,
+    data: ItemDataMap[T],
+    isPrivate: boolean,
+  ): Promise<Item<T>> {
+    const existing = await this.db.items.get(id);
+    if (existing && (existing.type !== type || existing.recordId !== recordId)) {
+      throw new Error(`Item ${id} is not a ${type} in this record`);
+    }
+    const stamp = now();
+    const item: Item<T> = {
+      id,
+      recordId,
+      type,
+      schema: currentSchema[type],
+      private: privateCapable.has(type) && isPrivate,
+      data,
+      createdAt: existing?.createdAt ?? stamp,
+      updatedAt: stamp,
+    };
+    await this.db.items.put(item as Item);
+    if (existing) await this.removeFilesNoLongerUsed(existing, item as Item);
+    return item;
+  }
+
   private async removeFilesNoLongerUsed(before: Item, after: Item) {
     const kept = new Set(filesOf(after));
     const dropped = filesOf(before).filter((f) => !kept.has(f));
