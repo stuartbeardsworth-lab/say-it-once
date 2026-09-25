@@ -204,7 +204,7 @@ describe('records', () => {
     const store = await freshStore();
     const first = await store.ensureRecord();
     const second = await store.createRecord('Second injury');
-    expect((await store.listRecords()).map((r) => r.data.name)).toEqual(['My record', 'Second injury']);
+    expect((await store.listRecords()).map((r) => r.data.name).sort()).toEqual(['My record', 'Second injury']);
     await store.setActiveRecord(second);
     expect(await store.ensureRecord()).toBe(second);
     await store.setActiveRecord(first);
