@@ -8,6 +8,7 @@ import { useQuickNoteDialogs } from '../features/quickNotes/useQuickNoteDialogs'
 import { AppointmentDialog } from '../features/track/AppointmentDialog';
 import { navigate, RouteLink, type Route } from '../router';
 import { AddToPhonePrompt } from '../shell/AddToPhonePrompt';
+import { BackupReminder } from '../shell/BackupReminder';
 import { DeviceOnlyBanner } from '../shell/DeviceOnlyBanner';
 import { useItems } from '../store/hooks';
 
@@ -101,6 +102,7 @@ export function Home() {
         </ul>
       </section>
 
+      <BackupReminder />
       <AddToPhonePrompt />
 
       <p>

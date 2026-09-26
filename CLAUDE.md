@@ -44,6 +44,8 @@ If code and these documents disagree, stop and ask which is right.
   search history and server copies.
 - Anything marked "Keep this private" never appears in any output. Enforced in one
   function (`toShareable`), proved by property-based tests. Private is absolute.
+  The one exception is the person's own backup (decided 26 September 2026):
+  it holds everything, private entries included, and says so.
 - Accessibility is a primary requirement: keyboard use, focus management in every
   dialog, screen reader support, and text size that scales the whole app from the
   root. Target WCAG 2.2 AA.
@@ -150,3 +152,16 @@ Done when:
   matching the old app, which included them. A file that can't be found is
   named on screen, never left out quietly. Files are read and written one
   at a time.
+- 26 September 2026, Stage 6 is built in two parts: 6a backup and restore,
+  the backup reminder and deleting everything; 6b ready for testers.
+- Restore from the app's own backup is built (restore only ever adds
+  records; a record already on the device is left out unless the person
+  chooses a separate copy). It is also how a record moves from Safari to
+  the iPhone home-screen app.
+- A backup includes private entries. It is the person's own copy, not an
+  output: leaving them out would lose them on restore. The backup is not
+  encrypted until Stage 7, and says so on screen and in its manifest.
+- The Building blocks page goes in 6b; "Load the example record" moves to
+  How to use. There is no feedback link in the app (decided 26 September
+  2026): the owner tells testers directly how to reach them, so no personal
+  contact details appear in the app. Revisit before a public launch.

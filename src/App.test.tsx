@@ -118,8 +118,10 @@ describe('storage', () => {
     expect(alert).toHaveTextContent('can’t save on this device');
     expect(alert).toHaveTextContent('private window');
     await user.click(screen.getByRole('link', { name: 'Privacy & backup' }));
-    expect(screen.getByRole('alert')).toBeInTheDocument();
+    // Privacy & backup also has empty alert areas, ready for backup messages.
+    const storageAlert = () => screen.queryAllByRole('alert').filter((a) => a.textContent?.includes('can’t save on this device'));
+    expect(storageAlert()).toHaveLength(1);
     await user.click(screen.getByRole('button', { name: 'Try again' }));
-    await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
+    await waitFor(() => expect(storageAlert()).toHaveLength(0));
   });
 });

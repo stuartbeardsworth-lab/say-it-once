@@ -357,7 +357,7 @@ Update 25 September 2026: no one, including testers, holds real data in the old 
 
 **Re-importing the same backup** — each imported record remembers its source record ID; importing it again offers "Skip" or "Import as a separate copy".
 
-**Export from the new app** — a zip with a readable `manifest.json`, one JSON file per record and the original files. It is plaintext and says so. It serves as the person's own backup, as data portability, and as the in-app answer to a subject access request.
+**Export from the new app** — a zip with a readable `manifest.json`, one JSON file per record and the original files. It is plaintext and says so. It serves as the person's own backup, as data portability, and as the in-app answer to a subject access request. It includes entries marked private, since it is the person's own copy (decided 26 September 2026). Restoring it only ever adds records, with new IDs, checked and summarised before anything changes; it is also how a record moves from a Safari tab to the home-screen app while there is no sync.
 
 **Tests** — fixture backups from every old build you can supply plus anonymised real ones, a legacy single-record backup, a truncated file, missing attachments, a duplicate import, and a 300 MB synthetic backup run under a memory cap. Each fixture has a golden expected result; a round trip (old backup → import → export) checks every field and link count.
 

@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Button } from '../../components/Button';
 import { makePdf } from '../../reports/makePdf';
 import type { Report } from '../../reports/model';
-import { canShareFile, downloadFile, isAppleHomeScreenApp, safeFileName, shareFile, type DeliveryResult } from './deliver';
+import { safeFileName } from './deliver';
+import { DeliverFile } from './DeliverFile';
 
 // Make a PDF or a zip of the report, then share or save it. Two taps on
 // purpose: phones only open the share options straight after a tap, and
@@ -16,7 +17,7 @@ const words: Record<Kind, { name: string; making: string }> = {
   zip: { name: 'zip file', making: 'Making the zip file…' },
 };
 
-type Ready = { step: 'ready'; kind: Kind; file: File; missing: string[]; result: DeliveryResult | null };
+type Ready = { step: 'ready'; kind: Kind; file: File; missing: string[] };
 type State = { step: 'start' } | { step: 'making'; kind: Kind } | Ready | { step: 'failed'; kind: Kind };
 
 export interface SendReportProps {
@@ -52,40 +53,23 @@ export function SendReport({ report, readFile, onSent }: SendReportProps) {
     setDismissed(false);
     try {
       const { file, missing } = await build(kind, report, readFile);
-      setState({ step: 'ready', kind, file, missing, result: null });
+      setState({ step: 'ready', kind, file, missing });
     } catch {
       setState({ step: 'failed', kind });
     }
   }
 
-  async function deliver(ready: Ready, how: 'share' | 'download') {
-    setDismissed(false);
-    const result = how === 'share' ? await shareFile(ready.file, report.title) : downloadFile(ready.file);
-    setState({ ...ready, result });
-    if (result.outcome === 'shared' || result.outcome === 'downloading') onSent(report.itemIds);
-  }
-
   const ready = state.step === 'ready' ? state : null;
-  const result = ready?.result ?? null;
   const name = state.step === 'start' ? '' : words[state.kind].name;
-  const share = ready ? canShareFile(ready.file) : false;
-  // A home-screen app on an iPhone saves through the share options instead.
-  const download = ready ? !(share && isAppleHomeScreenApp()) : false;
 
   let quiet = '';
   if (state.step === 'making') quiet = words[state.kind].making;
-  else if (ready && !result) quiet = `Your ${name} is ready (${size(ready.file.size)}).`;
-  else if (result?.outcome === 'shared') quiet = 'Passed to the app you chose. Check there that it was sent.';
-  else if (result?.outcome === 'cancelled') quiet = 'Not sent. The share options were closed without choosing an app.';
-  else if (result?.outcome === 'downloading' && ready)
-    quiet = `Your browser is saving “${ready.file.name}”. You’ll find it with your other downloads.`;
+  else if (ready) quiet = `Your ${name} is ready (${size(ready.file.size)}).`;
 
   const problem =
     state.step === 'failed'
       ? `The ${name} couldn’t be made. Nothing was shared or saved. If trying again doesn’t work, close Say It Once completely, open it again and come back to this report.`
-      : result?.outcome === 'failed'
-        ? `${result.reason} Nothing was shared or saved.`
-        : null;
+      : null;
 
   const making = state.step === 'making';
   const missing = ready?.missing ?? [];
@@ -105,18 +89,8 @@ export function SendReport({ report, readFile, onSent }: SendReportProps) {
       </p>
 
       {ready && (
-        <div className="button-row">
-          {share && (
-            <Button variant="primary" autoFocus onPress={() => void deliver(ready, 'share')}>
-              {`Share the ${name}`}
-            </Button>
-          )}
-          {download && (
-            <Button variant={share ? 'secondary' : 'primary'} autoFocus={!share} onPress={() => void deliver(ready, 'download')}>
-              {`Save the ${name} to this device`}
-            </Button>
-          )}
-        </div>
+        // Unmounted while the next file is made, so each new file starts with no result shown.
+        <DeliverFile file={ready.file} name={name} title={report.title} onSent={() => onSent(report.itemIds)} />
       )}
       {missing.length > 0 && (
         <p className="notice notice-info">

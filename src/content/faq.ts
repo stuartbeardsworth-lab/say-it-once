@@ -48,7 +48,7 @@ export const faq: FaqTopic[] = [
         q: 'Where is my record kept?',
         a: [
           'Only in this browser, on this device. It isn’t sent anywhere, and no one at Say It Once can see it.',
-          'That also means that if the phone is lost or its browser data is cleared, the record is lost too. A way to save a backup copy is coming.',
+          'That also means that if the phone is lost or its browser data is cleared, the record is lost too. Save a backup copy now and then, in Privacy & backup, and keep it somewhere safe.',
         ],
       },
       {
@@ -94,6 +94,26 @@ export const faq: FaqTopic[] = [
       {
         q: 'How do I find something?',
         a: ['Use Find in my record. Type any word, such as a name, a medicine or a word from a letter. It also shows totals for money spent and lost, your current medication and your next appointment.'],
+      },
+    ],
+  },
+  {
+    title: 'Backups',
+    questions: [
+      {
+        q: 'How do I save a backup?',
+        a: [
+          'Go to Privacy & backup and press Make a backup. When it’s ready, share it to your email or a cloud drive, or save it to your phone or computer.',
+          'A backup holds every record on this device, including entries marked “Keep this private”, and it isn’t locked with a password. Keep it somewhere only you can open.',
+        ],
+      },
+      {
+        q: 'How do I bring my record back from a backup?',
+        a: [
+          'Go to Privacy & backup and press Choose a backup file. Say It Once shows what the backup holds, and anything it can’t bring back, before it changes anything.',
+          'Restoring only ever adds records. It never replaces or changes what’s already on this device. If a record is already here, you choose whether to add it again as a separate copy.',
+          'This is also how to move your record from Safari to Say It Once on your home screen: save a backup in Safari, then restore it in the home-screen app.',
+        ],
       },
     ],
   },
