@@ -6,13 +6,21 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Deploy Previews include the Building blocks review page (src/buildInfo.ts),
+# so the owner can review parts and run the phone speed check. The live site
+# never has it.
+[context.deploy-preview.environment]
+  VITE_REVIEW_PAGES = "1"
+
 # No third-party scripts, fonts or connections (docs/architecture.md, Threat model).
 # style-src allows inline styles because React Aria positions some elements
-# with style attributes; no inline scripts are allowed.
+# with style attributes; no inline scripts are allowed. 'wasm-unsafe-eval'
+# lets libsodium run as WebAssembly (Stage 7); it does not allow eval() or
+# any other way of running text as JavaScript.
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
     Referrer-Policy = "no-referrer"
     X-Content-Type-Options = "nosniff"
     Permissions-Policy = "camera=(self), microphone=(), geolocation=()"

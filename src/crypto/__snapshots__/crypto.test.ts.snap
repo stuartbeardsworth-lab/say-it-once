@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`test vectors > are unchanged 1`] = `
+{
+  "accountKey": "r0R3GL7Imy8x4kDe7bV-sf6d_IU3D5dNFLUssi_dqyQ",
+  "accountKeyWrappedByPassphrase": "iZxeQxdA_EsQII3NDSxcIgbJajpWn56D2nutAaJduHbtAyfOmJTykbJEj48fm3fnDzDnOUGPDxJaMtAEVcwo7XOaMfLYJM0p",
+  "accountKeyWrappedByRecoveryKey": "aUV7VknE6cDGVCGoQ-NQtLg87wX5HmGpyQcf8gSYWWPalwDWbJrFb8eNucQa95h7_mNuMujb4PfSMZWeBsm31mI8jcsnQ7NU",
+  "fileKey": "oGPU9s6EHi2z_f9iiy7SUopeUtPSmwaIOzbAraNGFBE",
+  "fileKeyWrapped": "BSv67y-juy9hHSCRJpkHXQnFlziSCLD3LYeatm1o98M0lO3Rzp4LuKoJpD3m7-0QvjVa8lAD01Vps_2U1A9zgVDVNMgZy2m2",
+  "item": {
+    "address": {
+      "accountId": "acct-0001",
+      "itemId": "item-0001",
+      "recordId": "rec-0001",
+      "version": 1,
+    },
+    "ciphertext": "0bah-SzoFcUbnUzB3EGOoFd5fU8iQRvsixM-qyNH-ETvhmkqp-Xhhs78ydQV_oI5DK_drS9gtLr1RakFGFt5X_WBJPfoCXy_aBrVwb2meS5QI5yTd7K2bBQ8rZLDQuGjFxDOkFlySqvx7LiLHl_YVg88GsyJY6Lj4M1FEC0wpSMQb4vg8Q2IlLxEZOaL3SdvZlkhPyJdsep-5znGU9hMpJhIA3l3r39W11a4QqLDPcR1OPlo7xCAiY1sYAAcNFY-7th_89gGTSN2vSTcbGlZDEsJENYexWP4Nn__35retknTdUven8kFa6WKqEJ5Q2lGpofySiYVr18cCEzr8DclwTf5q2jC4k3G3BxyssJAxS-rNytro8HdnhQRYlaNDZE867gbcgFPdRB1Bzu35qFbY_4G5ZAHwoybyFssqUBs7b1EEbnqzEQ1qYVqi6JSKKCpWFg7tSVH0TA65rsoPBc3G-sgK-tyQB_PrY-XGwHajzonxD5whYE6INeKNyec7-WBO3hYdhhJjsvzq5zr1-6ANzbpuZwfRTKuZcH_k_qQq4aU-Qm8BWpreBJMPme0HJxB54w7yVcxB193VyrVnJ7xfSM16ExZcfY-q_EJldLfkq6kUTeGdRr8nL-32HWDcY813u2Cf2sKV0axpiMHC6rZVRaVOSCKklCg-wjmEnfPeNZS_pH6Flpm6RU0Yx3oaqpudF2Vzmy4CbisTDv0mktJgCRJV4JxwS_L",
+    "wrappedKey": "Mo0CrzprWjljwaeoCPTUqZTJibUHo31u7QeTKTUqm_hp72BW3nLmrOJX7Wp4kI1vGoCAOnjn9auz73tgRv5hVKOKbRhcIat0",
+  },
+  "passphrase": "correct horse battery staple",
+  "passphraseSalt": "MpRVRw2Zlvhq-HTvKnupIQ",
+  "recordKey": "n-OrZj0Lfe5T77Mg5WN5hERYyqfKvDcOTCij-GG1TMk",
+  "recordKeyWrapped": "8WDclM-NR0OABG50GR7nAKdIllDxc-_OP9pWfZ6qW8HfCmu9jlkzbtEbYpeqTMJ6cLg5vEMN6cYtXIVPwH3wXGh0QBYcj9fP",
+  "recoveryKey": "DRJR-MTQ3-8GTF-PAAS-6ELV-NH5D-45FU-5UMY-9Z4S-PZ55-KLPP-M4ZZ-P87R",
+  "settings": {
+    "argon2id": {
+      "memLimit": 8388608,
+      "opsLimit": 1,
+    },
+    "note": "test settings; the app uses 3 passes and 64 MiB",
+  },
+}
+`;

@@ -6,6 +6,7 @@ import { SaveStatus, type SaveState } from '../components/SaveStatus';
 import { TextArea, TextField } from '../components/TextField';
 import { PageTop } from '../shell/PageTop';
 import { TryExample } from '../features/example/TryExample';
+import { SpeedCheck } from '../features/review/SpeedCheck';
 import { StorageReview } from './StorageReview';
 
 // A review page for the Stage 1 building blocks, so each can be tried with a
@@ -113,6 +114,7 @@ export function BuildingBlocks() {
       </section>
 
       <TryExample />
+      <SpeedCheck />
 
       <StorageReview />
     </>
