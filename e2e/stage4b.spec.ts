@@ -6,6 +6,10 @@ import { choose, create, loadExample } from './reports';
 
 test('steps need an answer before moving on, and Back works', async ({ page }) => {
   await page.goto('/#use');
+  // Let the screen finish opening (the record and the fonts) before the first
+  // tap, so a slow test machine can't tap while the page is still settling.
+  await expect(page.getByRole('heading', { name: 'Who is it for?' })).toBeVisible();
+  await page.evaluate(() => document.fonts.ready.then(() => undefined));
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.getByText('Choose who it’s for.')).toBeVisible();
   await expectNoAxeViolations(page);
