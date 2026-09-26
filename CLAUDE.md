@@ -187,3 +187,9 @@ Done when:
   now; they can move to object storage later without changing the app.
 - The server runs TypeScript directly with Node's type stripping (Node
   22.18+), so it has no build step. See `docs/server.md`.
+- 26 September 2026, look and feel: the rebuild takes the original app's
+  look (the orange-dot speech-bubble logo, colours, fonts, layout, icon)
+  from `legacy/`, read as a specification and never copied as code. This is
+  a short stage done next, before Stage 8b. Fonts are bundled with the app,
+  never loaded from elsewhere, and colours are checked for WCAG 2.2 AA
+  contrast.
