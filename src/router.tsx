@@ -17,6 +17,7 @@ export const routes = {
   contacts: { title: 'Contacts & important numbers' },
   'quick-notes': { title: 'Quick Notes' },
   find: { title: 'Find in my record' },
+  use: { title: 'Use my record' },
   support: { title: 'Find support' },
   faq: { title: 'Questions and answers' },
   'how-to-use': { title: 'How to use Say It Once' },

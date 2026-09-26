@@ -51,6 +51,9 @@ export function Home() {
         <Button variant="primary" onPress={() => navigate('find')}>
           Find in my record
         </Button>
+        <Button variant="primary" onPress={() => navigate('use')}>
+          Use my record
+        </Button>
       </nav>
       <p role="status" className="quiet-status">
         {message}

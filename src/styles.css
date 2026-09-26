@@ -896,6 +896,88 @@ td {
   color: var(--colour-text);
 }
 
+/* Reports */
+
+.report {
+  border-top: var(--border-thick) solid var(--colour-brand);
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+}
+
+.report-header h2 {
+  font-size: 1.75rem;
+  margin-top: 0;
+}
+
+.report-section h2 {
+  border-bottom: var(--border-thin) solid var(--colour-border);
+  padding-bottom: var(--space-1);
+}
+
+.report-entry h3,
+.report-section h4 {
+  font-size: 1.0625rem;
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.report-fields {
+  display: grid;
+  grid-template-columns: minmax(min(10rem, 40%), max-content) 1fr;
+  gap: var(--space-1) var(--space-3);
+  margin: var(--space-2) 0;
+}
+
+.report-fields > div {
+  display: contents;
+}
+
+.report-fields dt {
+  color: var(--colour-text-muted);
+}
+
+.report-fields dd {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.report-entry {
+  border-left: 0.25rem solid var(--colour-info-background);
+  padding-left: var(--space-3);
+  margin: var(--space-3) 0;
+}
+
+.report-totals th {
+  font-weight: 400;
+  color: var(--colour-text-muted);
+}
+
+.report-totals td {
+  font-weight: 700;
+}
+
+.report-signature dd {
+  min-height: 2.5rem;
+  border-bottom: var(--border-thin) solid var(--colour-text);
+  margin: 0 0 var(--space-3);
+}
+
+.report-footer {
+  margin-top: var(--space-5);
+  color: var(--colour-text-muted);
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 30em) {
+  .report-fields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .report-fields dd {
+    margin-bottom: var(--space-2);
+  }
+}
+
 /* Printing: only the page content, never the header, footer or buttons. */
 @media print {
   .skip-link,

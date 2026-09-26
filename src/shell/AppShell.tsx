@@ -73,6 +73,9 @@ export function AppShell({ location, children }: AppShellProps) {
                 <RouteLink to="find">Find in my record</RouteLink>
               </li>
               <li>
+                <RouteLink to="use">Use my record</RouteLink>
+              </li>
+              <li>
                 <RouteLink to="support">Find support</RouteLink>
               </li>
               <li>

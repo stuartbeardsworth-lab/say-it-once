@@ -1,0 +1,2681 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`every purpose, from the example record > appointment-brief 1`] = `
+"Appointment brief
+A short brief to help at a health appointment: how things are now, treatment and recent appointments.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+Current position
+Areas of daily life affected
+Preparing food, Using the toilet, Dressing and undressing, Mixing with other people
+Medication
+Naproxen
+Recent treatment
+Physiotherapy, Operation to fix the wrist with a plate
+Last appointment
+17 April 2026, Fracture clinic, Leeds General Infirmary
+Next appointment
+4 June 2026, Physiotherapy, St James’s
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Recent changes
+Health and wellbeing check-ins
+2 April 2026
+Pain
+High
+How I felt
+Struggling
+Pulse
+82 beats per minute
+Bad night after physio.
+12 May 2026
+Pain
+Medium
+How I felt
+Okay
+Earlier positions
+How things were from 21 February 2026
+Dressing and undressing: How it is
+I cannot do it at all
+Dressing and undressing: What happens
+In a cast I needed help with all dressing.
+I could not leave the house much.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Appointments and next steps
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E1
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+E1
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > family 1`] = `
+"Family support overview
+An overview for family or someone who supports me, so they know how things are.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+How things are now
+Areas of daily life affected
+Preparing food, Using the toilet, Dressing and undressing, Mixing with other people
+Medication
+Naproxen
+Recent treatment
+Physiotherapy, Operation to fix the wrist with a plate
+Last appointment
+17 April 2026, Fracture clinic, Leeds General Infirmary
+Next appointment
+4 June 2026, Physiotherapy, St James’s
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E1
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+Contacts
+Hartley & Shah Solicitors
+Role
+Case handler: Jo Hartley
+Reference
+PI/2231
+Phone or email
+0113 496 0000
+Northgate Distribution HR
+Role
+HR adviser
+Phone or email
+hr@example.com
+E1
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > full-record 1`] = `
+"Full record
+Everything in my record except what I have marked private.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+What happened
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+Chronology
+1 February 2026 — What happened, Loading bay, Northgate Distribution, Leeds
+2 February 2026 — Income lost: Wages while off sick, after sick pay
+3 February 2026 — Started Co-codamol
+3 February 2026 — Document: Discharge letter
+9 February 2026 — Earlier position saved
+15 February 2026 — Treatment: Operation to fix the wrist with a plate
+21 February 2026 — Spent: Wrist brace
+3 March 2026 — Document: Taxi receipts
+3 March 2026 — Spent: Taxis to hospital and physio
+2 April 2026 — Started Naproxen
+2 April 2026 — Check-in
+17 April 2026 — Appointment: Fracture clinic, Leeds General Infirmary
+2 May 2026 — Treatment: Physiotherapy
+12 May 2026 — Check-in
+4 June 2026 — Appointment: Physiotherapy, St James’s
+15 June 2026 — Appointment: Fracture clinic, Leeds General Infirmary
+Injuries and symptoms
+Broken right wrist (distal radius). Concussion. Bruised hip.
+Work at the time
+Employer
+Northgate Distribution Ltd
+Workplace
+Leeds depot
+Job
+Warehouse operative
+Started work there
+23 April 2022
+Payroll or staff number
+ND-40721
+Accident reported at work
+Yes
+Reported to
+Dan Hughes, shift supervisor
+Date reported
+1 February 2026
+Back at work since
+2 May 2026
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Changes over time
+Health and wellbeing check-ins
+2 April 2026
+Pain
+High
+How I felt
+Struggling
+Pulse
+82 beats per minute
+Bad night after physio.
+12 May 2026
+Pain
+Medium
+How I felt
+Okay
+Earlier positions
+How things were from 21 February 2026
+Dressing and undressing: How it is
+I cannot do it at all
+Dressing and undressing: What happens
+In a cast I needed help with all dressing.
+I could not leave the house much.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E3
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+Costs and lost income
+Money I spent
+Wrist brace
+Date
+21 February 2026
+Amount
+£24.99
+Taxis to hospital and physio
+Date
+3 March 2026
+Amount
+£186.40
+Proof
+Receipts in the blue folder
+Document
+See E2
+Income I lost
+Wages while off sick, after sick pay
+From
+2 February 2026
+To
+22 April 2026
+Amount
+£2,140.00
+Proof
+Payslips
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+Contacts
+Hartley & Shah Solicitors
+Role
+Case handler: Jo Hartley
+Reference
+PI/2231
+Phone or email
+0113 496 0000
+Northgate Distribution HR
+Role
+HR adviser
+Phone or email
+hr@example.com
+Other notes
+6 March 2026
+Ask the fracture clinic about going back to lifting at work.
+Letters and documents
+E1: Discharge letter
+Date
+3 February 2026
+From
+Leeds General Infirmary
+Relates to
+Treatment & medication
+The important point
+Operation to fix the wrist with a plate.
+File
+discharge-letter.pdf
+E2: Taxi receipts
+Date
+3 March 2026
+From
+City Cabs
+Paper copy
+Blue folder, kitchen drawer
+File
+No digital copy kept
+E3: Appointment letter — Fracture clinic
+Date
+17 April 2026
+From
+Fracture clinic
+Relates to
+Appointments
+File
+fracture-clinic-letter.pdf
+E1
+Discharge letter
+3 February 2026
+Leeds General Infirmary
+discharge-letter.pdf
+E2
+Taxi receipts
+3 March 2026
+City Cabs
+E3
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > health-overview 1`] = `
+"Health overview
+An overview of what happened, its effects, and treatment so far.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+Relevant background
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+Injuries and symptoms
+Broken right wrist (distal radius). Concussion. Bruised hip.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E1
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+E1
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > iidb 1`] = `
+"IIDB support pack
+Supporting information for an Industrial Injuries Disablement Benefit claim: the accident at work and its effects.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+Work at the time
+Employer
+Northgate Distribution Ltd
+Workplace
+Leeds depot
+Job
+Warehouse operative
+Started work there
+23 April 2022
+Payroll or staff number
+ND-40721
+Accident reported at work
+Yes
+Reported to
+Dan Hughes, shift supervisor
+Date reported
+1 February 2026
+Back at work since
+2 May 2026
+What happened
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+Injuries and symptoms
+Broken right wrist (distal radius). Concussion. Bruised hip.
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E3
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+Letters and documents
+E1: Discharge letter
+Date
+3 February 2026
+From
+Leeds General Infirmary
+Relates to
+Treatment & medication
+The important point
+Operation to fix the wrist with a plate.
+File
+discharge-letter.pdf
+E2: Taxi receipts
+Date
+3 March 2026
+From
+City Cabs
+Paper copy
+Blue folder, kitchen drawer
+File
+No digital copy kept
+E3: Appointment letter — Fracture clinic
+Date
+17 April 2026
+From
+Fracture clinic
+Relates to
+Appointments
+File
+fracture-clinic-letter.pdf
+Chronology
+1 February 2026 — What happened, Loading bay, Northgate Distribution, Leeds
+2 February 2026 — Income lost: Wages while off sick, after sick pay
+3 February 2026 — Started Co-codamol
+3 February 2026 — Document: Discharge letter
+9 February 2026 — Earlier position saved
+15 February 2026 — Treatment: Operation to fix the wrist with a plate
+21 February 2026 — Spent: Wrist brace
+3 March 2026 — Document: Taxi receipts
+3 March 2026 — Spent: Taxis to hospital and physio
+2 April 2026 — Started Naproxen
+2 April 2026 — Check-in
+17 April 2026 — Appointment: Fracture clinic, Leeds General Infirmary
+2 May 2026 — Treatment: Physiotherapy
+12 May 2026 — Check-in
+4 June 2026 — Appointment: Physiotherapy, St James’s
+15 June 2026 — Appointment: Fracture clinic, Leeds General Infirmary
+E1
+Discharge letter
+3 February 2026
+Leeds General Infirmary
+discharge-letter.pdf
+E2
+Taxi receipts
+3 March 2026
+City Cabs
+E3
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > insurance-costs 1`] = `
+"Costs and lost income summary
+Money spent and income lost because of the injury or illness, with supporting documents.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+Financial impact
+Entries
+3
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+Costs and lost income
+Money I spent
+Wrist brace
+Date
+21 February 2026
+Amount
+£24.99
+Taxis to hospital and physio
+Date
+3 March 2026
+Amount
+£186.40
+Proof
+Receipts in the blue folder
+Document
+See E2
+Income I lost
+Wages while off sick, after sick pay
+From
+2 February 2026
+To
+22 April 2026
+Amount
+£2,140.00
+Proof
+Payslips
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+Letters and documents
+E1: Discharge letter
+Date
+3 February 2026
+From
+Leeds General Infirmary
+Relates to
+Treatment & medication
+The important point
+Operation to fix the wrist with a plate.
+File
+discharge-letter.pdf
+E2: Taxi receipts
+Date
+3 March 2026
+From
+City Cabs
+Paper copy
+Blue folder, kitchen drawer
+File
+No digital copy kept
+E3: Appointment letter — Fracture clinic
+Date
+17 April 2026
+From
+Fracture clinic
+Relates to
+Appointments
+File
+fracture-clinic-letter.pdf
+E1
+Discharge letter
+3 February 2026
+Leeds General Infirmary
+discharge-letter.pdf
+E2
+Taxi receipts
+3 March 2026
+City Cabs
+E3
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > insurance-evidence 1`] = `
+"Insurance evidence pack
+Evidence for an insurance claim: what happened, treatment, costs and documents.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+What happened
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+Injuries and symptoms
+Broken right wrist (distal radius). Concussion. Bruised hip.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Financial impact
+Entries
+3
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+Costs and lost income
+Money I spent
+Wrist brace
+Date
+21 February 2026
+Amount
+£24.99
+Taxis to hospital and physio
+Date
+3 March 2026
+Amount
+£186.40
+Proof
+Receipts in the blue folder
+Document
+See E2
+Income I lost
+Wages while off sick, after sick pay
+From
+2 February 2026
+To
+22 April 2026
+Amount
+£2,140.00
+Proof
+Payslips
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+Contacts
+Hartley & Shah Solicitors
+Role
+Case handler: Jo Hartley
+Reference
+PI/2231
+Phone or email
+0113 496 0000
+Northgate Distribution HR
+Role
+HR adviser
+Phone or email
+hr@example.com
+Letters and documents
+E1: Discharge letter
+Date
+3 February 2026
+From
+Leeds General Infirmary
+Relates to
+Treatment & medication
+The important point
+Operation to fix the wrist with a plate.
+File
+discharge-letter.pdf
+E2: Taxi receipts
+Date
+3 March 2026
+From
+City Cabs
+Paper copy
+Blue folder, kitchen drawer
+File
+No digital copy kept
+E3: Appointment letter — Fracture clinic
+Date
+17 April 2026
+From
+Fracture clinic
+Relates to
+Appointments
+File
+fracture-clinic-letter.pdf
+E1
+Discharge letter
+3 February 2026
+Leeds General Infirmary
+discharge-letter.pdf
+E2
+Taxi receipts
+3 March 2026
+City Cabs
+E3
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > insurance-summary 1`] = `
+"Insurance claim summary
+An overview for an insurance claim.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+How things are now
+Areas of daily life affected
+Preparing food, Using the toilet, Dressing and undressing, Mixing with other people
+Medication
+Naproxen
+Recent treatment
+Physiotherapy, Operation to fix the wrist with a plate
+Last appointment
+17 April 2026, Fracture clinic, Leeds General Infirmary
+Next appointment
+4 June 2026, Physiotherapy, St James’s
+What happened
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Financial impact
+Entries
+3
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+Contacts
+Hartley & Shah Solicitors
+Role
+Case handler: Jo Hartley
+Reference
+PI/2231
+Phone or email
+0113 496 0000
+Northgate Distribution HR
+Role
+HR adviser
+Phone or email
+hr@example.com
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > other-benefit 1`] = `
+"Summary for a benefit or form
+A summary to help with a benefit claim or form.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+What happened
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+Injuries and symptoms
+Broken right wrist (distal radius). Concussion. Bruised hip.
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E1
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+E1
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > personal 1`] = `
+"Personal overview
+An overview of my record, for my own use.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+How things are now
+Areas of daily life affected
+Preparing food, Using the toilet, Dressing and undressing, Mixing with other people
+Medication
+Naproxen
+Recent treatment
+Physiotherapy, Operation to fix the wrist with a plate
+Last appointment
+17 April 2026, Fracture clinic, Leeds General Infirmary
+Next appointment
+4 June 2026, Physiotherapy, St James’s
+What happened
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Changes over time
+Health and wellbeing check-ins
+2 April 2026
+Pain
+High
+How I felt
+Struggling
+Pulse
+82 beats per minute
+Bad night after physio.
+12 May 2026
+Pain
+Medium
+How I felt
+Okay
+Earlier positions
+How things were from 21 February 2026
+Dressing and undressing: How it is
+I cannot do it at all
+Dressing and undressing: What happens
+In a cast I needed help with all dressing.
+I could not leave the house much.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E1
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+Financial impact
+Entries
+3
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+E1
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > personal-injury 1`] = `
+"Personal injury case summary
+A summary for a personal injury claim: what happened, its effects, treatment and costs.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+How things are now
+Areas of daily life affected
+Preparing food, Using the toilet, Dressing and undressing, Mixing with other people
+Medication
+Naproxen
+Recent treatment
+Physiotherapy, Operation to fix the wrist with a plate
+Last appointment
+17 April 2026, Fracture clinic, Leeds General Infirmary
+Next appointment
+4 June 2026, Physiotherapy, St James’s
+What happened
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+Injuries and symptoms
+Broken right wrist (distal radius). Concussion. Bruised hip.
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Changes over time
+Health and wellbeing check-ins
+2 April 2026
+Pain
+High
+How I felt
+Struggling
+Pulse
+82 beats per minute
+Bad night after physio.
+12 May 2026
+Pain
+Medium
+How I felt
+Okay
+Earlier positions
+How things were from 21 February 2026
+Dressing and undressing: How it is
+I cannot do it at all
+Dressing and undressing: What happens
+In a cast I needed help with all dressing.
+I could not leave the house much.
+Financial impact
+Entries
+3
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+Contacts
+Hartley & Shah Solicitors
+Role
+Case handler: Jo Hartley
+Reference
+PI/2231
+Phone or email
+0113 496 0000
+Northgate Distribution HR
+Role
+HR adviser
+Phone or email
+hr@example.com
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E3
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+Other notes
+6 March 2026
+Ask the fracture clinic about going back to lifting at work.
+Letters and documents
+E1: Discharge letter
+Date
+3 February 2026
+From
+Leeds General Infirmary
+Relates to
+Treatment & medication
+The important point
+Operation to fix the wrist with a plate.
+File
+discharge-letter.pdf
+E2: Taxi receipts
+Date
+3 March 2026
+From
+City Cabs
+Paper copy
+Blue folder, kitchen drawer
+File
+No digital copy kept
+E3: Appointment letter — Fracture clinic
+Date
+17 April 2026
+From
+Fracture clinic
+Relates to
+Appointments
+File
+fracture-clinic-letter.pdf
+Detailed costs and lost income
+Money I spent
+Wrist brace
+Date
+21 February 2026
+Amount
+£24.99
+Taxis to hospital and physio
+Date
+3 March 2026
+Amount
+£186.40
+Proof
+Receipts in the blue folder
+Document
+See E2
+Income I lost
+Wages while off sick, after sick pay
+From
+2 February 2026
+To
+22 April 2026
+Amount
+£2,140.00
+Proof
+Payslips
+Money spent
+£211.39
+Income lost
+£2,140.00
+Together
+£2,351.39
+Chronology
+1 February 2026 — What happened, Loading bay, Northgate Distribution, Leeds
+2 February 2026 — Income lost: Wages while off sick, after sick pay
+3 February 2026 — Started Co-codamol
+3 February 2026 — Document: Discharge letter
+9 February 2026 — Earlier position saved
+15 February 2026 — Treatment: Operation to fix the wrist with a plate
+21 February 2026 — Spent: Wrist brace
+3 March 2026 — Document: Taxi receipts
+3 March 2026 — Spent: Taxis to hospital and physio
+2 April 2026 — Started Naproxen
+2 April 2026 — Check-in
+17 April 2026 — Appointment: Fracture clinic, Leeds General Infirmary
+2 May 2026 — Treatment: Physiotherapy
+12 May 2026 — Check-in
+4 June 2026 — Appointment: Physiotherapy, St James’s
+15 June 2026 — Appointment: Fracture clinic, Leeds General Infirmary
+E1
+Discharge letter
+3 February 2026
+Leeds General Infirmary
+discharge-letter.pdf
+E2
+Taxi receipts
+3 March 2026
+City Cabs
+E3
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > pip 1`] = `
+"PIP support pack
+Supporting information for a Personal Independence Payment claim or review, focused on daily living and getting around.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Changes over time
+Health and wellbeing check-ins
+2 April 2026
+Pain
+High
+How I felt
+Struggling
+Pulse
+82 beats per minute
+Bad night after physio.
+12 May 2026
+Pain
+Medium
+How I felt
+Okay
+Earlier positions
+How things were from 21 February 2026
+Dressing and undressing: How it is
+I cannot do it at all
+Dressing and undressing: What happens
+In a cast I needed help with all dressing.
+I could not leave the house much.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Contacts
+Hartley & Shah Solicitors
+Role
+Case handler: Jo Hartley
+Reference
+PI/2231
+Phone or email
+0113 496 0000
+Northgate Distribution HR
+Role
+HR adviser
+Phone or email
+hr@example.com
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E3
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+Other notes
+6 March 2026
+Ask the fracture clinic about going back to lifting at work.
+Letters and documents
+E1: Discharge letter
+Date
+3 February 2026
+From
+Leeds General Infirmary
+Relates to
+Treatment & medication
+The important point
+Operation to fix the wrist with a plate.
+File
+discharge-letter.pdf
+E2: Taxi receipts
+Date
+3 March 2026
+From
+City Cabs
+Paper copy
+Blue folder, kitchen drawer
+File
+No digital copy kept
+E3: Appointment letter — Fracture clinic
+Date
+17 April 2026
+From
+Fracture clinic
+Relates to
+Appointments
+File
+fracture-clinic-letter.pdf
+E1
+Discharge letter
+3 February 2026
+Leeds General Infirmary
+discharge-letter.pdf
+E2
+Taxi receipts
+3 March 2026
+City Cabs
+E3
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > recent-changes 1`] = `
+"Recent changes summary
+What has changed recently, with earlier positions for comparison.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+Current position
+Areas of daily life affected
+Preparing food, Using the toilet, Dressing and undressing, Mixing with other people
+Medication
+Naproxen
+Recent treatment
+Physiotherapy, Operation to fix the wrist with a plate
+Last appointment
+17 April 2026, Fracture clinic, Leeds General Infirmary
+Next appointment
+4 June 2026, Physiotherapy, St James’s
+Changes over time
+Health and wellbeing check-ins
+2 April 2026
+Pain
+High
+How I felt
+Struggling
+Pulse
+82 beats per minute
+Bad night after physio.
+12 May 2026
+Pain
+Medium
+How I felt
+Okay
+Earlier positions
+How things were from 21 February 2026
+Dressing and undressing: How it is
+I cannot do it at all
+Dressing and undressing: What happens
+In a cast I needed help with all dressing.
+I could not leave the house much.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > treatment-concerns 1`] = `
+"Medical treatment concerns summary
+A summary of treatment and what happened at each stage, for a solicitor looking at concerns about medical care.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+What happened
+When and where
+1 February 2026 · 14:20 · Loading bay, Northgate Distribution, Leeds
+Beforehand
+I was unloading pallets at the end of a normal shift.
+What happened
+A pallet slipped off the forklift and knocked me down. I landed on my right wrist and hit my head on the kerb.
+What happened next
+A first aider stayed with me and my supervisor called an ambulance. I was taken to Leeds General Infirmary.
+Complications
+The wrist needed an operation to fix it with a plate two weeks later.
+What I was told at the time
+The paramedic said I might have broken my wrist and should not drive.
+Other people there
+Priya from the day shift, and my supervisor Dan.
+Police, ambulance or fire service
+Ambulance. The incident was logged in the accident book.
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E3
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Letters and documents
+E1: Discharge letter
+Date
+3 February 2026
+From
+Leeds General Infirmary
+Relates to
+Treatment & medication
+The important point
+Operation to fix the wrist with a plate.
+File
+discharge-letter.pdf
+E2: Taxi receipts
+Date
+3 March 2026
+From
+City Cabs
+Paper copy
+Blue folder, kitchen drawer
+File
+No digital copy kept
+E3: Appointment letter — Fracture clinic
+Date
+17 April 2026
+From
+Fracture clinic
+Relates to
+Appointments
+File
+fracture-clinic-letter.pdf
+Chronology
+1 February 2026 — What happened, Loading bay, Northgate Distribution, Leeds
+2 February 2026 — Income lost: Wages while off sick, after sick pay
+3 February 2026 — Started Co-codamol
+3 February 2026 — Document: Discharge letter
+9 February 2026 — Earlier position saved
+15 February 2026 — Treatment: Operation to fix the wrist with a plate
+21 February 2026 — Spent: Wrist brace
+3 March 2026 — Document: Taxi receipts
+3 March 2026 — Spent: Taxis to hospital and physio
+2 April 2026 — Started Naproxen
+2 April 2026 — Check-in
+17 April 2026 — Appointment: Fracture clinic, Leeds General Infirmary
+2 May 2026 — Treatment: Physiotherapy
+12 May 2026 — Check-in
+4 June 2026 — Appointment: Physiotherapy, St James’s
+15 June 2026 — Appointment: Fracture clinic, Leeds General Infirmary
+E1
+Discharge letter
+3 February 2026
+Leeds General Infirmary
+discharge-letter.pdf
+E2
+Taxi receipts
+3 March 2026
+City Cabs
+E3
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;
+
+exports[`every purpose, from the example record > work 1`] = `
+"Work and occupational health summary
+A summary for an employer or occupational health: how things are, treatment and what may help at work.
+Example: fall at work (made up)
+Sam Taylor
+1 June 2026
+How things are now
+Areas of daily life affected
+Preparing food, Using the toilet, Dressing and undressing, Mixing with other people
+Medication
+Naproxen
+Recent treatment
+Physiotherapy, Operation to fix the wrist with a plate
+Last appointment
+17 April 2026, Fracture clinic, Leeds General Infirmary
+Next appointment
+4 June 2026, Physiotherapy, St James’s
+Treatment and medication
+Straight afterwards
+X-ray, a plaster cast and painkillers in A&E.
+Ongoing care
+Physiotherapy weekly, and fracture clinic every six weeks.
+Treatment
+Operation to fix the wrist with a plate
+Date
+15 February 2026
+Did it help?
+Helped a lot
+Physiotherapy
+Date
+2 May 2026
+Did it help?
+Helped a little
+Grip is getting stronger.
+Medication
+Co-codamol
+For
+Pain
+Dose
+30/500
+How often
+Four times a day
+Still taking?
+Stopped
+Started
+3 February 2026
+Has it helped?
+Helped a lot
+Side effects
+Constipation and drowsiness.
+Naproxen
+For
+Pain and swelling
+Dose
+500 mg
+How often
+Twice a day
+Still taking?
+Still taking
+Started
+2 April 2026
+Has it helped?
+Helped a little
+Quick Notes
+5 March 2026
+Physio says to squeeze the stress ball ten times, three times a day.
+How it affects me
+Preparing food
+How it is
+It is harder now
+What happens
+I can’t chop or lift a full pan. I mostly use ready meals.
+Help I need
+Someone to lift pans and drain vegetables.
+How often
+Every day
+Using the toilet
+How it is
+It is harder now
+What happens
+Cleaning myself with my left hand is difficult and slow.
+How often
+Every day
+Dressing and undressing
+How it is
+I find this very difficult
+What happens
+I can’t do buttons or zips with my right hand. My partner helps me every morning.
+Help I need
+Someone to help with buttons, zips and socks.
+Aids or equipment
+A sock aid and elastic shoelaces.
+How often
+Every day
+Doing it safely, and more than once
+I lose my balance putting trousers on, so I sit down.
+The time it takes
+About twice as long as before.
+Doing it properly, to a good standard
+I often have to leave shirts undone.
+Mixing with other people
+How it is
+It is harder now
+What happens
+I avoid busy places because I worry someone will knock my arm.
+How often
+Most days
+Anything else this has changed
+I had to stop playing five-a-side football, which was my main way of seeing friends.
+Changes over time
+Health and wellbeing check-ins
+2 April 2026
+Pain
+High
+How I felt
+Struggling
+Pulse
+82 beats per minute
+Bad night after physio.
+12 May 2026
+Pain
+Medium
+How I felt
+Okay
+Earlier positions
+How things were from 21 February 2026
+Dressing and undressing: How it is
+I cannot do it at all
+Dressing and undressing: What happens
+In a cast I needed help with all dressing.
+I could not leave the house much.
+Appointments
+17 April 2026, 09:30 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+Seeing
+Mr Okafor
+What it was for
+Check-up after the operation
+Where
+Outpatients, level 2
+What I was told
+The bone is healing. Keep doing the exercises.
+What happens next
+Physiotherapy twice a week, then back in six weeks.
+Letter
+See E1
+4 June 2026, 15:45 — Physiotherapy, St James’s
+Type
+In person
+What it was for
+Wrist exercises
+15 June 2026, 11:00 — Fracture clinic, Leeds General Infirmary
+Type
+In person
+What it was for
+Six-week review
+E1
+Appointment letter — Fracture clinic
+17 April 2026
+Fracture clinic
+fracture-clinic-letter.pdf
+This was written by Sam Taylor, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report."
+`;

@@ -115,3 +115,11 @@ Done when:
   Samaritans 116 123) and links to each organisation's own website. The
   owner checks the list before release.
 - Print contact list leaves out private contacts.
+- 25 September 2026, Stage 4 is built in two parts: 4a the privacy filter,
+  its property tests, purposes and the report model with a reading view;
+  4b the full "Use my record" screens and Find's "Use these results".
+- Report test records are written by Claude, clearly fictional, and
+  reviewed by the owner.
+- The reports import rule blocks exactly the store, sync code and raw
+  record types (`src/domain/types`, `schema`, `validate`, `blank`).
+  Harmless domain helpers (wording lists, dates, money) may be used.
