@@ -1,3 +1,4 @@
+import { MicHelp } from '../components/MicHelp';
 import { SaveStatus } from '../components/SaveStatus';
 import { TextArea, TextField } from '../components/TextField';
 import { blank } from '../domain/blank';
@@ -33,6 +34,7 @@ export function WhatHappened() {
         Write as much or as little as you like. A few words are enough, and you can come back to it any time. It
         saves as you type. To speak instead of typing, use the microphone on your phone’s keyboard.
       </p>
+      <MicHelp />
       {draft ? (
         <IncidentForm
           key={draft.id}

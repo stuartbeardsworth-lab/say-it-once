@@ -139,6 +139,7 @@ function QuickNoteForm({ note, onDirtyChange, onCancel, onSaved }: FormProps) {
         onChange={setText}
         errorMessage={error}
         rows={4}
+        micHelp
         autoFocus
       />
 

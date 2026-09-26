@@ -97,6 +97,7 @@ function AreaForm({ edit, controls }: { edit: AreaEdit; controls: EntryFormContr
         hint="A few words are enough. To speak instead of typing, use the microphone on your phone’s keyboard."
         {...form.text('detail')}
         rows={4}
+        micHelp
       />
       <details className="more">
         <summary>More detail (optional)</summary>

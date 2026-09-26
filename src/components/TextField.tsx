@@ -1,3 +1,4 @@
+import { MicHelp } from './MicHelp';
 import {
   FieldError,
   Input,
@@ -51,16 +52,21 @@ export function TextField({ label, hint, errorMessage, list, ...props }: TextFie
 
 export interface TextAreaProps extends Omit<TextFieldProps, 'list'> {
   rows?: number;
+  /** Shows "Can't find the microphone?" under the box. Use once per screen or dialog, on its main box. */
+  micHelp?: boolean;
 }
 
-export function TextArea({ label, hint, errorMessage, rows = 5, ...props }: TextAreaProps) {
+export function TextArea({ label, hint, errorMessage, rows = 5, micHelp = false, ...props }: TextAreaProps) {
   const parts = fieldParts({ label, hint, errorMessage });
   return (
-    <AriaTextField {...props} className="field" isInvalid={Boolean(errorMessage)} validationBehavior="aria">
-      {parts.label}
-      {parts.hint}
-      {parts.error}
-      <AriaTextArea className="field-input field-textarea" rows={rows} />
-    </AriaTextField>
+    <>
+      <AriaTextField {...props} className="field" isInvalid={Boolean(errorMessage)} validationBehavior="aria">
+        {parts.label}
+        {parts.hint}
+        {parts.error}
+        <AriaTextArea className="field-input field-textarea" rows={rows} />
+      </AriaTextField>
+      {micHelp && <MicHelp />}
+    </>
   );
 }

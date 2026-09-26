@@ -41,3 +41,21 @@ it('TextArea renders a multi-line box', () => {
   render(<TextArea label="What happened?" />);
   expect(screen.getByRole('textbox', { name: 'What happened?' }).tagName).toBe('TEXTAREA');
 });
+
+describe('microphone help', () => {
+  it('is folded away under the box, and opens to show the steps for each kind of phone', async () => {
+    const user = userEvent.setup();
+    render(<TextArea label="Your note" micHelp />);
+    const summary = screen.getByText('Can’t find the microphone?');
+    expect(screen.getByRole('heading', { name: 'iPhone or iPad', hidden: true })).not.toBeVisible();
+    await user.click(summary);
+    expect(screen.getByRole('heading', { name: 'iPhone or iPad' })).toBeVisible();
+    expect(screen.getByRole('heading', { name: 'Samsung phone' })).toBeVisible();
+    expect(screen.getByText(/Say It Once never receives the recording/)).toBeVisible();
+  });
+
+  it('is only shown when asked for', () => {
+    render(<TextArea label="Your note" />);
+    expect(screen.queryByText('Can’t find the microphone?')).not.toBeInTheDocument();
+  });
+});

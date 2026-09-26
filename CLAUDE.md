@@ -234,3 +234,12 @@ Done when:
   online speech service. The guide is `docs/play-store.md`; the Digital
   Asset Links file (`public/.well-known/assetlinks.json`) is added once the
   package exists.
+- 26 September 2026, microphone: the owner asked to keep a microphone for
+  people who can't find the one on their keyboard. In-app dictation stays
+  out (Q8: in a web app the recording goes to Google or Apple, and it would
+  make the privacy policy and Play Store answers untrue). Instead a
+  fold-out "Can't find the microphone?" under the main writing boxes (What
+  happened, Quick Note, an area of How it affects me, and "Anything else
+  this has changed") gives the steps for iPhone, Gboard and Samsung,
+  including turning the microphone on. It's `src/components/MicHelp.tsx`,
+  shown with `<TextArea micHelp>`, once per screen or dialog.

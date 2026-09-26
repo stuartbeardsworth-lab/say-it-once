@@ -172,3 +172,14 @@ test('your name is saved for every record', async ({ page }) => {
   await page.reload();
   await expect(page.getByRole('textbox', { name: 'Your name (optional)' })).toHaveValue('Sam Taylor');
 });
+
+test('a Quick Note explains how to find the keyboard microphone, and the help passes the accessibility checks', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Quick Note', exact: true }).click();
+  const dialog = page.getByRole('dialog', { name: 'Quick Note' });
+  await dialog.getByText('Can’t find the microphone?').click();
+  await expect(dialog.getByRole('heading', { name: 'iPhone or iPad' })).toBeVisible();
+  await expectNoAxeViolations(page);
+});
