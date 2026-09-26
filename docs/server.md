@@ -100,7 +100,7 @@ Add a new migration at the end of `server/src/db/migrations.ts`, and never edit
 one that has been released. The server applies new migrations when it starts,
 and `npm run migrate` applies them without starting.
 
-## Still to do in Stage 8b
+## Still to do in Stage 8b (paused: see CLAUDE.md, 26 September 2026)
 
 - The web address, pointed at Netlify (`app.`) and the server (`api.`).
 - A Hetzner server in Germany or Finland: firewall, HTTPS (with automatic

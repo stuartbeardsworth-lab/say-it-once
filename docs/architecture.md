@@ -450,6 +450,8 @@ All ten recommendations were accepted on 25 September 2026. Q9 had no single rec
 
 ## Build plan
 
+**Paused after Stage 8a (26 September 2026).** Stages 8b, 9 and 10 need a paid server, web address and cryptography review. Until funding is found, Say It Once is device-only; the 8a server code is kept and tested. See the CLAUDE.md decision of that date.
+
 Build the device-only app first and release it as a replacement for the current one, then add accounts and sync; each stage ends with something you can run and review, and I stop for your sign-off before the next.
 
 The reasoning for the split: stages 1–6 fix every known defect and the privacy leaks without touching servers, keys or accounts. With no live users, stage 6 is a release to testers rather than the public, and the hardest, least reversible work (encryption and sync) is built on a foundation already proven with real data.

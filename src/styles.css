@@ -109,6 +109,11 @@
   box-sizing: border-box;
 }
 
+/* The same cream behind the page when a phone scrolls past its end. */
+html {
+  background: var(--colour-background);
+}
+
 body {
   margin: 0;
   background: var(--colour-background);
@@ -268,9 +273,14 @@ main:focus {
 
 .site-footer {
   border-top: var(--border-thin) solid var(--colour-line);
-  padding: var(--space-4) 0;
+  /* No empty band at the bottom of the page. */
+  padding: var(--space-4) 0 var(--space-3);
   color: var(--colour-text-muted);
   font-size: 0.9375rem;
+}
+
+.site-footer p:last-child {
+  margin-bottom: 0;
 }
 
 .footer-links {

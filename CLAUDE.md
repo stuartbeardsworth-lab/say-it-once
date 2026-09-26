@@ -213,3 +213,12 @@ Done when:
   buttons are not added. Home's "Your record" cards are folded away, as in
   the original, and the "Only on this phone" notice is on Privacy & backup
   only, to keep Home calm.
+- 26 September 2026, sync is paused: the owner doesn't want to pay for
+  anything, and every remaining stage (8b going live, 9 sync, 10 launch of
+  sync) needs a server, a web address and the cryptography review, which
+  all cost money. Free hosting was ruled out for health data (mostly US
+  companies, databases deleted or servers switched off when idle, no own
+  web address). Say It Once stays device-only, free on Netlify, with backup
+  and restore to move a record between devices. The server code from 8a
+  stays in `server/`, tested in CI, ready if funding is found; then work
+  restarts at Stage 8b. Until then, work is limited to the device-only app.
