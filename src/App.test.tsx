@@ -41,14 +41,15 @@ describe('App shell', () => {
     expect(document.title).toBe('Home – Say It Once');
   });
 
-  it('shows the device-only warning on Home and Privacy & backup', async () => {
+  it('shows the device-only warning on Privacy & backup, and keeps Home calm', async () => {
     const user = userEvent.setup();
     renderApp();
+    await screen.findByRole('heading', { level: 1, name: /Keep everything together/ });
+    expect(screen.queryByRole('complementary', { name: 'Where your record is kept' })).not.toBeInTheDocument();
+    await user.click(footerLink('Privacy & backup'));
     expect(screen.getByRole('complementary', { name: 'Where your record is kept' })).toHaveTextContent(
       'If the phone or browser data is lost, so is your record.',
     );
-    await user.click(footerLink('Privacy & backup'));
-    expect(screen.getByRole('complementary', { name: 'Where your record is kept' })).toBeInTheDocument();
   });
 
   it('moves focus to the page heading after navigating', async () => {

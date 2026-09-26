@@ -3,6 +3,7 @@ import { Logo } from '../components/Logo';
 import { TextSizeControl } from '../components/TextSizeControl';
 import { RouteLink, routes, type Location } from '../router';
 import { appVersion, reviewPages } from '../buildInfo';
+import { ListenBar, ListenButton, useListen } from './ListenControl';
 import { StorageBanner } from './StorageBanner';
 import { UpdateNotice } from './UpdateNotice';
 
@@ -14,6 +15,7 @@ interface AppShellProps {
 export function AppShell({ location, children }: AppShellProps) {
   const mainRef = useRef<HTMLElement>(null);
   const firstRender = useRef(true);
+  const listen = useListen(location, () => mainRef.current);
 
   // After every navigation, move focus to the new page's heading so screen
   // reader users hear where they are and keyboard users start from the top.
@@ -50,9 +52,13 @@ export function AppShell({ location, children }: AppShellProps) {
               <span className="brand-tagline">No need to relive it.</span>
             </span>
           </RouteLink>
-          <TextSizeControl />
+          <div className="header-tools">
+            <TextSizeControl />
+            <ListenButton listen={listen} />
+          </div>
         </div>
       </header>
+      <ListenBar listen={listen} />
       <main id="main" ref={mainRef} tabIndex={-1} className="container main">
         <StorageBanner />
         <UpdateNotice />

@@ -15,8 +15,10 @@ Open the Deploy Preview on your iPhone, and on a computer if you can.
 3. [ ] Under **What do you need today?** are cards for **Add something**
    (with an orange +), **Quick Note**, **Find in my record** and
    **Use my record**, then a peach **Find support** card.
-4. [ ] **Your record** shows cards for What happened, How it affects me and
-   Keep track.
+4. [ ] **Your record** is folded away. Tap it to see cards for What
+   happened, How it affects me and Keep track; tap again to fold it.
+   There's no "Only on this phone" box on Home any more (it's still on
+   Privacy & backup).
 5. [ ] Near the bottom is a box with How to use, Questions and answers, Add
    to phone and Privacy & backup, and the footer ends with
    **Record it → Keep it together → Use it when you need it**.
@@ -34,12 +36,22 @@ Open the Deploy Preview on your iPhone, and on a computer if you can.
 10. [ ] With VoiceOver on, swipe to the Add something card. It says "Add
     something, button", then the line under it.
 
+## Listen
+
+11. [ ] Tap **Listen** in the header. The phone reads the screen aloud, and
+    a bar under the header says "Reading this page aloud." with **Pause**
+    and **Stop**.
+12. [ ] **Pause**, then **Carry on**, then **Stop** all work. Listen also
+    stops when you go to another screen.
+13. [ ] If you hear nothing, check the volume and the silent switch on the side of the iPhone.
+
 ## What's deliberately different from the old app
 
 - Orange words (like **Keep it together**) use a slightly deeper orange,
   because the original orange is too pale to read as text. The logo dot and
   the icons keep the original orange.
-- There's no **Listen** button and no dictation, as decided earlier.
+- There's no dictation, as decided earlier, and no separate Listen button
+  for each section: the one in the header reads the whole screen.
 - The card wording says only what the new app does. For example, Quick Note
   says "Write a few words or add a photo", with no dictation.
 

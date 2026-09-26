@@ -57,8 +57,8 @@ to be there. Please don't send us real details from your record.
   page copy of the report that works well with them.
 - **If making a PDF fails** because the app couldn't load its PDF tools,
   close Say It Once completely and open it again.
-- **No reading aloud by section, and no dictation.** Use your phone's own
-  Speak Screen or Select to Speak, and the microphone on your keyboard.
+- **Listen** in the header reads the screen aloud. There's no dictation:
+  use the microphone on your phone's keyboard.
 - **Deleting** removes an entry from your device, but can't take back a PDF,
   zip or backup you've already shared or saved.
 - **Support contacts** in Find support are being checked before a wider

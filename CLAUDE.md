@@ -112,6 +112,8 @@ Done when:
   new app does, and reviewed by the owner before release.
 - "Listen to this section" is left out for now; phones' own Speak Screen
   and Select to Speak cover it. Reports keep Read aloud (Stage 4).
+  (Changed 26 September 2026: "Listen" is back in the header, for people
+  who would rather hear a page than read it. See the look and feel entry.)
 - Find is plain search plus a few fixed answers computed from structured
   data (money spent, current medication, next appointment). No question
   parsing.
@@ -201,6 +203,13 @@ Done when:
   files in `src/assets/fonts` with their SIL Open Font Licences, taken from
   the Fontsource packages without adding a dependency. `src/theme.test.ts`
   checks every colour pair the app uses. The old page is kept as
-  `legacy/index.html`. "Listen" and dictation from the old header and Home
-  stay out, as decided; Home's card wording describes only what the new app
-  does.
+  `legacy/index.html`. Dictation stays out; Home's card wording describes
+  only what the new app does.
+- 26 September 2026, after the owner's review of the look: "Listen" is in
+  the header. It reads the screen's headings, text, labels and summaries
+  (up to 60 parts, en-GB voice, slower rate) with the device's own voice,
+  with Pause, Carry on and Stop in a bar under the header, and stops on
+  moving to another screen. Nothing leaves the device. Per-section Listen
+  buttons are not added. Home's "Your record" cards are folded away, as in
+  the original, and the "Only on this phone" notice is on Privacy & backup
+  only, to keep Home calm.
