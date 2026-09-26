@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Button } from '../components/Button';
 import { Dialog } from '../components/Dialog';
+import { Icon, type IconName } from '../components/icons';
+import { TaskButton, TaskLink } from '../components/TaskCard';
 import { today } from '../domain/dates';
 import { readableDate } from '../domain/format';
 import { QuickNoteCard } from '../features/quickNotes/QuickNoteCard';
@@ -24,6 +26,13 @@ const addChoices: { label: string; to: Route | 'appointment' | 'quick-note' }[] 
   { label: 'A Quick Note', to: 'quick-note' },
 ];
 
+const utilityLinks: { to: Route; label: string; icon: IconName }[] = [
+  { to: 'how-to-use', label: 'How to use', icon: 'story' },
+  { to: 'faq', label: 'Questions and answers', icon: 'question' },
+  { to: 'add-to-phone', label: 'Add to phone', icon: 'phone' },
+  { to: 'privacy', label: 'Privacy & backup', icon: 'lock' },
+];
+
 export function Home() {
   const notes = useItems('quickNote');
   const appointments = useItems('appointment');
@@ -39,30 +48,54 @@ export function Home() {
 
   return (
     <>
-      <h1 tabIndex={-1}>Keep everything together, so you don&rsquo;t have to start again.</h1>
+      <p className="kicker">After an injury, accident or illness&hellip;</p>
+      <h1 tabIndex={-1} className="home-title">
+        Keep everything together, <span className="home-title-soft">so you don&rsquo;t have to start again.</span>
+      </h1>
       <DeviceOnlyBanner />
 
-      <nav aria-label="What would you like to do?" className="tasks">
-        <Button variant="primary" onPress={() => setChoosing(true)}>
-          Add something
-        </Button>
-        <Button variant="primary" onPress={write}>
-          Quick Note
-        </Button>
-        <Button variant="primary" onPress={() => navigate('find')}>
-          Find in my record
-        </Button>
-        <Button variant="primary" onPress={() => navigate('use')}>
-          Use my record
-        </Button>
+      <h2 id="today" className="home-section-title">
+        What do you need today?
+      </h2>
+      <nav aria-labelledby="today" className="task-cards">
+        <TaskButton
+          tone="add"
+          icon="add"
+          title="Add something"
+          detail="What happened, an appointment, treatment, a change, a letter or anything else."
+          onPress={() => setChoosing(true)}
+        />
+        <TaskButton icon="note" title="Quick Note" detail="Write a few words or add a photo, and file it later." onPress={write} />
+        <TaskButton
+          icon="search"
+          title="Find in my record"
+          detail="Search everything you’ve added."
+          onPress={() => navigate('find')}
+        />
+        <TaskButton
+          icon="report"
+          title="Use my record"
+          detail="Make a Summary, Evidence Pack or Full Record."
+          onPress={() => navigate('use')}
+        />
       </nav>
       <p role="status" className="quiet-status">
         {message}
       </p>
 
+      <TaskLink
+        to="support"
+        tone="support"
+        icon="support"
+        title="Find support"
+        detail="Helplines and organisations, including urgent help."
+      />
+
       {next && (
         <section aria-labelledby="next-appointment">
-          <h2 id="next-appointment">Your next appointment</h2>
+          <h2 id="next-appointment" className="home-section-title">
+            Your next appointment
+          </h2>
           <div className="note-card">
             <p className="entry-title">
               {readableDate(next.data.date)}
@@ -79,7 +112,9 @@ export function Home() {
 
       {latest && (
         <section aria-labelledby="latest-note">
-          <h2 id="latest-note">Your latest Quick Note</h2>
+          <h2 id="latest-note" className="home-section-title">
+            Your latest Quick Note
+          </h2>
           <QuickNoteCard note={latest} onEdit={edit} onFile={file} showDelete={false} />
           <p>
             <RouteLink to="quick-notes">See all Quick Notes</RouteLink>
@@ -88,26 +123,36 @@ export function Home() {
       )}
 
       <section aria-labelledby="your-record">
-        <h2 id="your-record">Your record</h2>
-        <ul className="plain-list link-list">
-          <li>
-            <RouteLink to="what">What happened</RouteLink>
-          </li>
-          <li>
-            <RouteLink to="impact">How it affects me</RouteLink>
-          </li>
-          <li>
-            <RouteLink to="track">Keep track: appointments, treatment, letters, costs</RouteLink>
-          </li>
-        </ul>
+        <h2 id="your-record" className="home-section-title">
+          Your record
+        </h2>
+        <div className="record-cards">
+          <TaskLink to="what" icon="story" title="What happened" detail="The event, in your own words." />
+          <TaskLink to="impact" icon="impact" title="How it affects me" detail="Daily life, work, health and changes." />
+          <TaskLink
+            to="track"
+            icon="calendar"
+            title="Keep track"
+            detail="Appointments, treatment, letters, costs and contacts."
+          />
+        </div>
       </section>
 
       <BackupReminder />
       <AddToPhonePrompt />
 
-      <p>
-        <RouteLink to="support">Find support</RouteLink>: helplines and charities, including urgent help.
-      </p>
+      <nav aria-label="Help and settings" className="utility-links">
+        <ul>
+          {utilityLinks.map((l) => (
+            <li key={l.to}>
+              <RouteLink to={l.to}>
+                <Icon name={l.icon} />
+                {l.label}
+              </RouteLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       <Dialog isOpen={choosing} onOpenChange={setChoosing} title="Add something">
         {(close, { finish }) => (

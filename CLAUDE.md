@@ -137,7 +137,7 @@ Done when:
   closed. Making the PDF and sharing it are two taps, because phones only
   open the share options straight after a tap.
 - The service worker and app manifest (vite-plugin-pwa) are added in
-  Stage 5, with a placeholder icon drawn by `scripts/make-icons.mjs`. A new
+  Stage 5, with the icon drawn by `scripts/make-icons.mjs`. A new
   version waits until the person chooses "Use the new version".
 - Delete confirmations say when the entry was in a PDF that was shared or
   saved on this device. The note is device-only and deleted with the entry.
@@ -193,3 +193,14 @@ Done when:
   a short stage done next, before Stage 8b. Fonts are bundled with the app,
   never loaded from elsewhere, and colours are checked for WCAG 2.2 AA
   contrast.
+- Look and feel as built: navy #20433E, cream #FBF8F5, slate, emerald and
+  the original orange #E8714A. That orange is too light for text (2.9:1),
+  so it is kept for the logo dot, icons and decoration, and a deeper orange
+  #B84F2D is used for orange words. The focus outline is navy with an
+  orange edge. Manrope (headings) and Inter (text) are bundled as woff2
+  files in `src/assets/fonts` with their SIL Open Font Licences, taken from
+  the Fontsource packages without adding a dependency. `src/theme.test.ts`
+  checks every colour pair the app uses. The old page is kept as
+  `legacy/index.html`. "Listen" and dictation from the old header and Home
+  stay out, as decided; Home's card wording describes only what the new app
+  does.

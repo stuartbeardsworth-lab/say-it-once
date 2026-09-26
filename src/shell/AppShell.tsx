@@ -1,4 +1,5 @@
 import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react';
+import { Logo } from '../components/Logo';
 import { TextSizeControl } from '../components/TextSizeControl';
 import { RouteLink, routes, type Location } from '../router';
 import { appVersion, reviewPages } from '../buildInfo';
@@ -43,7 +44,11 @@ export function AppShell({ location, children }: AppShellProps) {
       <header className="site-header">
         <div className="container site-header-inner">
           <RouteLink to="home" className="site-name">
-            Say It Once
+            <Logo className="brand-mark" />
+            <span className="brand-text">
+              Say It Once
+              <span className="brand-tagline">No need to relive it.</span>
+            </span>
           </RouteLink>
           <TextSizeControl />
         </div>
@@ -100,6 +105,10 @@ export function AppShell({ location, children }: AppShellProps) {
               )}
             </ul>
           </nav>
+          <p className="brand-promise">
+            Record it <span aria-hidden="true">→</span> <span className="brand-keep">Keep it together</span>{' '}
+            <span aria-hidden="true">→</span> Use it when you need it
+          </p>
           <p className="field-hint">Say It Once, test version {appVersion}</p>
         </div>
       </footer>

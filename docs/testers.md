@@ -61,6 +61,5 @@ to be there. Please don't send us real details from your record.
   Speak Screen or Select to Speak, and the microphone on your keyboard.
 - **Deleting** removes an entry from your device, but can't take back a PDF,
   zip or backup you've already shared or saved.
-- **The icon** is a placeholder.
 - **Support contacts** in Find support are being checked before a wider
   release.
