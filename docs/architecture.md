@@ -71,15 +71,15 @@ flowchart TD
 | Item key, 256-bit random | Per item, new on every save | Inside the item envelope, wrapped | Record key |
 | File key, 256-bit random | Per file | Inside the file envelope, wrapped | Record key |
 
-**Primitives** — libsodium only: Argon2id (`crypto_pwhash`) for the passphrase; XChaCha20-Poly1305 AEAD for items and key wrapping, with random 192-bit nonces; `secretstream` in 64 KiB chunks for files. No custom primitives.
+**Primitives** — libsodium only: Argon2id (`crypto_pwhash`) for the passphrase; XChaCha20-Poly1305 AEAD for items and key wrapping, with random 192-bit nonces; `secretstream` in 64 KiB chunks for files. No custom primitives. The device key is the one exception: WebCrypto AES-GCM, because only the browser can hold a non-extractable key. Details of the built module, its formats and test vectors: `docs/crypto-review.md`.
 
 **Binding** — every ciphertext carries associated data of `accountId | recordId | itemId | version | envelope type`, so the server cannot swap one item's ciphertext for another's or replay an old version as new.
 
 **Argon2id parameters** — start at 3 passes and 64 MiB of memory, calibrated on the slowest target phone to finish under two seconds. Parameters are stored per account so they can be raised later on the next passphrase change.
 
-**Passphrase rules** — at least 12 characters or a generated four-word phrase offered by default; checked against a common-password list on the device; pasting and password managers allowed; show/hide toggle.
+**Passphrase rules** — at least 12 characters or a generated four-word phrase offered by default; checked against a common-password list on the device; pasting and password managers allowed; show/hide toggle. *Built in Stage 7:* NFKC-normalised before hashing; the 10,000 most common passwords, including with digits or symbols added at either end; runs along digits, the alphabet or a keyboard row refused; the generated phrase is four words from the EFF long word list.
 
-**Recovery key format** — 256 bits shown as 13 groups of 4 characters (260 bits of capacity) from a 32-character unambiguous alphabet (no 0/O, 1/l), plus a QR code, on a printable "Keep this safe" sheet. Re-issuing it while unlocked invalidates the old one.
+**Recovery key format** — 256 bits shown as 13 groups of 4 characters (260 bits of capacity) from a 32-character unambiguous alphabet (no 0/O, 1/l), plus a QR code, on a printable "Keep this safe" sheet. Re-issuing it while unlocked invalidates the old one. *Built in Stage 7:* the alphabet is `23456789ABCDEFGHJKLMNPQRSTUVWXYZ` (no 0, O, 1, I); the 4 spare bits are a check (from BLAKE2b of the key) that catches most typing mistakes; the wrapping key is derived from it with libsodium's KDF. The QR code can be drawn by pdfmake, which is already used.
 
 **Size padding** — item ciphertexts are padded to the next multiple of 512 bytes so the server cannot tell a one-word note from a one-line one. File sizes are visible; that is accepted.
 

@@ -60,7 +60,8 @@ If code and these documents disagree, stop and ask which is right.
 ## Approved stack
 
 Client: TypeScript (strict), React, Vite, React Aria Components, Dexie.js,
-vite-plugin-pwa (Workbox), pdfmake, fflate, libsodium (from stage 7).
+vite-plugin-pwa (Workbox), pdfmake, fflate, libsodium (from stage 7, as
+`libsodium-wrappers-sumo`, the build that includes Argon2id).
 Server (from stage 8): Node.js LTS, Fastify, PostgreSQL, Kysely.
 Tests: Vitest, fast-check, Playwright (including WebKit), axe-core.
 Development-only tools (approved 25 September 2026; never shipped to users):
@@ -165,3 +166,14 @@ Done when:
   How to use. There is no feedback link in the app (decided 26 September
   2026): the owner tells testers directly how to reach them, so no personal
   contact details appear in the app. Revisit before a public launch.
+- 26 September 2026, Stage 7: the encryption module is `src/crypto/`, built
+  and tested but not used by the app until sync (Stage 9). The site's CSP
+  adds `'wasm-unsafe-eval'` so libsodium runs as WebAssembly (no other eval).
+  The device key is WebCrypto AES-GCM (non-extractable), the one exception to
+  "libsodium only". The EFF long word list (suggested passphrases) and the
+  SecLists 10,000 most common passwords ship with the app, never fetched.
+  Deploy Previews include the review page (with a phone speed check); the
+  live site doesn't.
+- The independent cryptography review (`docs/crypto-review.md`, brief in
+  `docs/crypto-review-brief.md`) is arranged and paid for by the owner. No
+  real person's data goes to the server until the reviewer has signed off.
