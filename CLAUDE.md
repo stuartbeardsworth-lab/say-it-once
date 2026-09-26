@@ -240,6 +240,8 @@ Done when:
   make the privacy policy and Play Store answers untrue). Instead a
   fold-out "Can't find the microphone?" under the main writing boxes (What
   happened, Quick Note, an area of How it affects me, and "Anything else
-  this has changed") gives the steps for iPhone, Gboard and Samsung,
-  including turning the microphone on. It's `src/components/MicHelp.tsx`,
+  this has changed") gives one short instruction, then only the steps for
+  the person's kind of phone (a best guess from the browser); turning the
+  microphone on, and other phones, are folded away (the owner asked that it
+  suit someone in trauma). It's `src/components/MicHelp.tsx`,
   shown with `<TextArea micHelp>`, once per screen or dialog.
