@@ -29,9 +29,13 @@ export function pageBlocks(root: HTMLElement): string[] {
   return blocks;
 }
 
+// Only voices the device says are built in (localService), so the words
+// aren't sent to an online speech service. A British English voice if there
+// is one, otherwise any built-in English voice, otherwise the device's own
+// default.
 function voice(): SpeechSynthesisVoice | undefined {
-  const voices = window.speechSynthesis.getVoices();
-  return voices.find((v) => v.lang === 'en-GB' && v.localService) ?? voices.find((v) => v.lang === 'en-GB');
+  const local = window.speechSynthesis.getVoices().filter((v) => v.localService);
+  return local.find((v) => v.lang === 'en-GB') ?? local.find((v) => v.lang.startsWith('en'));
 }
 
 export function speechSupported(): boolean {

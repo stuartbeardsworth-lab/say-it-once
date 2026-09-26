@@ -97,6 +97,7 @@ function NoteForm({
         hint="For example, work, hobbies, family life or sleep. A few words are enough."
         {...form.text('text')}
         rows={5}
+        micHelp
       />
       <KeepPrivate isSelected={form.isPrivate} onChange={form.setPrivate} />
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />

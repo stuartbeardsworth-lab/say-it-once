@@ -222,3 +222,32 @@ Done when:
   and restore to move a record between devices. The server code from 8a
   stays in `server/`, tested in CI, ready if funding is found; then work
   restarts at Stage 8b. Until then, work is limited to the device-only app.
+- 26 September 2026, Google Play: the device-only app goes on Google Play as
+  a Trusted Web Activity made with PWABuilder by the owner, opening
+  `say-it-once-home.netlify.app`. No wrapper code or new dependency in this
+  repository. The privacy policy is a plain page, `public/privacy-policy.html`
+  (no scripts, so reviewers can read it anywhere), linked from Privacy &
+  backup, and kept true to what the app does. Store images are made from the
+  app by `scripts/store-images.mjs`. The owner's personal email stays out of
+  the app; Google's public contact email is a separate address. Listen uses
+  only voices the device reports as built in, so the words aren't sent to an
+  online speech service. The guide is `docs/play-store.md`; the Digital
+  Asset Links file (`public/.well-known/assetlinks.json`) is added once the
+  package exists.
+- 26 September 2026, microphone: the owner asked to keep a microphone for
+  people who can't find the one on their keyboard. In-app dictation stays
+  out (Q8: in a web app the recording goes to Google or Apple, and it would
+  make the privacy policy and Play Store answers untrue). Instead a
+  fold-out "Can't find the microphone?" under the main writing boxes (What
+  happened, Quick Note, an area of How it affects me, and "Anything else
+  this has changed") gives one short instruction, then only the steps for
+  the person's kind of phone (a best guess from the browser); turning the
+  microphone on, and other phones, are folded away (the owner asked that it
+  suit someone in trauma). It's `src/components/MicHelp.tsx`,
+  shown with `<TextArea micHelp>`, once per screen or dialog.
+- 26 September 2026, no list of links at the foot of every screen (the owner
+  asked; apps don't usually have one, and the old app hid it on Home). Every
+  screen is reached from Home: the task cards, "Your record" (now also Quick
+  Notes and My records) and the Help and settings box (plus Building blocks
+  in Deploy Previews); other screens have Back and Home. The footer keeps the
+  brand line and the version.

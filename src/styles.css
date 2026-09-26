@@ -283,15 +283,6 @@ main:focus {
   margin-bottom: 0;
 }
 
-.footer-links {
-  list-style: none;
-  margin: 0 0 var(--space-3);
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
-}
-
 .page-top {
   display: flex;
   flex-wrap: wrap;
@@ -899,6 +890,52 @@ h3 {
   .task-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+.mic-help {
+  margin: calc(var(--space-2) * -1) 0 var(--space-3);
+}
+
+.mic-help > summary,
+.mic-help-more > summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--colour-link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+.mic-help-body {
+  border-left: 0.25rem solid var(--colour-emerald);
+  background: var(--colour-surface);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+}
+
+.mic-help-more {
+  margin-top: var(--space-1);
+}
+
+.mic-help-more > p,
+.mic-help-more h3 {
+  margin-left: var(--space-3);
+}
+
+.mic-help-body h3 {
+  font-size: 1.0625rem;
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.mic-help-body ol,
+.mic-help-body ul {
+  margin: 0 0 var(--space-2);
+  padding-left: 1.5rem;
+}
+
+.mic-help-body > :last-child {
+  margin-bottom: 0;
 }
 
 .home-more {

@@ -33,6 +33,10 @@ export function Privacy() {
         one at Say It Once can see it. There is no tracking and nothing is measured about how you use it.
       </p>
 
+      <p>
+        <a href="./privacy-policy.html">Read the full privacy policy</a>
+      </p>
+
       <h2>Who can read it?</h2>
       <p>
         Anyone who can open this device and this browser can read your record. Keeping your phone locked keeps

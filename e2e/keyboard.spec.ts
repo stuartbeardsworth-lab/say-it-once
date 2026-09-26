@@ -29,7 +29,6 @@ test('skip link is first, visible when focused, and moves focus to the content',
 
 test('navigating by keyboard moves focus to the new page heading, and Back returns', async ({ page }) => {
   await page.goto('/');
-  // Home's own Help and settings links (the footer has the same links).
   await tabTo(page, page.getByRole('navigation', { name: 'Help and settings' }).getByRole('link', { name: 'Privacy & backup' }));
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy & backup' })).toBeFocused();

@@ -59,7 +59,10 @@ test('when storage is unavailable every screen says so, nothing saves, and Try a
   await typeNote(page, 'This should not be kept');
   await expect(page.getByRole('alert').filter({ hasText: 'Not saved' })).toBeVisible();
 
-  await page.getByRole('navigation', { name: 'More' }).getByRole('link', { name: 'Privacy & backup' }).click();
+  // Moving around inside the app keeps the pretend failure: Home, then Privacy & backup.
+  await page.getByRole('button', { name: 'Home' }).click();
+  await expect(banner).toBeVisible();
+  await page.getByRole('navigation', { name: 'Help and settings' }).getByRole('link', { name: 'Privacy & backup' }).click();
   await expect(banner).toBeVisible();
   await banner.getByRole('button', { name: 'Try again' }).click();
   await expect(banner).toBeHidden();
