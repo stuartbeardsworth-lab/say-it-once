@@ -56,6 +56,7 @@ const paths = {
       <path d="M5 17v3h14v-3" />
     </>
   ),
+  folder: <path d="M3 6h7l2 2h9v10.5A2.5 2.5 0 0 1 18.5 21h-13A2.5 2.5 0 0 1 3 18.5z" />,
   lock: (
     <>
       <rect x="5" y="10" width="14" height="10" rx="2" />

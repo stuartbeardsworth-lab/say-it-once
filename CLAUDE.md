@@ -245,3 +245,9 @@ Done when:
   microphone on, and other phones, are folded away (the owner asked that it
   suit someone in trauma). It's `src/components/MicHelp.tsx`,
   shown with `<TextArea micHelp>`, once per screen or dialog.
+- 26 September 2026, no list of links at the foot of every screen (the owner
+  asked; apps don't usually have one, and the old app hid it on Home). Every
+  screen is reached from Home: the task cards, "Your record" (now also Quick
+  Notes and My records) and the Help and settings box (plus Building blocks
+  in Deploy Previews); other screens have Back and Home. The footer keeps the
+  brand line and the version.

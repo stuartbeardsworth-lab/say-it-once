@@ -6,9 +6,9 @@ import { parseHash } from './router';
 import { StorageProblem } from './store/problems';
 import { Store } from './store/store';
 
-// Home also links to Privacy & backup, so tests use the footer's link, which is on every screen.
+// Home's Help and settings links.
 function footerLink(name: string) {
-  return within(screen.getByRole('navigation', { name: 'More' })).getByRole('link', { name });
+  return within(screen.getByRole('navigation', { name: 'Help and settings' })).getByRole('link', { name });
 }
 
 function renderApp() {

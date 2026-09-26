@@ -9,6 +9,14 @@ async function openApp(page: Page, hash = '#home') {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 }
 
+/** Opens a screen from Home's folded-away "Your record" section, as a person would. */
+async function openFromHome(page: Page, name: 'My records' | 'Quick Notes') {
+  await page.getByRole('link', { name: /Say It Once/ }).click();
+  await page.getByText('Your record', { exact: true }).click();
+  await page.getByRole('link', { name, exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1, name })).toBeFocused();
+}
+
 async function writeNote(page: Page, text: string, how: 'save' | 'file' = 'save') {
   await page.getByRole('button', { name: 'Quick Note', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Quick Note' });
@@ -135,7 +143,7 @@ test('records: add, switch, rename and delete, and each keeps its own notes', as
   await openApp(page);
   await writeNote(page, 'Note in the first record');
 
-  await page.getByRole('link', { name: 'My records' }).click();
+  await openFromHome(page, 'My records');
   await page.getByRole('button', { name: 'Add another record' }).click();
   const add = page.getByRole('dialog', { name: 'Add another record' });
   await add.getByRole('textbox', { name: 'Name of the record' }).fill('Fall at work, March 2026');
@@ -144,15 +152,15 @@ test('records: add, switch, rename and delete, and each keeps its own notes', as
   await expect(page.getByText('Record: Fall at work, March 2026')).toBeVisible();
   await expectNoAxeViolations(page);
 
-  await page.getByRole('link', { name: 'Quick Notes', exact: true }).click();
+  await openFromHome(page, 'Quick Notes');
   await expect(page.getByText('No Quick Notes yet.')).toBeVisible();
 
-  await page.getByRole('link', { name: 'My records' }).click();
+  await openFromHome(page, 'My records');
   await page.getByRole('button', { name: 'Show this record' }).click();
-  await page.getByRole('link', { name: 'Quick Notes', exact: true }).click();
+  await openFromHome(page, 'Quick Notes');
   await expect(page.getByText('Note in the first record')).toBeVisible();
 
-  await page.getByRole('link', { name: 'My records' }).click();
+  await openFromHome(page, 'My records');
   await page.getByRole('button', { name: 'Rename' }).first().click();
   const rename = page.getByRole('dialog', { name: 'Rename this record' });
   await rename.getByRole('textbox', { name: 'Name of the record' }).fill('Car accident, 2025');
