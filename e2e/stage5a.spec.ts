@@ -79,7 +79,7 @@ test('a shared PDF is passed to the app chosen', async ({ page }) => {
   await pipReport(page);
   await page.getByRole('button', { name: 'Make a PDF' }).click();
   await page.getByRole('button', { name: 'Share the PDF' }).click({ timeout: 30_000 });
-  await expect(page.getByText('Passed to the app you chose. Check there that it was sent.')).toBeVisible();
+  await expect(page.getByText('Passed to the app you chose. Check there that it was sent or saved.')).toBeVisible();
   const shared = await page.evaluate(() => (window as unknown as { sharedFiles: string[] }).sharedFiles);
   expect(shared).toHaveLength(1);
   expect(shared[0]).toMatch(/\.pdf\|application\/pdf\|\d+$/);

@@ -12,7 +12,7 @@ import {
 } from '../domain/types';
 import { validate } from '../domain/validate';
 import { blank } from '../domain/blank';
-import { SayItOnceDb, type LocalRow } from './db';
+import { SayItOnceDb, type FileRow, type LocalRow } from './db';
 import { StorageProblem, ValidationProblem, toStorageProblem } from './problems';
 import { WriteQueue } from './queue';
 
@@ -65,6 +65,19 @@ function newId() {
 }
 
 export const newItemId = newId;
+
+export interface BackupContents {
+  profile: Item<'profile'> | undefined;
+  records: { meta: Item<'recordMeta'>; items: Item[]; files: Omit<FileRow, 'bytes'>[] }[];
+}
+
+export interface RestoreRecord {
+  meta: Item<'recordMeta'>;
+  items: Item[];
+  files: { fileId: string; name: string; type: string; size: number; createdAt: string; bytes: ArrayBuffer }[];
+  /** Added to the record's name, e.g. " (copy)", when it's already on this device. */
+  nameSuffix?: string;
+}
 
 /** File IDs an item points at. */
 function filesOf(item: Item): string[] {
@@ -276,6 +289,126 @@ export class Store {
     );
     this.requestPersistence();
     return recordId;
+  }
+
+  // ---- Backup and restore ----------------------------------------------------
+
+  /**
+   * Everything a backup needs: the profile, and every record with all of its
+   * entries, private ones included (a backup is the person's own copy, not
+   * something shared; CLAUDE.md, decisions of 26 September 2026), and the
+   * details of its files. File contents are read one at a time with fileBytes.
+   */
+  async backupContents(): Promise<BackupContents> {
+    const profile = await this.getProfile();
+    const records = await Promise.all(
+      (await this.listRecords()).map(async (meta) => ({
+        meta,
+        items: (await this.db.items.where('recordId').equals(meta.id).toArray()).filter((i) => i.id !== meta.id),
+        files: (await this.db.files.where('recordId').equals(meta.id).toArray()).map((f) => ({
+          id: f.id,
+          recordId: f.recordId,
+          name: f.name,
+          type: f.type,
+          size: f.size,
+          createdAt: f.createdAt,
+        })),
+      })),
+    );
+    return { profile, records };
+  }
+
+  async fileBytes(fileId: string): Promise<ArrayBuffer | undefined> {
+    return (await this.db.files.get(fileId))?.bytes;
+  }
+
+  /** When a backup was last shared or saved from this device, or null. */
+  async lastBackupAt(): Promise<string | null> {
+    return (await this.getPreference<string>('lastBackupAt')) ?? null;
+  }
+
+  async noteBackupSaved(): Promise<void> {
+    await this.setPreference('lastBackupAt', now());
+  }
+
+  /**
+   * Whether a record from a backup is already on this device: the same
+   * record, or one restored from it before. Returns its name, or null.
+   */
+  async alreadyHere(sourceRecordId: string): Promise<string | null> {
+    const same = await this.db.items.get(sourceRecordId);
+    if (same?.type === 'recordMeta') return (same as Item<'recordMeta'>).data.name;
+    const rows = await this.db.local.where('key').startsWith('restoredFrom:').toArray();
+    const row = rows.find((r) => r.value === sourceRecordId && r.recordId);
+    const meta = row?.recordId ? await this.db.items.get(row.recordId) : undefined;
+    return meta?.type === 'recordMeta' ? (meta as Item<'recordMeta'>).data.name : null;
+  }
+
+  /**
+   * Adds records from a backup, in one transaction: all of them, with every
+   * entry and file, or nothing. Restoring only ever adds (docs/architecture.md,
+   * "Importing"): each record, entry and file gets a new ID, and links between
+   * them are updated to match, so nothing on this device is replaced.
+   * The person's name is taken from the backup only if this device has none.
+   */
+  async restoreRecords(records: RestoreRecord[], personName = ''): Promise<string[]> {
+    const prepared = records.map((r, index) => {
+      const ids = new Map<string, string>([[r.meta.id, newId()], ...r.items.map((i) => [i.id, newId()] as const)]);
+      const fileIds = new Map(r.files.map((f) => [f.fileId, newId()] as const));
+      const remap = (value: unknown): unknown => {
+        if (typeof value === 'string') return ids.get(value) ?? fileIds.get(value) ?? value;
+        if (Array.isArray(value)) return value.map(remap);
+        if (value && typeof value === 'object') {
+          return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([k, v]) => [k, remap(v)]));
+        }
+        return value;
+      };
+      const recordId = ids.get(r.meta.id) as string;
+      const items = [r.meta, ...r.items].map((item) => {
+        const { item: current, readOnly } = upgrade(item);
+        if (readOnly) throw new Error(`${item.type} was saved by a newer version of Say It Once`);
+        const data = remap(current.data) as ItemDataMap[ItemType];
+        const result = validate(current.type, data, current.private);
+        if (!result.ok) throw new ValidationProblem(result.errors);
+        return { ...current, id: ids.get(item.id) as string, recordId, data } as Item;
+      });
+      // The record counts as added now, so it's listed after those already here.
+      // Its entries keep their own dates.
+      const meta = items[0] as Item<'recordMeta'>;
+      meta.createdAt = meta.updatedAt = new Date(Date.now() + index).toISOString();
+      if (r.nameSuffix) meta.data = { ...meta.data, name: `${meta.data.name}${r.nameSuffix}` };
+      const files = r.files.map((f) => ({ ...f, id: fileIds.get(f.fileId) as string, recordId }));
+      return { recordId, sourceId: r.meta.id, items, files };
+    });
+
+    await this.queue.run(() =>
+      this.db.transaction('rw', [this.db.items, this.db.files, this.db.local], async () => {
+        for (const r of prepared) {
+          for (const f of r.files) {
+            await this.db.files.add({ id: f.id, recordId: f.recordId, bytes: f.bytes, name: f.name, type: f.type, size: f.size, createdAt: f.createdAt });
+          }
+          await this.db.items.bulkAdd(r.items);
+          await this.db.local.put({ key: `restoredFrom:${r.recordId}`, recordId: r.recordId, itemId: null, value: r.sourceId });
+        }
+        const profile = (await this.db.items.where('type').equals('profile').first()) as Item<'profile'> | undefined;
+        if (personName.trim() && !profile?.data.personName.trim()) {
+          const stamp = now();
+          const data = { ...(profile?.data ?? blank('profile', {})), personName: personName.trim() };
+          await this.db.items.put({
+            id: profile?.id ?? newId(),
+            recordId: null,
+            type: 'profile',
+            schema: currentSchema.profile,
+            private: false,
+            data,
+            createdAt: profile?.createdAt ?? stamp,
+            updatedAt: stamp,
+          } as Item);
+        }
+      }),
+    );
+    this.requestPersistence();
+    return prepared.map((r) => r.recordId);
   }
 
   /** Must run inside a transaction that includes items. */
