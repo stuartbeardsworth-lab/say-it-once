@@ -162,5 +162,6 @@ Done when:
   output: leaving them out would lose them on restore. The backup is not
   encrypted until Stage 7, and says so on screen and in its manifest.
 - The Building blocks page goes in 6b; "Load the example record" moves to
-  How to use. Testers send feedback through an email link to an address the
-  owner gives.
+  How to use. There is no feedback link in the app (decided 26 September
+  2026): the owner tells testers directly how to reach them, so no personal
+  contact details appear in the app. Revisit before a public launch.
