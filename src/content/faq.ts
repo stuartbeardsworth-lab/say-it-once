@@ -105,6 +105,7 @@ export const faq: FaqTopic[] = [
         a: [
           'Go to Use my record. Choose who it’s for and what they need, check what goes in, then press Create the report.',
           'Press Make a PDF. When it’s ready, press Share the PDF to send it with email, a message or another app, or save it to your phone or computer.',
+          'Or press Make a zip file. A zip file is one file holding the PDF, a copy that works well with screen readers, and the letters and photos the report refers to, numbered to match it (E1, E2, P1…).',
           'Anything marked “Keep this private” is never included.',
         ],
       },

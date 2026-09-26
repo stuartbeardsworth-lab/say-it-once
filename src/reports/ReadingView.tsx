@@ -62,11 +62,27 @@ function BlockView({ block, underSubheading }: { block: Block; underSubheading: 
   }
 }
 
-export function ReadingView({ report }: { report: Report }) {
+export interface ReadingViewProps {
+  report: Report;
+  /**
+   * For the copy inside a zip: where each attachment sits, by its reference
+   * (E1, P1…), so the index can link to it. Left out in the app.
+   */
+  fileLinks?: ReadonlyMap<string, string>;
+  /** On a page of its own (the zip's copy), the report's title is the page's main heading. */
+  standalone?: boolean;
+}
+
+export function ReadingView({ report, fileLinks, standalone = false }: ReadingViewProps) {
+  const Title = standalone ? 'h1' : 'h2';
+  const linked = (ref: string, text: string) => {
+    const href = fileLinks?.get(ref);
+    return href ? <a href={href}>{text}</a> : text;
+  };
   return (
     <article className="report" aria-labelledby="report-title">
       <header className="report-header">
-        <h2 id="report-title">{report.title}</h2>
+        <Title id="report-title">{report.title}</Title>
         <p>{report.intro}</p>
         <Fields
           fields={[
@@ -108,7 +124,32 @@ export function ReadingView({ report }: { report: Report }) {
                   <td>{e.title}</td>
                   <td>{e.date}</td>
                   <td>{e.from}</td>
-                  <td>{e.fileName ?? reportWords.paperOnly}</td>
+                  <td>{e.fileName ? linked(e.ref, e.fileName) : reportWords.paperOnly}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
+
+      {report.photos.length > 0 && (
+        <section aria-labelledby="report-photos" className="report-section">
+          <h2 id="report-photos">{reportWords.photosTitle}</h2>
+          <table className="report-index">
+            <thead>
+              <tr>
+                {reportWords.photoHeadings.map((h) => (
+                  <th key={h} scope="col">
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {report.photos.map((p) => (
+                <tr key={p.ref}>
+                  <td>{linked(p.ref, p.ref)}</td>
+                  <td>{p.date}</td>
                 </tr>
               ))}
             </tbody>

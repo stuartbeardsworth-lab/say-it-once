@@ -41,7 +41,7 @@ test('a PDF is made on the device and saved as a download', async ({ page }) => 
   await page.getByRole('button', { name: 'Make a PDF' }).click();
   const save = page.getByRole('button', { name: 'Save the PDF to this device' });
   await expect(save).toBeFocused({ timeout: 30_000 });
-  await expect(page.getByRole('status').filter({ hasText: 'Your PDF is ready.' })).toBeVisible();
+  await expect(page.getByRole('status').filter({ hasText: /^Your PDF is ready \(\d+ KB\)\.$/ })).toBeVisible();
   await expectNoAxeViolations(page);
 
   const [download] = await Promise.all([page.waitForEvent('download'), save.click()]);
@@ -105,7 +105,7 @@ test.describe('when the PDF maker can’t load', () => {
   });
 });
 
-test('it can be added to a home screen, and works offline, PDFs included', async ({ page, context, browserName }) => {
+test('it can be added to a home screen, and works offline, PDFs and zips included', async ({ page, context, browserName }) => {
   test.skip(browserName !== 'chromium', 'Offline mode is checked in Chromium; the phone check is done by hand.');
   await page.goto('/#home');
   const manifestHref = await page.locator('link[rel="manifest"]').getAttribute('href');
@@ -127,5 +127,7 @@ test('it can be added to a home screen, and works offline, PDFs included', async
   await create(page);
   await page.getByRole('button', { name: 'Make a PDF' }).click();
   await expect(page.getByRole('button', { name: 'Save the PDF to this device' })).toBeVisible({ timeout: 30_000 });
+  await page.getByRole('button', { name: 'Make a zip file' }).click();
+  await expect(page.getByRole('button', { name: 'Save the zip file to this device' })).toBeVisible({ timeout: 30_000 });
   await context.setOffline(false);
 });

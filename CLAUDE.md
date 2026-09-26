@@ -142,3 +142,11 @@ Done when:
   and `src/reports/pdf.ts` describe the parts used instead of adding a
   types package. The PDF privacy test checks the document description
   handed to pdfmake, since text inside the finished PDF can't be searched.
+- The zip holds `report.pdf`, `report.html` (the reading view as one page,
+  no scripts, the report's title as its main heading) and
+  `attachments/E1-name.ext` for letters. Photos kept with Quick Notes that
+  are in the report go in too, as `attachments/P1-photo.ext`, numbered in
+  reading order; the report says "See P1" and lists them under Photos,
+  matching the old app, which included them. A file that can't be found is
+  named on screen, never left out quietly. Files are read and written one
+  at a time.

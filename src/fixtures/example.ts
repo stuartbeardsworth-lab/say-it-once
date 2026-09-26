@@ -11,8 +11,13 @@ import type { AnyItem, ItemDataMap, ItemType } from '../domain/types';
 export interface ExampleFile {
   name: string;
   type: string;
+  /** The file's contents: text, or base64 for an image. */
   text: string;
+  base64?: boolean;
 }
+
+/** A tiny made-up picture (a chequered square) for the example's photo. */
+const examplePhoto = 'iVBORw0KGgoAAAANSUhEUgAAADAAAAAkCAIAAABAJy5dAAAASklEQVR42u3VsQkAIAwEQBdxJhdwfktxBPvYGwgHKR9y1X/rY4Zb+4T7mWlAQOVAue/fDBBQPZAeAgKyZUBAtkwxAgHZMiCgVNAFzgP5Jm3k30MAAAAASUVORK5CYII=';
 
 export interface ExampleEntry {
   id: string;
@@ -261,7 +266,13 @@ export function exampleRecord(today: string): ExampleRecord {
   add('ex-contact-private', 'contact', { organisation: 'PRIVATE: my GP about my mood', role: '', reference: '', phoneOrEmail: '0113 496 0999' }, true);
 
   add('ex-qn-1', 'quickNote', { text: 'Physio says to squeeze the stress ball ten times, three times a day.', filedTo: { section: 'treatment', impactArea: null }, photoFileId: null });
-  add('ex-qn-2', 'quickNote', { text: 'Ask the fracture clinic about going back to lifting at work.', filedTo: null, photoFileId: null });
+  add(
+    'ex-qn-2',
+    'quickNote',
+    { text: 'Ask the fracture clinic about going back to lifting at work. Photo of the exercise sheet.', filedTo: null, photoFileId: 'ex-file-photo' },
+    false,
+    { name: 'exercise-sheet.png', type: 'image/png', text: examplePhoto, base64: true },
+  );
   add('ex-qn-private', 'quickNote', { text: 'PRIVATE: argued with my partner about money again.', filedTo: { section: 'impact', impactArea: 'money' }, photoFileId: null }, true);
 
   return { recordName: 'Example: fall at work (made up)', personName: 'Sam Taylor', entries };

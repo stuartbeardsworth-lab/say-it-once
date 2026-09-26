@@ -208,7 +208,13 @@ export class Store {
    */
   async importRecord(
     name: string,
-    entries: { id: string; type: ItemType; data: unknown; private: boolean; file?: { name: string; type: string; text: string } }[],
+    entries: {
+      id: string;
+      type: ItemType;
+      data: unknown;
+      private: boolean;
+      file?: { name: string; type: string; text: string; base64?: boolean };
+    }[],
     impactCurrentSince = '',
   ): Promise<string> {
     const ids = new Map(entries.map((e) => [e.id, newId()]));
@@ -222,16 +228,20 @@ export class Store {
       return value;
     };
     const files = entries.flatMap((e) => {
-      const ref = (e.data as { file?: { fileId: string } | null }).file;
-      if (!e.file || !ref) return [];
+      // A document's file, or a Quick Note's photo.
+      const data = e.data as { file?: { fileId: string } | null; photoFileId?: string | null };
+      const oldId = data.file?.fileId ?? data.photoFileId;
+      if (!e.file || !oldId) return [];
       const fileId = newId();
-      fileIds.set(ref.fileId, fileId);
-      const bytes = new TextEncoder().encode(e.file.text).buffer;
+      fileIds.set(oldId, fileId);
+      const bytes = e.file.base64
+        ? Uint8Array.from(atob(e.file.text), (c) => c.charCodeAt(0)).buffer
+        : new TextEncoder().encode(e.file.text).buffer;
       return [{ fileId, name: e.file.name, type: e.file.type, size: bytes.byteLength, bytes }];
     });
     const items = entries.map((e) => {
       const data = remap(e.data) as ItemDataMap[ItemType];
-      if (e.file) {
+      if (e.file && e.type === 'document') {
         const f = files.find((x) => x.fileId === fileIds.get((e.data as { file: { fileId: string } }).file.fileId));
         if (f) (data as ItemDataMap['document']).file = { fileId: f.fileId, name: f.name, type: f.type, size: f.size };
       }

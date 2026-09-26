@@ -49,6 +49,21 @@ export interface EvidenceItem {
   fileName: string | null;
 }
 
+export interface PhotoItem {
+  /** P1, P2 … in the order they appear in the report. */
+  ref: string;
+  noteId: string;
+  fileId: string;
+  /** The date of the Quick Note it was kept with. */
+  date: string;
+}
+
+/** Evidence and photo references, handed to each section's builder. */
+interface Refs {
+  doc: (documentId: string | null) => string | null;
+  photo: (noteId: string, fileId: string, createdAt: string) => string;
+}
+
 export interface Report {
   purposeKey: string;
   title: string;
@@ -59,6 +74,8 @@ export interface Report {
   preparedOn: string;
   sections: ReportSection[];
   evidence: EvidenceItem[];
+  /** Photos kept with the Quick Notes included, numbered in reading order. */
+  photos: PhotoItem[];
   /** Kinds of personal information included (Q15), in plain words. */
   personalInfo: string[];
   signature: boolean;
@@ -86,24 +103,27 @@ function byDate<T>(dateOf: (t: T) => string) {
   return (a: T, b: T) => dateOf(a).localeCompare(dateOf(b));
 }
 
-function noteBlocks(notes: ShareableEntry<QuickNoteData>[]): Block[] {
+function noteBlocks(notes: ShareableEntry<QuickNoteData>[], refs: Refs): Block[] {
   if (notes.length === 0) return [];
   return [
     { type: 'subheading', text: 'Quick Notes' },
     ...notes
       .sort(byDate((n) => n.createdAt))
-      .map((n): Block => ({
-        type: 'entry',
-        heading: readableDate(n.createdAt.slice(0, 10)),
-        fields: n.data.photoFileId ? [{ label: 'Photo', value: 'A photo was kept with this note.' }] : [],
-        paragraphs: n.data.text.trim() ? [n.data.text] : [],
-        refs: [],
-      })),
+      .map((n): Block => {
+        const photo = n.data.photoFileId ? refs.photo(n.id, n.data.photoFileId, n.createdAt) : null;
+        return {
+          type: 'entry',
+          heading: readableDate(n.createdAt.slice(0, 10)),
+          fields: photo ? [{ label: 'Photo', value: `See ${photo}` }] : [],
+          paragraphs: n.data.text.trim() ? [n.data.text] : [],
+          refs: photo ? [photo] : [],
+        };
+      }),
   ];
 }
 
-function filedNotes(view: ShareableRecord, ids: Set<string>, section: keyof typeof sectionLabels): Block[] {
-  return noteBlocks(view.quickNotes.filter((n) => n.data.filedTo?.section === section && ids.has(n.id)));
+function filedNotes(view: ShareableRecord, ids: Set<string>, section: keyof typeof sectionLabels, refs: Refs): Block[] {
+  return noteBlocks(view.quickNotes.filter((n) => n.data.filedTo?.section === section && ids.has(n.id)), refs);
 }
 
 function areaFields(a: ImpactAreaData): Field[] {
@@ -196,12 +216,12 @@ function currentPositionParts(view: ShareableRecord, today: string) {
 type Builder = (
   view: ShareableRecord,
   ids: Set<string>,
-  refOf: (documentId: string | null) => string | null,
+  refs: Refs,
   today: string,
 ) => Block[];
 
 const builders: Record<SectionKey, Builder> = {
-  account(view, ids) {
+  account(view, ids, refs) {
     const i = view.incident;
     const blocks: Block[] = [];
     if (i) {
@@ -218,7 +238,7 @@ const builders: Record<SectionKey, Builder> = {
       ]);
       if (fields.length) blocks.push({ type: 'fields', fields });
     }
-    return [...blocks, ...filedNotes(view, ids, 'what')];
+    return [...blocks, ...filedNotes(view, ids, 'what', refs)];
   },
 
   injuries(view) {
@@ -248,7 +268,7 @@ const builders: Record<SectionKey, Builder> = {
     ];
   },
 
-  currentPosition(view, _ids, _refOf, today) {
+  currentPosition(view, _ids, _refs, today) {
     const { meds, treatments, last, next } = currentPositionParts(view, today);
     const describe = (a: ShareableEntry<AppointmentData> | undefined) =>
       a ? `${readableDate(a.data.date)}, ${a.data.organisation}` : '';
@@ -266,7 +286,7 @@ const builders: Record<SectionKey, Builder> = {
     ];
   },
 
-  impact(view, ids) {
+  impact(view, ids, refs) {
     const blocks: Block[] = sortAreas(pick(view.impactAreas, ids)).map((a) => ({
       type: 'entry',
       heading: impactAreaLabel(a.data.areaKey),
@@ -277,7 +297,7 @@ const builders: Record<SectionKey, Builder> = {
     if (view.impactNote && ids.has(view.impactNote.id) && view.impactNote.data.text.trim()) {
       blocks.push({ type: 'entry', heading: 'Anything else this has changed', fields: [], paragraphs: [view.impactNote.data.text], refs: [] });
     }
-    return [...blocks, ...filedNotes(view, ids, 'impact')];
+    return [...blocks, ...filedNotes(view, ids, 'impact', refs)];
   },
 
   changes(view, ids) {
@@ -317,7 +337,7 @@ const builders: Record<SectionKey, Builder> = {
     return blocks;
   },
 
-  treatment(view, ids) {
+  treatment(view, ids, refs) {
     const blocks: Block[] = [];
     const i = view.incident;
     const fixed = nonEmpty([
@@ -362,13 +382,13 @@ const builders: Record<SectionKey, Builder> = {
         });
       }
     }
-    return [...blocks, ...filedNotes(view, ids, 'treatment')];
+    return [...blocks, ...filedNotes(view, ids, 'treatment', refs)];
   },
 
-  appointments(view, ids, refOf) {
+  appointments(view, ids, refs) {
     const appts = pick(view.appointments, ids).sort(byDate((a) => `${a.data.date}${a.data.time}`));
     const blocks: Block[] = appts.map((a) => {
-      const ref = refOf(a.data.documentId);
+      const ref = refs.doc(a.data.documentId);
       return {
         type: 'entry',
         heading: appointmentHeading(a.data),
@@ -385,7 +405,7 @@ const builders: Record<SectionKey, Builder> = {
         refs: ref ? [ref] : [],
       };
     });
-    return [...blocks, ...filedNotes(view, ids, 'appointments')];
+    return [...blocks, ...filedNotes(view, ids, 'appointments', refs)];
   },
 
   costSummary(view) {
@@ -404,7 +424,7 @@ const builders: Record<SectionKey, Builder> = {
     ];
   },
 
-  costs(view, ids, refOf) {
+  costs(view, ids, refs) {
     const chosen = pick(view.costs, ids).sort(byDate((c) => c.data.date));
     const blocks: Block[] = [];
     for (const [kind, heading] of [
@@ -415,7 +435,7 @@ const builders: Record<SectionKey, Builder> = {
       if (!list.length) continue;
       blocks.push({ type: 'subheading', text: heading });
       for (const c of list) {
-        const ref = refOf(c.data.documentId);
+        const ref = refs.doc(c.data.documentId);
         blocks.push({
           type: 'entry',
           heading: c.data.item,
@@ -437,10 +457,10 @@ const builders: Record<SectionKey, Builder> = {
         ],
       });
     }
-    return [...blocks, ...filedNotes(view, ids, 'costs')];
+    return [...blocks, ...filedNotes(view, ids, 'costs', refs)];
   },
 
-  contacts(view, ids) {
+  contacts(view, ids, refs) {
     const blocks: Block[] = pick(view.contacts, ids).map((c) => ({
       type: 'entry',
       heading: c.data.organisation || c.data.phoneOrEmail,
@@ -452,15 +472,15 @@ const builders: Record<SectionKey, Builder> = {
       paragraphs: [],
       refs: [],
     }));
-    return [...blocks, ...filedNotes(view, ids, 'contacts')];
+    return [...blocks, ...filedNotes(view, ids, 'contacts', refs)];
   },
 
-  documents(view, ids, refOf) {
+  documents(view, ids, refs) {
     const docs = pick(view.documents, ids).sort(
       byDate((d) => d.data.date || d.createdAt),
     );
     const blocks: Block[] = docs.map((d) => {
-      const ref = refOf(d.id);
+      const ref = refs.doc(d.id);
       return {
         type: 'entry',
         heading: `${ref ? `${ref}: ` : ''}${d.data.title || d.data.file?.name || 'Untitled document'}`,
@@ -469,12 +489,12 @@ const builders: Record<SectionKey, Builder> = {
         refs: ref ? [ref] : [],
       };
     });
-    return [...blocks, ...filedNotes(view, ids, 'documents')];
+    return [...blocks, ...filedNotes(view, ids, 'documents', refs)];
   },
 
-  quickNotes(view, ids) {
+  quickNotes(view, ids, refs) {
     const notes = view.quickNotes.filter((n) => n.data.filedTo === null && ids.has(n.id));
-    return noteBlocks(notes).slice(1);
+    return noteBlocks(notes, refs).slice(1);
   },
 
   chronology(view, ids) {
@@ -511,15 +531,25 @@ export interface BuildOptions {
 
 export function buildReport(view: ShareableRecord, purpose: Purpose, selection: Selection, options: BuildOptions): Report {
   const evidence = assignEvidence(view, selection);
-  const refs = new Map(evidence.map((e) => [e.documentId, e.ref]));
-  const refOf = (documentId: string | null) => (documentId ? (refs.get(documentId) ?? null) : null);
+  const docRefs = new Map(evidence.map((e) => [e.documentId, e.ref]));
+  const photos: PhotoItem[] = [];
+  const refs: Refs = {
+    doc: (documentId) => (documentId ? (docRefs.get(documentId) ?? null) : null),
+    photo: (noteId, fileId, createdAt) => {
+      const known = photos.find((p) => p.noteId === noteId);
+      if (known) return known.ref;
+      const ref = `P${photos.length + 1}`;
+      photos.push({ ref, noteId, fileId, date: readableDate(createdAt.slice(0, 10)) });
+      return ref;
+    },
+  };
 
   const sections: ReportSection[] = [];
   for (const config of purpose.sections) {
     const chosen = selection[config.key];
     if (!chosen?.included) continue;
     const ids = fixedSections.has(config.key) ? new Set(candidates(view, config.key).map((c) => c.id)) : new Set(chosen.ids);
-    const blocks = builders[config.key](view, ids, refOf, options.today);
+    const blocks = builders[config.key](view, ids, refs, options.today);
     if (blocks.length) sections.push({ key: config.key, title: sectionTitle(purpose, config.key), blocks });
   }
 
@@ -545,6 +575,7 @@ export function buildReport(view: ShareableRecord, purpose: Purpose, selection: 
     preparedOn: readableDate(options.today),
     sections,
     evidence,
+    photos,
     personalInfo: personalInfo(view, selection, sections),
     signature: purpose.signature,
     itemIds: [...itemIds],
@@ -565,6 +596,7 @@ export function reportText(report: Report): string[] {
     }
   }
   for (const e of report.evidence) out.push(e.ref, e.title, e.date, e.from, e.fileName ?? '');
+  for (const p of report.photos) out.push(p.ref, p.date);
   // The personal-information warning is shown in the app before sharing,
   // not printed in the report, so it isn't part of the report's text.
   out.push(report.disclaimer);

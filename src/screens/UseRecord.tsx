@@ -302,6 +302,7 @@ export function UseRecord() {
             </div>
             <SendReport
               report={report}
+              readFile={async (fileId) => (await store.getFile(fileId))?.blob}
               onSent={(ids) => {
                 // Only for the warning when deleting later; a failure here doesn't undo the send.
                 if (recordId) store.noteShared(recordId, ids).catch(() => undefined);
