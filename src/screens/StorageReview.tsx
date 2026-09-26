@@ -9,6 +9,7 @@ import { StorageProblem, type StorageProblemKind } from '../store/problems';
 import { newItemId } from '../store/store';
 import { useStore } from '../store/StoreContext';
 import { useLiveQuery } from '../store/useLiveQuery';
+import { SharedCopiesNote } from '../features/deliver/SharedCopiesNote';
 
 // Stage 2 review: real saving to this device, and switches that make saving
 // fail on purpose so the error messages can be seen. Part of the Building
@@ -104,6 +105,7 @@ export function StorageReview() {
                 }}
               >
                 <p>&ldquo;{note.data.text.slice(0, 80)}&rdquo; will be deleted from this device.</p>
+                <SharedCopiesNote itemIds={[note.id]} />
               </ConfirmDialog>
             </li>
           ))}

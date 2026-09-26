@@ -12,6 +12,7 @@ import { effects, medicationStatuses } from '../../domain/vocab';
 import { useEntryForm } from '../../forms/useEntryForm';
 import { newItemId } from '../../store/store';
 import { useRecordId, useStore } from '../../store/StoreContext';
+import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
 const effectOptions = effects.map((e) => ({ value: e, label: e }));
 
@@ -29,6 +30,7 @@ function DeleteEntry({ id, what, onDone }: { id: string; what: string; onDone: (
       }}
     >
       <p>It will be deleted from this device.</p>
+      <SharedCopiesNote itemIds={[id]} />
     </ConfirmDialog>
   );
 }

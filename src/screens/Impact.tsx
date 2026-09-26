@@ -13,6 +13,7 @@ import { RouteLink } from '../router';
 import { PageTop } from '../shell/PageTop';
 import { useItems } from '../store/hooks';
 import { useStore } from '../store/StoreContext';
+import { SharedCopiesNote } from '../features/deliver/SharedCopiesNote';
 
 // How it affects me (docs/spec.md, "impact").
 
@@ -73,6 +74,7 @@ export function Impact() {
                     onConfirm={() => store.deleteItem(a.id)}
                   >
                     <p>This area will be deleted, including every earlier version of it kept in Changes over time.</p>
+                    <SharedCopiesNote itemIds={[a.id]} />
                   </ConfirmDialog>
                 </div>
               </li>

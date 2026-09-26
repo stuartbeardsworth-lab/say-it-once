@@ -6,6 +6,7 @@ import type { Item } from '../../domain/types';
 import { useStore } from '../../store/StoreContext';
 import { useFileUrl } from '../../store/useFileUrl';
 import { whenSaved, whereFiled } from './format';
+import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
 // One Quick Note in a list, with everything you can do to it.
 
@@ -50,6 +51,7 @@ export function QuickNoteCard({ note, onEdit, onFile, showDelete = true }: Quick
           >
             <p>The note will be deleted from this device.</p>
             {note.data.photoFileId && <p>Its photo will be deleted too, unless it has been kept as a document.</p>}
+            <SharedCopiesNote itemIds={[note.id]} />
           </ConfirmDialog>
         )}
       </div>

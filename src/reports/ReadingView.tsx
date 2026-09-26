@@ -1,4 +1,5 @@
 import type { Block, Field, Report } from './model';
+import { reportWords } from './pdf';
 
 // The reading view (docs/architecture.md, "Renderers"): the accessible
 // version of a report, drawn from the document model with real headings,
@@ -69,9 +70,9 @@ export function ReadingView({ report }: { report: Report }) {
         <p>{report.intro}</p>
         <Fields
           fields={[
-            ...(report.personName ? [{ label: 'About', value: report.personName }] : []),
-            { label: 'Record', value: report.recordName },
-            { label: 'Prepared', value: report.preparedOn },
+            ...(report.personName ? [{ label: reportWords.about, value: report.personName }] : []),
+            { label: reportWords.record, value: report.recordName },
+            { label: reportWords.prepared, value: report.preparedOn },
           ]}
         />
       </header>
@@ -89,15 +90,15 @@ export function ReadingView({ report }: { report: Report }) {
 
       {report.evidence.length > 0 && (
         <section aria-labelledby="report-evidence" className="report-section">
-          <h2 id="report-evidence">{report.kind === 'evidence' ? 'Evidence index' : 'Documents referred to'}</h2>
+          <h2 id="report-evidence">{reportWords.evidenceTitle(report.kind)}</h2>
           <table className="report-index">
             <thead>
               <tr>
-                <th scope="col">Ref</th>
-                <th scope="col">Document</th>
-                <th scope="col">Date</th>
-                <th scope="col">From</th>
-                <th scope="col">File</th>
+                {reportWords.indexHeadings.map((h) => (
+                  <th key={h} scope="col">
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -107,7 +108,7 @@ export function ReadingView({ report }: { report: Report }) {
                   <td>{e.title}</td>
                   <td>{e.date}</td>
                   <td>{e.from}</td>
-                  <td>{e.fileName ?? 'Paper copy only'}</td>
+                  <td>{e.fileName ?? reportWords.paperOnly}</td>
                 </tr>
               ))}
             </tbody>
@@ -117,8 +118,8 @@ export function ReadingView({ report }: { report: Report }) {
 
       {report.signature && (
         <section aria-labelledby="report-confirmation" className="report-section">
-          <h2 id="report-confirmation">Confirmation</h2>
-          <p>I confirm that this is my own account, to the best of my knowledge.</p>
+          <h2 id="report-confirmation">{reportWords.confirmation}</h2>
+          <p>{reportWords.confirm}</p>
           <dl className="report-signature">
             <div>
               <dt>Name</dt>

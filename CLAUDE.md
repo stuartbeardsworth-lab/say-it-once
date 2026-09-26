@@ -123,3 +123,22 @@ Done when:
 - The reports import rule blocks exactly the store, sync code and raw
   record types (`src/domain/types`, `schema`, `validate`, `blank`).
   Harmless domain helpers (wording lists, dates, money) may be used.
+- 26 September 2026, Stage 5 is built in two parts: 5a PDF, sharing or
+  saving it, and the home-screen app with offline use; 5b the zip with an
+  HTML copy and the attachments.
+- Delivery results say only what is known. The share options can report
+  that the file was passed to an app, not that it was sent; browsers never
+  report that a download finished. So: "Passed to the app you chose",
+  "Your browser is saving …", and "Not sent" when the share options are
+  closed. Making the PDF and sharing it are two taps, because phones only
+  open the share options straight after a tap.
+- The service worker and app manifest (vite-plugin-pwa) are added in
+  Stage 5, with a placeholder icon drawn by `scripts/make-icons.mjs`. A new
+  version waits until the person chooses "Use the new version".
+- Delete confirmations say when the entry was in a PDF that was shared or
+  saved on this device. The note is device-only and deleted with the entry.
+- The PDF uses Roboto, which comes with pdfmake, bundled and loaded only
+  when the first PDF is made. pdfmake has no types; `src/types/pdfmake.d.ts`
+  and `src/reports/pdf.ts` describe the parts used instead of adding a
+  types package. The PDF privacy test checks the document description
+  handed to pdfmake, since text inside the finished PDF can't be searched.

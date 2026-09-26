@@ -321,7 +321,7 @@ flowchart LR
 | PDF | pdfmake, fonts embedded | Page numbers, contents page, E-refs, signature block where configured. Not a tagged PDF, which is why the zip also carries HTML. |
 | Zip | fflate, streamed | `report.pdf`, `report.html` (self-contained, no scripts), `attachments/E1-name.ext`… |
 
-**Delivery** — through the share sheet where available, otherwise a download; success is reported only when the share or download actually completes. Everything runs on the device and works offline.
+**Delivery** — through the share sheet where available, otherwise a download. The result says only what is known: the share sheet reports that the file was passed to an app, not that it was sent, and browsers never report that a download finished, so the app says "Passed to the app you chose" or "Your browser is saving …", and "Not sent" when the share sheet is closed without choosing (decided 26 September 2026). Everything runs on the device and works offline.
 
 **Tests** — snapshot tests of the document model for each purpose against fixture records; a check that all three renderers contain the same text and the same E-refs; the privacy property test from the previous section.
 

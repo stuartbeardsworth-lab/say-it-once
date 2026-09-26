@@ -3,8 +3,8 @@
 exports[`every purpose, from the example record > appointment-brief 1`] = `
 "Appointment brief
 A short brief to help at a health appointment: how things are now, treatment and recent appointments.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 Current position
 Areas of daily life affected
@@ -168,8 +168,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > family 1`] = `
 "Family support overview
 An overview for family or someone who supports me, so they know how things are.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 How things are now
 Areas of daily life affected
@@ -324,8 +324,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > full-record 1`] = `
 "Full record
 Everything in my record except what I have marked private.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 What happened
 When and where
@@ -620,8 +620,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > health-overview 1`] = `
 "Health overview
 An overview of what happened, its effects, and treatment so far.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 Relevant background
 When and where
@@ -771,8 +771,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > iidb 1`] = `
 "IIDB support pack
 Supporting information for an Industrial Injuries Disablement Benefit claim: the accident at work and its effects.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 Work at the time
 Employer
@@ -997,8 +997,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > insurance-costs 1`] = `
 "Costs and lost income summary
 Money spent and income lost because of the injury or illness, with supporting documents.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 Financial impact
 Entries
@@ -1091,8 +1091,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > insurance-evidence 1`] = `
 "Insurance evidence pack
 Evidence for an insurance claim: what happened, treatment, costs and documents.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 What happened
 When and where
@@ -1266,8 +1266,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > insurance-summary 1`] = `
 "Insurance claim summary
 An overview for an insurance claim.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 How things are now
 Areas of daily life affected
@@ -1374,8 +1374,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > other-benefit 1`] = `
 "Summary for a benefit or form
 A summary to help with a benefit claim or form.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 What happened
 When and where
@@ -1525,8 +1525,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > personal 1`] = `
 "Personal overview
 An overview of my record, for my own use.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 How things are now
 Areas of daily life affected
@@ -1716,8 +1716,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > personal-injury 1`] = `
 "Personal injury case summary
 A summary for a personal injury claim: what happened, its effects, treatment and costs.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 How things are now
 Areas of daily life affected
@@ -2013,8 +2013,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > pip 1`] = `
 "PIP support pack
 Supporting information for a Personal Independence Payment claim or review, focused on daily living and getting around.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 How it affects me
 Preparing food
@@ -2222,8 +2222,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > recent-changes 1`] = `
 "Recent changes summary
 What has changed recently, with earlier positions for comparison.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 Current position
 Areas of daily life affected
@@ -2313,8 +2313,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > treatment-concerns 1`] = `
 "Medical treatment concerns summary
 A summary of treatment and what happened at each stage, for a solicitor looking at concerns about medical care.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 What happened
 When and where
@@ -2518,8 +2518,8 @@ This was written by Sam Taylor, in their own words, using Say It Once. It is the
 exports[`every purpose, from the example record > work 1`] = `
 "Work and occupational health summary
 A summary for an employer or occupational health: how things are, treatment and what may help at work.
-Example: fall at work (made up)
 Sam Taylor
+Example: fall at work (made up)
 1 June 2026
 How things are now
 Areas of daily life affected

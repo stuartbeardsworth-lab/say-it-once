@@ -14,6 +14,11 @@ export default tseslint.config(
     rules: reactHooks.configs.recommended.rules,
   },
   {
+    // Small development scripts, run with Node.
+    files: ['scripts/**/*.mjs'],
+    languageOptions: { globals: globals.node },
+  },
+  {
     // In tests, "!" is a plain way to say "this must exist"; a wrong guess
     // fails the test loudly. App code keeps the stricter rule.
     files: ['**/*.test.{ts,tsx}'],
