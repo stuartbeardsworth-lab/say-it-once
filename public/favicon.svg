@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="11.52" fill="#1d4f5c"/>
-  <text x="50%" y="50%" dy="0.35em" text-anchor="middle" fill="#ffffff"
-    font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="24.32">SiO</text>
+  <rect width="64" height="64" rx="11.52" fill="#20433e"/>
+  <g transform="translate(7.039999999999999 8.5376) scale(0.20800000000000002)">
+    <path d="M20 16 h176 a28 28 0 0 1 28 28 v92 a28 28 0 0 1 -28 28 h-92 l-40 40 v-40 h-36 a28 28 0 0 1 -28 -28 v-92 a28 28 0 0 1 28 -28 z" fill="none" stroke="#ffffff" stroke-width="20" stroke-linejoin="round"/>
+    <circle cx="108" cy="86" r="16" fill="#e8714a"/>
+  </g>
 </svg>

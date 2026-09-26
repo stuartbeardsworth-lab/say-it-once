@@ -88,9 +88,11 @@ interface RouteLinkProps {
   to: Route;
   className?: string;
   children: ReactNode;
+  'aria-labelledby'?: string;
+  'aria-describedby'?: string;
 }
 
-export function RouteLink({ to, className, children }: RouteLinkProps) {
+export function RouteLink({ to, className, children, ...aria }: RouteLinkProps) {
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     // Let the browser handle "open in new tab" and similar.
     if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
@@ -100,7 +102,7 @@ export function RouteLink({ to, className, children }: RouteLinkProps) {
     navigate(to);
   }
   return (
-    <a href={`#${to}`} className={className} onClick={handleClick}>
+    <a href={`#${to}`} className={className} onClick={handleClick} {...aria}>
       {children}
     </a>
   );

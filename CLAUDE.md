@@ -112,6 +112,8 @@ Done when:
   new app does, and reviewed by the owner before release.
 - "Listen to this section" is left out for now; phones' own Speak Screen
   and Select to Speak cover it. Reports keep Read aloud (Stage 4).
+  (Changed 26 September 2026: "Listen" is back in the header, for people
+  who would rather hear a page than read it. See the look and feel entry.)
 - Find is plain search plus a few fixed answers computed from structured
   data (money spent, current medication, next appointment). No question
   parsing.
@@ -137,7 +139,7 @@ Done when:
   closed. Making the PDF and sharing it are two taps, because phones only
   open the share options straight after a tap.
 - The service worker and app manifest (vite-plugin-pwa) are added in
-  Stage 5, with a placeholder icon drawn by `scripts/make-icons.mjs`. A new
+  Stage 5, with the icon drawn by `scripts/make-icons.mjs`. A new
   version waits until the person chooses "Use the new version".
 - Delete confirmations say when the entry was in a PDF that was shared or
   saved on this device. The note is device-only and deleted with the entry.
@@ -193,3 +195,30 @@ Done when:
   a short stage done next, before Stage 8b. Fonts are bundled with the app,
   never loaded from elsewhere, and colours are checked for WCAG 2.2 AA
   contrast.
+- Look and feel as built: navy #20433E, cream #FBF8F5, slate, emerald and
+  the original orange #E8714A. That orange is too light for text (2.9:1),
+  so it is kept for the logo dot, icons and decoration, and a deeper orange
+  #B84F2D is used for orange words. The focus outline is navy with an
+  orange edge. Manrope (headings) and Inter (text) are bundled as woff2
+  files in `src/assets/fonts` with their SIL Open Font Licences, taken from
+  the Fontsource packages without adding a dependency. `src/theme.test.ts`
+  checks every colour pair the app uses. The old page is kept as
+  `legacy/index.html`. Dictation stays out; Home's card wording describes
+  only what the new app does.
+- 26 September 2026, after the owner's review of the look: "Listen" is in
+  the header. It reads the screen's headings, text, labels and summaries
+  (up to 60 parts, en-GB voice, slower rate) with the device's own voice,
+  with Pause, Carry on and Stop in a bar under the header, and stops on
+  moving to another screen. Nothing leaves the device. Per-section Listen
+  buttons are not added. Home's "Your record" cards are folded away, as in
+  the original, and the "Only on this phone" notice is on Privacy & backup
+  only, to keep Home calm.
+- 26 September 2026, sync is paused: the owner doesn't want to pay for
+  anything, and every remaining stage (8b going live, 9 sync, 10 launch of
+  sync) needs a server, a web address and the cryptography review, which
+  all cost money. Free hosting was ruled out for health data (mostly US
+  companies, databases deleted or servers switched off when idle, no own
+  web address). Say It Once stays device-only, free on Netlify, with backup
+  and restore to move a record between devices. The server code from 8a
+  stays in `server/`, tested in CI, ready if funding is found; then work
+  restarts at Stage 8b. Until then, work is limited to the device-only app.

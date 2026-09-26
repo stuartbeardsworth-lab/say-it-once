@@ -31,8 +31,8 @@ export default defineConfig({
         start_url: './',
         scope: './',
         display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#1d4f5c',
+        background_color: '#fbf8f5',
+        theme_color: '#20433e',
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },
@@ -40,7 +40,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg,webmanifest}'],
+        globPatterns: ['**/*.{js,css,html,png,svg,webmanifest,woff2}'],
         // The PDF maker and its font are large, but are needed offline too.
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         navigateFallback: 'index.html',

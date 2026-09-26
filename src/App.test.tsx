@@ -1,10 +1,15 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
 import { parseHash } from './router';
 import { StorageProblem } from './store/problems';
 import { Store } from './store/store';
+
+// Home also links to Privacy & backup, so tests use the footer's link, which is on every screen.
+function footerLink(name: string) {
+  return within(screen.getByRole('navigation', { name: 'More' })).getByRole('link', { name });
+}
 
 function renderApp() {
   return render(<App store={new Store(`app-${crypto.randomUUID()}`)} />);
@@ -36,20 +41,21 @@ describe('App shell', () => {
     expect(document.title).toBe('Home – Say It Once');
   });
 
-  it('shows the device-only warning on Home and Privacy & backup', async () => {
+  it('shows the device-only warning on Privacy & backup, and keeps Home calm', async () => {
     const user = userEvent.setup();
     renderApp();
+    await screen.findByRole('heading', { level: 1, name: /Keep everything together/ });
+    expect(screen.queryByRole('complementary', { name: 'Where your record is kept' })).not.toBeInTheDocument();
+    await user.click(footerLink('Privacy & backup'));
     expect(screen.getByRole('complementary', { name: 'Where your record is kept' })).toHaveTextContent(
       'If the phone or browser data is lost, so is your record.',
     );
-    await user.click(screen.getByRole('link', { name: 'Privacy & backup' }));
-    expect(screen.getByRole('complementary', { name: 'Where your record is kept' })).toBeInTheDocument();
   });
 
   it('moves focus to the page heading after navigating', async () => {
     const user = userEvent.setup();
     renderApp();
-    await user.click(screen.getByRole('link', { name: 'Privacy & backup' }));
+    await user.click(footerLink('Privacy & backup'));
     const heading = screen.getByRole('heading', { level: 1, name: 'Privacy & backup' });
     expect(heading).toHaveFocus();
     expect(window.location.hash).toBe('#privacy');
@@ -59,7 +65,7 @@ describe('App shell', () => {
   it('Back returns to the previous screen and focuses its heading', async () => {
     const user = userEvent.setup();
     renderApp();
-    await user.click(screen.getByRole('link', { name: 'Privacy & backup' }));
+    await user.click(footerLink('Privacy & backup'));
     await user.click(screen.getByRole('button', { name: 'Back' }));
     // history.back() is asynchronous in jsdom.
     await screen.findByRole('heading', { level: 1, name: /Keep everything together/ });
@@ -117,7 +123,7 @@ describe('storage', () => {
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent('can’t save on this device');
     expect(alert).toHaveTextContent('private window');
-    await user.click(screen.getByRole('link', { name: 'Privacy & backup' }));
+    await user.click(footerLink('Privacy & backup'));
     // Privacy & backup also has empty alert areas, ready for backup messages.
     const storageAlert = () => screen.queryAllByRole('alert').filter((a) => a.textContent?.includes('can’t save on this device'));
     expect(storageAlert()).toHaveLength(1);

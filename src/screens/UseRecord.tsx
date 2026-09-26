@@ -25,6 +25,7 @@ import {
 import { toShareable } from '../shareable/toShareable';
 import { RouteLink } from '../router';
 import { PageTop } from '../shell/PageTop';
+import { useReadAloud } from '../features/listen/speech';
 import { useRecordId, useStore } from '../store/StoreContext';
 import { useLiveQuery } from '../store/useLiveQuery';
 
@@ -34,34 +35,6 @@ import { useLiveQuery } from '../store/useLiveQuery';
 // offered, ticked or included.
 
 type Step = 'who' | 'need' | 'check' | 'report';
-
-function useReadAloud() {
-  const supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
-  const [speaking, setSpeaking] = useState(false);
-  useEffect(
-    () => () => {
-      if (supported) window.speechSynthesis.cancel();
-    },
-    [supported],
-  );
-  return {
-    supported,
-    speaking,
-    start(text: string) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-GB';
-      utterance.onend = () => setSpeaking(false);
-      utterance.onerror = () => setSpeaking(false);
-      setSpeaking(true);
-      window.speechSynthesis.speak(utterance);
-    },
-    stop() {
-      window.speechSynthesis.cancel();
-      setSpeaking(false);
-    },
-  };
-}
 
 // [one, several] for each kind of entry, so a count reads naturally.
 const privateKindLabels: Record<string, [string, string]> = {
@@ -294,10 +267,10 @@ export function UseRecord() {
               <Button onPress={() => setStep('check')}>Change what’s included</Button>
               <Button onPress={() => window.print()}>Print</Button>
               {readAloud.supported &&
-                (readAloud.speaking ? (
-                  <Button onPress={readAloud.stop}>Stop reading aloud</Button>
+                (readAloud.state === 'idle' ? (
+                  <Button onPress={() => readAloud.start(reportText(report))}>Read aloud</Button>
                 ) : (
-                  <Button onPress={() => readAloud.start(reportText(report).join('. '))}>Read aloud</Button>
+                  <Button onPress={readAloud.stop}>Stop reading aloud</Button>
                 ))}
             </div>
             <SendReport

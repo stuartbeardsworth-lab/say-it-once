@@ -14,7 +14,6 @@ async function tabTo(page: Page, target: Locator, maxPresses = 40) {
   throw new Error(`Could not reach ${target.toString()} with Tab`);
 }
 
-const link = (page: Page, name: string) => page.getByRole('link', { name, exact: true });
 const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
 
 test('skip link is first, visible when focused, and moves focus to the content', async ({ page }) => {
@@ -30,7 +29,8 @@ test('skip link is first, visible when focused, and moves focus to the content',
 
 test('navigating by keyboard moves focus to the new page heading, and Back returns', async ({ page }) => {
   await page.goto('/');
-  await tabTo(page, link(page, 'Privacy & backup'));
+  // Home's own Help and settings links (the footer has the same links).
+  await tabTo(page, page.getByRole('navigation', { name: 'Help and settings' }).getByRole('link', { name: 'Privacy & backup' }));
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy & backup' })).toBeFocused();
   await expect(page).toHaveTitle('Privacy & backup – Say It Once');

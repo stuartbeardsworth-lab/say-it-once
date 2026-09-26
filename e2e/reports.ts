@@ -13,6 +13,9 @@ export async function loadExample(page: Page) {
 export async function choose(page: Page, audience: string, need: string) {
   await page.getByRole('radiogroup', { name: 'Choose one' }).getByText(audience, { exact: true }).click();
   await page.getByRole('button', { name: 'Continue' }).click();
+  // Some needs share their wording with an audience, so wait for the second
+  // step before choosing, or the click can land on the first step's answer.
+  await expect(page.getByRole('heading', { name: 'What do they need?' })).toBeFocused();
   await page.getByRole('radiogroup', { name: 'Choose one' }).getByText(need).click();
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.getByRole('heading', { name: /^What goes in:/ })).toBeFocused();

@@ -91,7 +91,7 @@ Signing in proves who you are; unlocking proves you can read the record. They ar
 
 | Flow | Steps | Notes |
 | --- | --- | --- |
-| Device-only start | Open the app, start writing. No account. | Persistent banner on Home and Privacy: "Only on this phone. If the phone or browser data is lost, so is your record." One tap to turn on sync. |
+| Device-only start | Open the app, start writing. No account. | Persistent banner on Privacy & backup: "Only on this phone. If the phone or browser data is lost, so is your record." (Taken off Home on 26 September 2026 to keep Home calm; the backup reminder still appears on Home when a backup is due.) One tap to turn on sync. |
 | Turn on sync | Enter email → 6-digit code by email (10 minutes, 5 attempts) → choose passphrase → recovery sheet shown → confirm by typing the last group of the recovery key → initial upload with progress | The confirmation step cannot be skipped. The sheet offers Print, Save as PDF and Share. |
 | Everyday use on a signed-in device | Opens straight into the record | The device key unwraps the account key. No passphrase prompt. |
 | New device or installed app | Email → code → passphrase or recovery key → download | Shows "Downloading your record — 34 of 120 items". Usable as soon as items arrive; files download on demand. |
@@ -449,6 +449,8 @@ All ten recommendations were accepted on 25 September 2026. Q9 had no single rec
 | Q10 | External review of the key hierarchy and sync design before real data is stored. |
 
 ## Build plan
+
+**Paused after Stage 8a (26 September 2026).** Stages 8b, 9 and 10 need a paid server, web address and cryptography review. Until funding is found, Say It Once is device-only; the 8a server code is kept and tested. See the CLAUDE.md decision of that date.
 
 Build the device-only app first and release it as a replacement for the current one, then add accounts and sync; each stage ends with something you can run and review, and I stop for your sign-off before the next.
 
