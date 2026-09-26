@@ -5,6 +5,8 @@ import type { AnyItem } from '../domain/types';
 import { formatPence } from '../domain/money';
 import { filters, isSearchable, kindLabels, quickAnswers, screenFor, search, titleOf, type FilterKey, type SearchableItem } from '../domain/search';
 import { navigate } from '../router';
+import { handOverResults } from '../features/use/handoff';
+import { Button } from '../components/Button';
 import { PageTop } from '../shell/PageTop';
 import { useRecordId, useStore } from '../store/StoreContext';
 import { useLiveQuery } from '../store/useLiveQuery';
@@ -69,6 +71,20 @@ export function Find() {
       <p role="status" className="quiet-status">
         {query.trim() ? (results.length === 1 ? '1 result' : `${results.length} results`) : ''}
       </p>
+
+      {query.trim() !== '' && results.length > 0 && (
+        <div className="button-row">
+          <Button
+            variant="primary"
+            onPress={() => {
+              handOverResults(results.map((r) => r.item.id));
+              navigate('use');
+            }}
+          >
+            Use these results in a report
+          </Button>
+        </div>
+      )}
 
       {query.trim() !== '' && results.length > 0 && (
         <ul className="entry-list">

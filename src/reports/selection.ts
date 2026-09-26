@@ -190,3 +190,26 @@ export function selectEverything(purpose: Purpose, view: ShareableRecord): Selec
 export function sectionTitle(purpose: Purpose, key: SectionKey): string {
   return purpose.sections.find((s) => s.key === key)?.title ?? sectionTitles[key];
 }
+
+/**
+ * A selection made from chosen entries, such as Find's "Use these results".
+ * Only entries the shareable view offers can be chosen, so an ID of a
+ * private entry is simply ignored. Sections with none of the entries are
+ * left out; fixed sections (worked out from the record) are left out too.
+ */
+export function selectionFromIds(purpose: Purpose, view: ShareableRecord, ids: readonly string[]): Selection {
+  const wanted = new Set(ids);
+  const selection: Selection = {};
+  for (const s of purpose.sections) {
+    const chosen = fixedSections.has(s.key) ? [] : candidates(view, s.key).map((c) => c.id).filter((id) => wanted.has(id));
+    selection[s.key] = { included: chosen.length > 0, ids: chosen };
+  }
+  return selection;
+}
+
+/** How many of the given IDs could go in a report at all (the rest are private or missing). */
+export function countShareable(view: ShareableRecord, ids: readonly string[]): number {
+  const all = new Set<string>();
+  for (const key of Object.keys(sectionTitles) as SectionKey[]) for (const c of candidates(view, key)) all.add(c.id);
+  return ids.filter((id) => all.has(id)).length;
+}

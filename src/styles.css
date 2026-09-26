@@ -896,6 +896,10 @@ td {
   color: var(--colour-text);
 }
 
+.entry-choices .checkbox-field {
+  margin: var(--space-2) 0;
+}
+
 /* Reports */
 
 .report {
