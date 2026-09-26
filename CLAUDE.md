@@ -222,3 +222,15 @@ Done when:
   and restore to move a record between devices. The server code from 8a
   stays in `server/`, tested in CI, ready if funding is found; then work
   restarts at Stage 8b. Until then, work is limited to the device-only app.
+- 26 September 2026, Google Play: the device-only app goes on Google Play as
+  a Trusted Web Activity made with PWABuilder by the owner, opening
+  `say-it-once-home.netlify.app`. No wrapper code or new dependency in this
+  repository. The privacy policy is a plain page, `public/privacy-policy.html`
+  (no scripts, so reviewers can read it anywhere), linked from Privacy &
+  backup, and kept true to what the app does. Store images are made from the
+  app by `scripts/store-images.mjs`. The owner's personal email stays out of
+  the app; Google's public contact email is a separate address. Listen uses
+  only voices the device reports as built in, so the words aren't sent to an
+  online speech service. The guide is `docs/play-store.md`; the Digital
+  Asset Links file (`public/.well-known/assetlinks.json`) is added once the
+  package exists.

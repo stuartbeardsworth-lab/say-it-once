@@ -24,6 +24,8 @@ export default defineConfig({
       injectRegister: false,
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
+        // A fixed id, so installed copies (and the Play Store app) stay the same app.
+        id: './',
         name: 'Say It Once',
         short_name: 'Say It Once',
         description: 'Keep a record of what happened and how it affects you, so you don’t have to start again.',
@@ -31,6 +33,7 @@ export default defineConfig({
         start_url: './',
         scope: './',
         display: 'standalone',
+        categories: ['health', 'medical', 'productivity'],
         background_color: '#fbf8f5',
         theme_color: '#20433e',
         icons: [
@@ -44,6 +47,8 @@ export default defineConfig({
         // The PDF maker and its font are large, but are needed offline too.
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         navigateFallback: 'index.html',
+        // The privacy policy is its own page, never the app.
+        navigateFallbackDenylist: [/privacy-policy\.html$/],
         cleanupOutdatedCaches: true,
       },
     }),
