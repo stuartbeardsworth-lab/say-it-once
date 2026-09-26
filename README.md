@@ -13,6 +13,12 @@ npm install      # once, to download the tools
 npm run dev      # start the app; open the address it prints
 ```
 
+The **Building blocks** review page (every part of the app in every state,
+used by the browser tests) is left out of the real site. To see it, start
+the app with `VITE_REVIEW_PAGES=1 npm run dev` and open `#building-blocks`.
+The browser tests turn it on themselves (`playwright.config.ts`), and CI
+checks that the site build doesn't contain it.
+
 ## Checks
 
 | Command | What it does |
@@ -35,7 +41,9 @@ All of these run on every push in GitHub Actions (`.github/workflows/ci.yml`).
 | `src/domain/` | The item types, fixed wording lists, validation, money and dates. No storage code. |
 | `src/store/` | The only code that touches the database on the device (Dexie). One write queue, honest errors, deleting everywhere. |
 | `src/forms/` | Form helpers: saving as the person types, entry forms, handing over files. |
-| `src/features/` | Pieces of screens grouped by topic: Quick Notes, How it affects me, Keep track. |
+| `src/features/` | Pieces of screens grouped by topic: Quick Notes, How it affects me, Keep track, Use my record, sharing and saving files, backup and restore. |
+| `src/shareable/` | `toShareable`, the one privacy filter every report goes through, and its property tests. |
+| `src/reports/` | Purposes, what goes in, the report model, and the reading view, PDF, HTML and zip renderers. It may only use the shareable view. |
 | `src/components/` | Accessible building blocks: dialogs, fields, save status, text size. |
 | `src/shell/`, `src/screens/` | The app's frame and its screens. |
 | `src/content/` | Words the owner can change without touching code: the Find support list (`support.json`) and the FAQ (`faq.ts`). |

@@ -2,6 +2,7 @@ import { strFromU8, strToU8, unzipSync, Zip, ZipDeflate, ZipPassThrough } from '
 import { upgrade } from '../../domain/schema';
 import { currentSchema, type Item, type ItemType } from '../../domain/types';
 import { validate } from '../../domain/validate';
+import { appVersion } from '../../buildInfo';
 import type { RestoreRecord, Store } from '../../store/store';
 
 // The backup file (docs/architecture.md, "Export from the new app"): a zip
@@ -27,6 +28,8 @@ interface Manifest {
   about: string;
   app: 'Say It Once';
   format: number;
+  /** The version of Say It Once that made it. */
+  appVersion?: string;
   createdAt: string;
   personName: string;
   records: ManifestRecord[];
@@ -75,6 +78,7 @@ export async function makeBackup(store: Store, createdAt: string): Promise<Blob>
     about: warning,
     app: 'Say It Once',
     format: backupFormat,
+    appVersion,
     createdAt,
     personName: contents.profile?.data.personName ?? '',
     records: [],

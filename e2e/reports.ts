@@ -3,7 +3,7 @@ import { expect, type Page } from '@playwright/test';
 // Going through Use my record's steps in a browser test.
 
 export async function loadExample(page: Page) {
-  await page.goto('/#building-blocks');
+  await page.goto('/#how-to-use');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.getByRole('button', { name: 'Load the example record' }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'Use my record' })).toBeFocused();

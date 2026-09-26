@@ -29,6 +29,9 @@ export default defineConfig({
   // Tests run against the production build, which is what people will use.
   webServer: {
     command: 'npm run build && npx vite preview --port 4173 --strictPort',
+    // The browser tests use the Building blocks page, which the real site
+    // leaves out (src/buildInfo.ts).
+    env: { VITE_REVIEW_PAGES: '1' },
     url: 'http://localhost:4173',
     // Always test a fresh build. Reusing a server that happens to be running
     // can mean testing old code without noticing.

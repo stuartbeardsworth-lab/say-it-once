@@ -1,6 +1,7 @@
 import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react';
 import { TextSizeControl } from '../components/TextSizeControl';
 import { RouteLink, routes, type Location } from '../router';
+import { appVersion, reviewPages } from '../buildInfo';
 import { StorageBanner } from './StorageBanner';
 import { UpdateNotice } from './UpdateNotice';
 
@@ -92,11 +93,14 @@ export function AppShell({ location, children }: AppShellProps) {
               <li>
                 <RouteLink to="privacy">Privacy &amp; backup</RouteLink>
               </li>
-              <li>
-                <RouteLink to="building-blocks">Building blocks (for review)</RouteLink>
-              </li>
+              {reviewPages && (
+                <li>
+                  <RouteLink to="building-blocks">Building blocks (for review)</RouteLink>
+                </li>
+              )}
             </ul>
           </nav>
+          <p className="field-hint">Say It Once, test version {appVersion}</p>
         </div>
       </footer>
     </>

@@ -1,9 +1,10 @@
 import { Button } from '../components/Button';
 import { RouteLink } from '../router';
 import { PageTop } from '../shell/PageTop';
+import { TryExample } from '../features/example/TryExample';
 
-// Four steps (docs/spec.md, "journey"). The third and fourth describe what
-// exists now; sharing arrives in Stage 4.
+// Four steps (docs/spec.md, "journey"), describing only what the app does,
+// and a made-up record to try things with.
 
 export function HowToUse() {
   return (
@@ -29,11 +30,13 @@ export function HowToUse() {
         <li>
           <h2>Use it</h2>
           <p>
-            Soon you’ll be able to create a summary for a solicitor, your employer, the DWP or a doctor, choosing exactly
-            what goes in. Anything marked private is always left out.
+            When you need to, Use my record puts together a report for a solicitor, your employer, the DWP or a doctor.
+            You choose exactly what goes in, then share or save it as a PDF or a zip file. Anything marked private is
+            always left out.
           </p>
         </li>
       </ol>
+      <TryExample />
       <div className="button-row no-print">
         <Button onPress={() => window.print()}>Print this guide</Button>
       </div>

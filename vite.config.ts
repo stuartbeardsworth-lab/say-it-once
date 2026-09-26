@@ -8,6 +8,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 const csp = /Content-Security-Policy = "([^"]+)"/.exec(readFileSync(new URL('./netlify.toml', import.meta.url), 'utf8'))?.[1];
 if (!csp) throw new Error('netlify.toml has no Content-Security-Policy');
 
+const { version } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string };
+
 export default defineConfig({
   plugins: [
     react(),
@@ -48,12 +50,15 @@ export default defineConfig({
   ],
   // Relative asset paths, so the built app works from any folder or host.
   base: './',
+  define: { __APP_VERSION__: JSON.stringify(version) },
   preview: {
     headers: { 'Content-Security-Policy': csp },
   },
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
+    // Unit tests can reach the Building blocks page, as the browser tests do.
+    env: { VITE_REVIEW_PAGES: '1' },
     include: ['src/**/*.test.{ts,tsx}', 'tests/**/*.test.ts'],
   },
 });
