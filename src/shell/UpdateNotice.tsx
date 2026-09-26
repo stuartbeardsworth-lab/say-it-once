@@ -1,5 +1,6 @@
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { Button } from '../components/Button';
+import { watchForUpdates } from './watchForUpdates';
 
 // Registers the service worker that keeps the app on this device for use
 // offline. When a new version has been downloaded, it waits: this notice
@@ -10,7 +11,11 @@ export function UpdateNotice() {
   const {
     needRefresh: [needRefresh, setNeedRefresh],
     updateServiceWorker,
-  } = useRegisterSW();
+  } = useRegisterSW({
+    onRegisteredSW(_url, registration) {
+      if (registration) watchForUpdates(registration);
+    },
+  });
 
   if (!needRefresh) return null;
   return (
