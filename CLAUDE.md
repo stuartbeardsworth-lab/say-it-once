@@ -62,7 +62,8 @@ If code and these documents disagree, stop and ask which is right.
 Client: TypeScript (strict), React, Vite, React Aria Components, Dexie.js,
 vite-plugin-pwa (Workbox), pdfmake, fflate, libsodium (from stage 7, as
 `libsodium-wrappers-sumo`, the build that includes Argon2id).
-Server (from stage 8): Node.js LTS, Fastify, PostgreSQL, Kysely.
+Server (from stage 8): Node.js LTS, Fastify, PostgreSQL, Kysely, with `pg`
+(Kysely's PostgreSQL driver) and `@fastify/cookie` (approved 26 September 2026).
 Tests: Vitest, fast-check, Playwright (including WebKit), axe-core.
 Development-only tools (approved 25 September 2026; never shipped to users):
 ESLint (with typescript-eslint, eslint-plugin-react-hooks, globals),
@@ -177,3 +178,12 @@ Done when:
 - The independent cryptography review (`docs/crypto-review.md`, brief in
   `docs/crypto-review-brief.md`) is arranged and paid for by the owner. No
   real person's data goes to the server until the reviewer has signed off.
+- 26 September 2026, Stage 8 is built in two parts: 8a the server code and
+  its tests (in `server/`, run by CI against PostgreSQL 16), and 8b going
+  live on Hetzner. The owner buys a web address so the app (`app.`) and the
+  server (`api.`) share it: the SameSite=Strict session cookie and the
+  sign-in emails both need that. Sign-in codes go through an EU-based email
+  provider, chosen in 8b. Encrypted files are stored in the database for
+  now; they can move to object storage later without changing the app.
+- The server runs TypeScript directly with Node's type stripping (Node
+  22.18+), so it has no build step. See `docs/server.md`.

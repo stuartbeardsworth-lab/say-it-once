@@ -34,6 +34,11 @@ Before running `test:e2e` for the first time, install the browsers with
 
 All of these run on every push in GitHub Actions (`.github/workflows/ci.yml`).
 
+## The server
+
+`server/` is the sync server (Stage 8), with its own `package.json`. See
+`docs/server.md` for what it stores, how to run it and its tests.
+
 ## Where things live
 
 | Folder | What's in it |

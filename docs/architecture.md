@@ -102,7 +102,7 @@ Signing in proves who you are; unlocking proves you can read the record. They ar
 | Change email | Only from an unlocked device, with a code sent to both addresses | Prevents takeover by someone who only has the email account. |
 | Delete account | Unlocked device, typed confirmation | Deletes every envelope, file and wrapped key; see Deletion. |
 
-**Sessions** — `HttpOnly`, `Secure`, `SameSite=Strict` cookie; 90-day rolling expiry per device; device list shows name, last seen, sign-out. Rate limits on codes per email and per IP.
+**Sessions** — `HttpOnly`, `Secure`, `SameSite=Strict` cookie; 90-day rolling expiry per device; device list shows name, last seen, sign-out. Rate limits on codes per email and per IP. *Built in Stage 8a:* codes and session tokens are stored only as hashes; limits are kept in the database (5 codes per email and 20 per IP an hour; 30 wrong codes per IP an hour); a device signed out from elsewhere is told "signed-out" once, so it can wipe its copy. Details: `docs/server.md`.
 
 **Why a code, not a magic link** — on iOS a tapped link opens Safari, not the installed app, recreating the storage split the rebuild must fix. A code is typed into whichever context asked for it.
 
@@ -228,7 +228,7 @@ Files are encrypted and moved in 64 KiB chunks, so no step ever needs a whole fi
 - **On the device** — stored as the original Blob, never base64. Originals are kept unchanged because they may be evidence. Thumbnails are made on the device and never synced.
 - **Size limit** — 25 MB per file, stated before the person picks a file, with a plain message if exceeded. (Q5)
 - **Encryption** — each file gets its own key, wrapped by the record key; `secretstream` produces a header and authenticated chunks, so a truncated or reordered file fails to decrypt instead of opening corrupted.
-- **What the server stores** — object key = random file ID; chunk count; total size. The file name, type and which item it belongs to live only inside the encrypted `document` or `quickNote` item.
+- **What the server stores** — object key = random file ID; chunk count; total size. *Stage 8 decision (26 September 2026):* the chunks are kept in PostgreSQL for now, which keeps one thing to run and back up; moving them to object storage later doesn't change the API. The file name, type and which item it belongs to live only inside the encrypted `document` or `quickNote` item.
 - **Upload** — chunks go through the API to object storage; each chunk is idempotent, so an interrupted upload resumes where it stopped. A file becomes visible to other devices only after `complete` confirms every chunk arrived. Until then the item shows "File still uploading from your other device".
 - **Download** — on demand when opened or when a report needs it; decrypted as a stream straight into a local Blob. A "Keep all files on this device" setting pre-fetches everything for offline use.
 - **Opening a file** — from a local Blob URL in the app; on iOS standalone, via the share sheet, with success reported only if the share completes.
