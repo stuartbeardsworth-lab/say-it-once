@@ -251,3 +251,9 @@ Done when:
   Notes and My records) and the Help and settings box (plus Building blocks
   in Deploy Previews); other screens have Back and Home. The footer keeps the
   brand line and the version.
+- 26 September 2026, updates: the owner's phone stayed on an old version
+  after new ones were published. The app now asks the browser to look for a
+  new version when it opens, whenever it comes back on screen, and hourly
+  (`src/shell/watchForUpdates.ts`); Netlify serves `sw.js` and `index.html`
+  with `Cache-Control: no-cache`. Switching still waits for the person to
+  choose "Use the new version".
