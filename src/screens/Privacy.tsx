@@ -3,6 +3,7 @@ import { ConfirmDialog } from '../components/ConfirmDialog';
 import { BackupSection } from '../features/backup/BackupSection';
 import { RestoreSection } from '../features/backup/RestoreSection';
 import { navigate, RouteLink } from '../router';
+import { appVersion } from '../buildInfo';
 import { DeviceOnlyBanner } from '../shell/DeviceOnlyBanner';
 import { useStore } from '../store/StoreContext';
 import { PageTop } from '../shell/PageTop';
@@ -16,10 +17,20 @@ export function Privacy() {
       <h1 tabIndex={-1}>Privacy &amp; backup</h1>
       <DeviceOnlyBanner />
 
+      <h2>A test version</h2>
+      <p>
+        You’re trying an early version of Say It Once (version {appVersion}). It will change as people tell us what
+        works and what doesn’t. Please save a backup now and then, and don’t rely on it as the only copy of anything
+        important yet.
+      </p>
+      <p>
+        Say It Once keeps records and helps you organise them. It doesn’t give medical, legal or benefits advice.
+      </p>
+
       <h2>Where is my record?</h2>
       <p>
         Your record is kept in this browser, on this device. It is not sent anywhere. There is no account and no
-        one at Say It Once can see it.
+        one at Say It Once can see it. There is no tracking and nothing is measured about how you use it.
       </p>
 
       <h2>Who can read it?</h2>

@@ -3,6 +3,7 @@ import { AppShell } from './shell/AppShell';
 import { AddToPhone } from './screens/AddToPhone';
 import { Appointments } from './screens/Appointments';
 import { BuildingBlocks } from './screens/BuildingBlocks';
+import { reviewPages } from './buildInfo';
 import { Changes } from './screens/Changes';
 import { Contacts } from './screens/Contacts';
 import { Costs } from './screens/Costs';
@@ -66,7 +67,7 @@ function Screen({ location }: { location: ReturnType<typeof useLocation> }) {
     case 'privacy':
       return <Privacy />;
     case 'building-blocks':
-      return <BuildingBlocks />;
+      return reviewPages ? <BuildingBlocks /> : <NotFound />;
     case 'not-found':
       return <NotFound />;
   }

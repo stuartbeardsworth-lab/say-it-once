@@ -19,6 +19,9 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
+      # The real site must not contain the Building blocks review page.
+      - name: The site build leaves out review pages
+        run: "! grep -rq 'Pretend storage is unavailable' dist"
 
   e2e:
     name: Browser tests with axe (Chromium, WebKit, iPhone)
