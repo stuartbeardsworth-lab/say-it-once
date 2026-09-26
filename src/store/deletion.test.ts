@@ -34,6 +34,20 @@ describe('deleting', () => {
     expect(await store.db.local.where('itemId').equals(contact.id).count()).toBe(0);
   });
 
+  it('any item: forgets that it was in a shared report', async () => {
+    const { store, recordId } = await setup();
+    const a = await store.save('contact', recordId, blank('contact', { organisation: 'Headway' }));
+    const b = await store.save('contact', recordId, blank('contact', { organisation: 'GP' }));
+    expect(await store.lastShared(recordId, [a.id])).toBeNull();
+    await store.noteShared(recordId, [a.id, b.id]);
+    expect(await store.lastShared(recordId, [a.id])).not.toBeNull();
+    expect(await store.lastShared(recordId)).not.toBeNull();
+    await store.deleteItem(a.id);
+    expect(await store.db.local.where('itemId').equals(a.id).count()).toBe(0);
+    expect(await store.lastShared(recordId, [a.id])).toBeNull();
+    expect(await store.lastShared(recordId, [b.id])).not.toBeNull();
+  });
+
   it('document: removes its file and unlinks appointments and costs', async () => {
     const { store, recordId } = await setup();
     const { doc, file } = await addDocumentWithFile(store, recordId);

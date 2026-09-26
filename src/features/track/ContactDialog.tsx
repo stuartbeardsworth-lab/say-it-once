@@ -10,6 +10,7 @@ import type { Item } from '../../domain/types';
 import { useEntryForm } from '../../forms/useEntryForm';
 import { newItemId } from '../../store/store';
 import { useRecordId, useStore } from '../../store/StoreContext';
+import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
 export function ContactDialog({ edit, onClose }: { edit: { existing?: Item<'contact'> } | null; onClose: () => void }) {
   return (
@@ -60,6 +61,7 @@ function ContactForm({ existing, controls }: { existing: Item<'contact'> | undef
             }}
           >
             <p>It will be deleted from this device.</p>
+            <SharedCopiesNote itemIds={[existing.id]} />
           </ConfirmDialog>
         )}
         <Button onPress={controls.cancel}>Cancel</Button>

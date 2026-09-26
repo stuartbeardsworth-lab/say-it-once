@@ -11,6 +11,7 @@ import { useItemDraft } from '../forms/useItemDraft';
 import { PageTop } from '../shell/PageTop';
 import { useRecords } from '../store/hooks';
 import { useRecordId, useStore } from '../store/StoreContext';
+import { SharedCopiesNote } from '../features/deliver/SharedCopiesNote';
 
 // My records (decision Q2): several records per person, one per incident,
 // with a switcher, rename and delete. The last record can't be deleted.
@@ -78,6 +79,7 @@ export function Records() {
                       Everything in this record will be deleted from this device: every entry, note, photo and
                       document. This can’t be undone.
                     </p>
+                    <SharedCopiesNote recordId={r.id} />
                   </ConfirmDialog>
                 )}
               </div>

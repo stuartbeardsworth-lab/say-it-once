@@ -337,6 +337,30 @@ export class Store {
     return { recent, often };
   }
 
+  /**
+   * Notes that these entries went into a report that left the app (shared or
+   * downloaded), so deleting one later can say that copies already given to
+   * someone can't be recalled. One row per entry, removed with the entry.
+   */
+  async noteShared(recordId: string, itemIds: readonly string[]): Promise<void> {
+    const at = now();
+    await this.queue.run(() =>
+      this.db.local.bulkPut(itemIds.map((itemId) => ({ key: `shared:${recordId}:${itemId}`, recordId, itemId, value: { at } }))),
+    );
+  }
+
+  /**
+   * When any of these entries (or, without a list, anything in the record)
+   * was last in a report that left the app, or null if never.
+   */
+  async lastShared(recordId: string, itemIds?: readonly string[]): Promise<string | null> {
+    const rows = itemIds
+      ? (await this.db.local.bulkGet(itemIds.map((id) => `shared:${recordId}:${id}`))).filter((r) => r !== undefined)
+      : (await this.db.local.where('recordId').equals(recordId).toArray()).filter((r) => r.key.startsWith('shared:'));
+    const times = rows.map((r) => (r.value as { at: string }).at).sort();
+    return times.at(-1) ?? null;
+  }
+
   async countItems(recordId: string): Promise<number> {
     return this.db.items.where('recordId').equals(recordId).count();
   }

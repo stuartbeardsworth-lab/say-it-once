@@ -5,6 +5,7 @@ import { blank } from '../domain/blank';
 import type { AnyItem, ItemDataMap, ItemType } from '../domain/types';
 import { impactAreas, sections } from '../domain/vocab';
 import { buildReport, reportText } from '../reports/model';
+import { pdfText, reportToPdf } from '../reports/pdf';
 import { purposes } from '../reports/purposes';
 import { ReadingView } from '../reports/ReadingView';
 import { defaultSelection, selectEverything } from '../reports/selection';
@@ -17,7 +18,8 @@ import { shareableFiles, toShareable } from './toShareable';
 //
 // For every purpose, with the default selection and with everything
 // selected, no marker from a private item appears in any output: the
-// report model, the reading view's HTML, or the list of files. And with
+// report model, the reading view's HTML, the PDF's content, or the list of
+// files. And with
 // everything selected in the full record, every marker from a non-private
 // item does appear, so over-filtering fails too.
 
@@ -227,6 +229,7 @@ function outputsFor(built: Built, selectAll: boolean) {
       purpose: purpose.key,
       text: reportText(report).join('\n') + '\n' + JSON.stringify(report),
       html: renderToStaticMarkup(<ReadingView report={report} />),
+      pdf: pdfText(reportToPdf(report)).join('\n'),
       files: shareableFiles(view).map((f) => f.fileId),
     };
   });
@@ -246,6 +249,7 @@ describe('toShareable and reports never leak private items', () => {
           for (const secret of secrets) {
             expect(out.text, `${out.purpose}: ${secret}`).not.toContain(secret);
             expect(out.html, `${out.purpose}: ${secret}`).not.toContain(secret);
+            expect(out.pdf, `${out.purpose}: ${secret}`).not.toContain(secret);
           }
           for (const fileId of out.files) {
             expect(built.isPrivate.get(built.fileOwner.get(fileId) ?? ''), `${out.purpose}: ${fileId}`).toBe(false);
@@ -263,7 +267,10 @@ describe('toShareable and reports never leak private items', () => {
         const full = outputsFor(built, true).find((o) => o.purpose === 'full-record')!;
         for (const [id, list] of built.markers) {
           if (built.isPrivate.get(id)) continue;
-          for (const m of list) expect(full.html, `${id}: ${m}`).toContain(m);
+          for (const m of list) {
+            expect(full.html, `${id}: ${m}`).toContain(m);
+            expect(full.pdf, `${id}: ${m}`).toContain(m);
+          }
         }
       }),
       { numRuns: 300 },
@@ -281,7 +288,7 @@ describe('toShareable and reports never leak private items', () => {
     );
   }, 60_000);
 
-  it('the text the reading view shows is exactly the model’s text', () => {
+  it('the reading view and the PDF both show every piece of the model’s text', () => {
     fc.assert(
       fc.property(planArb, (plan) => {
         const built = build(plan);
@@ -290,7 +297,11 @@ describe('toShareable and reports never leak private items', () => {
           const report = buildReport(view, purpose, selectEverything(purpose, view), { today: '2026-06-01' });
           const html = renderToStaticMarkup(<ReadingView report={report} />);
           const decoded = html.replace(/<[^>]+>/g, '\n').replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&amp;/g, '&');
-          for (const text of reportText(report)) expect(decoded).toContain(text);
+          const pdf = pdfText(reportToPdf(report));
+          for (const text of reportText(report)) {
+            expect(decoded).toContain(text);
+            expect(pdf).toContain(text);
+          }
         }
       }),
       { numRuns: 100 },

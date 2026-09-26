@@ -13,6 +13,7 @@ import { useEntryForm } from '../../forms/useEntryForm';
 import { useItems } from '../../store/hooks';
 import { newItemId } from '../../store/store';
 import { useRecordId, useStore } from '../../store/StoreContext';
+import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
 // Money spent, or income lost, because of the injury or illness.
 
@@ -141,6 +142,7 @@ function CostForm({ edit, controls }: { edit: CostEdit; controls: EntryFormContr
             }}
           >
             <p>It will be deleted from this device.</p>
+            <SharedCopiesNote itemIds={[edit.existing?.id]} />
           </ConfirmDialog>
         )}
         <Button onPress={controls.cancel}>Cancel</Button>

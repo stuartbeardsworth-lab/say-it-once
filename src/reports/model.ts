@@ -63,6 +63,11 @@ export interface Report {
   personalInfo: string[];
   signature: boolean;
   disclaimer: string;
+  /**
+   * The entries this report shows or mentions, so deleting one later can
+   * say it was in a report already made. Never printed.
+   */
+  itemIds: string[];
 }
 
 type Section = ShareableEntry<unknown>;
@@ -175,6 +180,19 @@ function assignEvidence(view: ShareableRecord, selection: Selection): EvidenceIt
     }));
 }
 
+/** What the "Where things are now" section mentions. */
+function currentPositionParts(view: ShareableRecord, today: string) {
+  const meds = view.medications.filter((m) => m.data.status !== 'Stopped');
+  const treatments = [...view.treatments]
+    .sort(byDate((t) => t.data.date || t.createdAt))
+    .reverse()
+    .slice(0, 3);
+  const ordered = [...view.appointments].sort(byDate((a) => `${a.data.date}${a.data.time}`));
+  const next = ordered.find((a) => a.data.date >= today);
+  const last = ordered.filter((a) => a.data.date < today).at(-1);
+  return { meds, treatments, last, next };
+}
+
 type Builder = (
   view: ShareableRecord,
   ids: Set<string>,
@@ -231,15 +249,7 @@ const builders: Record<SectionKey, Builder> = {
   },
 
   currentPosition(view, _ids, _refOf, today) {
-    const meds = view.medications.filter((m) => m.data.status !== 'Stopped').map((m) => m.data.name);
-    const treatments = [...view.treatments]
-      .sort(byDate((t) => t.data.date || t.createdAt))
-      .reverse()
-      .slice(0, 3)
-      .map((t) => t.data.name);
-    const ordered = [...view.appointments].sort(byDate((a) => `${a.data.date}${a.data.time}`));
-    const next = ordered.find((a) => a.data.date >= today);
-    const last = ordered.filter((a) => a.data.date < today).at(-1);
+    const { meds, treatments, last, next } = currentPositionParts(view, today);
     const describe = (a: ShareableEntry<AppointmentData> | undefined) =>
       a ? `${readableDate(a.data.date)}, ${a.data.organisation}` : '';
     return [
@@ -247,8 +257,8 @@ const builders: Record<SectionKey, Builder> = {
         type: 'fields',
         fields: nonEmpty([
           { label: 'Areas of daily life affected', value: sortAreas(view.impactAreas).map((a) => impactAreaLabel(a.data.areaKey)).join(', ') },
-          { label: 'Medication', value: meds.join(', ') },
-          { label: 'Recent treatment', value: treatments.join(', ') },
+          { label: 'Medication', value: meds.map((m) => m.data.name).join(', ') },
+          { label: 'Recent treatment', value: treatments.map((t) => t.data.name).join(', ') },
           { label: 'Last appointment', value: describe(last) },
           { label: 'Next appointment', value: describe(next) },
         ]),
@@ -513,6 +523,17 @@ export function buildReport(view: ShareableRecord, purpose: Purpose, selection: 
     if (blocks.length) sections.push({ key: config.key, title: sectionTitle(purpose, config.key), blocks });
   }
 
+  const itemIds = new Set(evidence.map((e) => e.documentId));
+  for (const s of sections) {
+    // What happened and work details are one per record and are never deleted
+    // on their own, so only entries that can be deleted are noted.
+    if (s.key === 'currentPosition') {
+      const parts = currentPositionParts(view, options.today);
+      for (const e of [...view.impactAreas, ...parts.meds, ...parts.treatments, parts.last, parts.next]) if (e) itemIds.add(e.id);
+    }
+    if (!fixedSections.has(s.key)) for (const id of selection[s.key]?.ids ?? []) itemIds.add(id);
+  }
+
   const person = view.personName.trim();
   return {
     purposeKey: purpose.key,
@@ -526,13 +547,14 @@ export function buildReport(view: ShareableRecord, purpose: Purpose, selection: 
     evidence,
     personalInfo: personalInfo(view, selection, sections),
     signature: purpose.signature,
+    itemIds: [...itemIds],
     disclaimer: `This was written by ${person || 'the person it is about'}, in their own words, using Say It Once. It is their own record and not a formal witness statement or medical report.`,
   };
 }
 
 /** Every piece of text in a report, in reading order. Used to prove renderers match. */
 export function reportText(report: Report): string[] {
-  const out = [report.title, report.intro, report.recordName, report.personName, report.preparedOn];
+  const out = [report.title, report.intro, report.personName, report.recordName, report.preparedOn];
   for (const s of report.sections) {
     out.push(s.title);
     for (const b of s.blocks) {

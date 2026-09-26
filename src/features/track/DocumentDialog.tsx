@@ -16,6 +16,7 @@ import { StorageProblem } from '../../store/problems';
 import { newItemId } from '../../store/store';
 import { useRecordId, useStore } from '../../store/StoreContext';
 import { FilePicker } from './FilePicker';
+import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
 // A letter or document: a photo, a PDF, or just the details of a paper one
 // (docs/spec.md, "Document"). It needs a file or a name.
@@ -132,6 +133,7 @@ function DocumentForm({ existing, controls }: { existing: Item<'document'> | und
           >
             <p>The document and its file will be deleted from this device.</p>
             <p>Appointments and costs it was linked to keep their details, but lose the link.</p>
+            <SharedCopiesNote itemIds={[existing.id]} />
           </ConfirmDialog>
         )}
         <Button onPress={controls.cancel}>Cancel</Button>

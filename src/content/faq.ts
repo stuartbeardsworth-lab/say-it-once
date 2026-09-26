@@ -15,7 +15,7 @@ export const faq: FaqTopic[] = [
         q: 'What is Say It Once for?',
         a: [
           'It helps you keep a record of what happened, how it affects you, and your appointments, treatment, costs, letters and contacts, all in one place.',
-          'Later, you’ll be able to share the parts you choose with a solicitor, your employer, the DWP or a doctor, so you don’t have to explain everything again.',
+          'When you need to, Use my record puts together the parts you choose for a solicitor, your employer, the DWP or a doctor, so you don’t have to explain everything again.',
         ],
       },
       {
@@ -66,6 +66,7 @@ export const faq: FaqTopic[] = [
         q: 'How do I delete something?',
         a: [
           'Open it and press Delete. You’re always asked first. Deleting removes it from this device completely, including any photo or file saved with it.',
+          'It can’t take back a PDF you’ve already shared or saved. If the entry was in one, the question before deleting says so.',
         ],
       },
     ],
@@ -97,11 +98,38 @@ export const faq: FaqTopic[] = [
     ],
   },
   {
+    title: 'Sharing your record',
+    questions: [
+      {
+        q: 'How do I give my record to someone?',
+        a: [
+          'Go to Use my record. Choose who it’s for and what they need, check what goes in, then press Create the report.',
+          'Press Make a PDF. When it’s ready, press Share the PDF to send it with email, a message or another app, or save it to your phone or computer.',
+          'Anything marked “Keep this private” is never included.',
+        ],
+      },
+      {
+        q: 'How do I know it was sent?',
+        a: [
+          'Say It Once can tell when the PDF was passed to the app you chose, such as your email. Whether the message was then sent is up to that app, so check there.',
+          'If you close the share options without choosing an app, it says “Not sent”.',
+        ],
+      },
+    ],
+  },
+  {
     title: 'Using it on your phone',
     questions: [
       {
         q: 'Can I put Say It Once on my home screen?',
         a: ['Yes. See “Keep Say It Once on your phone” for the steps for your phone, and one important thing to know first.'],
+      },
+      {
+        q: 'Does it work without the internet?',
+        a: [
+          'Yes. Once Say It Once has been opened with a connection, it keeps what it needs on your device. You can write, find things and make PDFs without a connection.',
+          'When a new version is ready, a message offers it. Nothing changes until you choose, and your record stays as it is.',
+        ],
       },
       {
         q: 'Can I make the words bigger?',

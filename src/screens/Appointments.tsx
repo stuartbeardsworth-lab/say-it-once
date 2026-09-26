@@ -14,6 +14,7 @@ import { deliverFile, deliveryMessage } from '../forms/deliverFile';
 import { PageTop } from '../shell/PageTop';
 import { useItems, useRecordName } from '../store/hooks';
 import { useStore } from '../store/StoreContext';
+import { SharedCopiesNote } from '../features/deliver/SharedCopiesNote';
 
 // Appointments (docs/spec.md, "diary"): upcoming ones first, earlier ones
 // folded away with a search.
@@ -174,6 +175,7 @@ function AppointmentCard({
               onChange={setAlsoLetter}
             />
           )}
+          <SharedCopiesNote itemIds={[appt.id, alsoLetter ? letter?.id : null]} />
         </ConfirmDialog>
       </div>
       {isUpcoming && appt.private && (

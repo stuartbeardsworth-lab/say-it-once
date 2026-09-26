@@ -13,6 +13,7 @@ import { feelings, painLevels } from '../../domain/vocab';
 import { useEntryForm } from '../../forms/useEntryForm';
 import { newItemId } from '../../store/store';
 import { useRecordId, useStore } from '../../store/StoreContext';
+import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
 // A dated health and wellbeing check-in: pain, how I feel, pulse, a note.
 // The app records these; it never scores or interprets them.
@@ -108,6 +109,7 @@ function CheckInForm({ existing, controls }: { existing: Item<'checkIn'> | undef
             }}
           >
             <p>The check-in will be deleted from this device.</p>
+            <SharedCopiesNote itemIds={[existing.id]} />
           </ConfirmDialog>
         )}
         <Button onPress={controls.cancel}>Cancel</Button>

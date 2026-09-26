@@ -4,6 +4,7 @@ import { Checkbox } from '../components/Checkbox';
 import { RadioList } from '../components/RadioList';
 import { today } from '../domain/dates';
 import type { AnyItem, Item } from '../domain/types';
+import { SendReport } from '../features/deliver/SendReport';
 import { ChooseEntriesDialog } from '../features/use/ChooseEntriesDialog';
 import { takeResults } from '../features/use/handoff';
 import { WorkDetailsDialog } from '../features/work/WorkDetailsDialog';
@@ -299,7 +300,13 @@ export function UseRecord() {
                   <Button onPress={() => readAloud.start(reportText(report).join('. '))}>Read aloud</Button>
                 ))}
             </div>
-            <p className="field-hint">Saving as PDF and as a zip with the documents comes next.</p>
+            <SendReport
+              report={report}
+              onSent={(ids) => {
+                // Only for the warning when deleting later; a failure here doesn't undo the send.
+                if (recordId) store.noteShared(recordId, ids).catch(() => undefined);
+              }}
+            />
           </div>
           <ReadingView report={report} />
         </section>
