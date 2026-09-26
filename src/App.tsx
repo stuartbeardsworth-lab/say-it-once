@@ -19,6 +19,7 @@ import { Privacy } from './screens/Privacy';
 import { QuickNotes } from './screens/QuickNotes';
 import { Records } from './screens/Records';
 import { Support } from './screens/Support';
+import { UseRecord } from './screens/UseRecord';
 import { WhatHappened } from './screens/WhatHappened';
 import { StoreProvider } from './store/StoreContext';
 import { Store } from './store/store';
@@ -50,6 +51,8 @@ function Screen({ location }: { location: ReturnType<typeof useLocation> }) {
       return <QuickNotes />;
     case 'find':
       return <Find />;
+    case 'use':
+      return <UseRecord />;
     case 'support':
       return <Support />;
     case 'faq':

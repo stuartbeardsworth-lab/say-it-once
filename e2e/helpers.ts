@@ -15,6 +15,7 @@ export const screens = [
   { hash: '#quick-notes', heading: 'Quick Notes' },
   { hash: '#records', heading: 'My records' },
   { hash: '#find', heading: 'Find in my record' },
+  { hash: '#use', heading: 'Use my record' },
   { hash: '#support', heading: 'Find support' },
   { hash: '#faq', heading: 'Questions and answers' },
   { hash: '#how-to-use', heading: 'How to use Say It Once' },

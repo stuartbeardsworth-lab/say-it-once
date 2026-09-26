@@ -16,13 +16,22 @@ describe('reports import boundary', () => {
     ["import { db } from '../../store';"],
     ["import { push } from '../sync/engine';"],
     ["import type { Record } from '../domain/types';"],
+    ["import type { Item } from '../../domain/types';"],
+    ["import { upgrade } from '../domain/schema';"],
+    ["import { validate } from '../domain/validate';"],
+    ["import { blank } from '../domain/blank';"],
+    ["import * as domain from '../domain';"],
     ["import Dexie from 'dexie';"],
   ])('blocks %s inside src/reports', async (code) => {
     expect(await lintAs('src/reports/example.ts', code)).toHaveLength(1);
   });
 
-  it('allows the shareable view inside src/reports', async () => {
-    const code = "import type { ShareableRecord } from '../shareable/types';";
+  it.each([
+    ["import type { ShareableRecord } from '../shareable/types';"],
+    ["import { impactAreaLabel } from '../domain/vocab';"],
+    ["import { readableDate } from '../domain/format';"],
+    ["import { formatPence } from '../domain/money';"],
+  ])('allows %s inside src/reports', async (code) => {
     expect(await lintAs('src/reports/example.ts', code)).toHaveLength(0);
   });
 

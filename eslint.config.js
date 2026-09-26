@@ -14,6 +14,12 @@ export default tseslint.config(
     rules: reactHooks.configs.recommended.rules,
   },
   {
+    // In tests, "!" is a plain way to say "this must exist"; a wrong guess
+    // fails the test loudly. App code keeps the stricter rule.
+    files: ['**/*.test.{ts,tsx}'],
+    rules: { '@typescript-eslint/no-non-null-assertion': 'off' },
+  },
+  {
     // The privacy boundary (docs/architecture.md, "How bypass is prevented").
     // Report code may only receive the shareable view. It must never reach the
     // local store, the sync engine or the raw record types in src/domain/,
@@ -31,7 +37,10 @@ export default tseslint.config(
           ],
           patterns: [
             {
-              regex: '(^|/)(store|sync|domain)(/|$)',
+              // The store, sync code, and the raw record types that still
+              // carry private items. Wording lists, dates and money helpers
+              // in src/domain/ are allowed.
+              regex: '(^|/)(store|sync)(/|$)|(^|/)domain/(types|schema|validate|blank)$|(^|/)domain$',
               message:
                 'Reports may only import the shareable view, never the local store, sync code or raw record types.',
             },

@@ -324,3 +324,22 @@ describe('Find history', () => {
     expect((await store.openedHistory(recordId)).recent).toEqual([b.id]);
   });
 });
+
+describe('importing a whole record', () => {
+  it('loads the made-up example in one go, with new IDs and working links and files', async () => {
+    const { exampleRecord } = await import('../fixtures/example');
+    const store = await freshStore();
+    await store.ensureRecord();
+    const ex = exampleRecord('2026-06-01');
+    const recordId = await store.importRecord(ex.recordName, ex.entries);
+    const all = await store.listAll(recordId);
+    expect(all.filter((i) => i.type !== 'recordMeta')).toHaveLength(ex.entries.length);
+    expect(all.some((i) => i.id.startsWith('ex-'))).toBe(false);
+    const appt = (await store.list(recordId, 'appointment')).find((a) => a.data.purpose === 'Check-up after the operation')!;
+    const letter = (await store.get(appt.data.documentId ?? ''))?.item as Item<'document'>;
+    expect(letter.data.title).toBe('Appointment letter — Fracture clinic');
+    expect(await (await store.getFile(letter.data.file?.fileId ?? ''))?.blob.text()).toContain('fictional');
+    const snap = (await store.list(recordId, 'impactSnapshot'))[0]!;
+    expect(all.map((i) => i.id)).toContain(snap.data.areas[0]?.itemId);
+  });
+});

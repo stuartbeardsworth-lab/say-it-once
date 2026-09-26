@@ -201,6 +201,73 @@ export class Store {
     return id;
   }
 
+  /**
+   * Adds a whole record at once, such as the made-up example, in one
+   * transaction: every entry and file, or nothing. Entries get new IDs, and
+   * links between them are updated to match.
+   */
+  async importRecord(
+    name: string,
+    entries: { id: string; type: ItemType; data: unknown; private: boolean; file?: { name: string; type: string; text: string } }[],
+    impactCurrentSince = '',
+  ): Promise<string> {
+    const ids = new Map(entries.map((e) => [e.id, newId()]));
+    const fileIds = new Map<string, string>();
+    const remap = (value: unknown): unknown => {
+      if (typeof value === 'string') return ids.get(value) ?? fileIds.get(value) ?? value;
+      if (Array.isArray(value)) return value.map(remap);
+      if (value && typeof value === 'object') {
+        return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([k, v]) => [k, remap(v)]));
+      }
+      return value;
+    };
+    const files = entries.flatMap((e) => {
+      const ref = (e.data as { file?: { fileId: string } | null }).file;
+      if (!e.file || !ref) return [];
+      const fileId = newId();
+      fileIds.set(ref.fileId, fileId);
+      const bytes = new TextEncoder().encode(e.file.text).buffer;
+      return [{ fileId, name: e.file.name, type: e.file.type, size: bytes.byteLength, bytes }];
+    });
+    const items = entries.map((e) => {
+      const data = remap(e.data) as ItemDataMap[ItemType];
+      if (e.file) {
+        const f = files.find((x) => x.fileId === fileIds.get((e.data as { file: { fileId: string } }).file.fileId));
+        if (f) (data as ItemDataMap['document']).file = { fileId: f.fileId, name: f.name, type: f.type, size: f.size };
+      }
+      const result = validate(e.type, data, e.private);
+      if (!result.ok) throw new ValidationProblem(result.errors);
+      return { id: ids.get(e.id) as string, type: e.type, data, private: e.private };
+    });
+
+    const recordId = await this.queue.run(() =>
+      this.db.transaction('rw', this.db.items, this.db.files, async () => {
+        const id = await this.addRecord(name);
+        if (impactCurrentSince) {
+          const meta = (await this.db.items.get(id)) as Item<'recordMeta'>;
+          await this.db.items.put({ ...meta, data: { ...meta.data, impactCurrentSince } });
+        }
+        for (const f of files) await this.addFileRow(id, { fileId: f.fileId, name: f.name, type: f.type, size: f.size }, f.bytes);
+        const stamp = now();
+        for (const item of items) {
+          await this.db.items.add({
+            id: item.id,
+            recordId: id,
+            type: item.type,
+            schema: currentSchema[item.type],
+            private: privateCapable.has(item.type) && item.private,
+            data: item.data,
+            createdAt: stamp,
+            updatedAt: stamp,
+          } as Item);
+        }
+        return id;
+      }),
+    );
+    this.requestPersistence();
+    return recordId;
+  }
+
   /** Must run inside a transaction that includes items. */
   private async addRecord(name: string): Promise<string> {
     const data = blank('recordMeta', { name });

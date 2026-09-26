@@ -3,6 +3,10 @@ import { TextArea, TextField } from '../components/TextField';
 import { blank } from '../domain/blank';
 import type { IncidentData } from '../domain/types';
 import { FiledNotes } from '../features/quickNotes/FiledNotes';
+import { WorkDetailsDialog } from '../features/work/WorkDetailsDialog';
+import { Button } from '../components/Button';
+import { useItems } from '../store/hooks';
+import { useState } from 'react';
 import { useAutosave } from '../forms/useAutosave';
 import { useItemDraft } from '../forms/useItemDraft';
 import { PageTop } from '../shell/PageTop';
@@ -42,6 +46,7 @@ export function WhatHappened() {
       ) : (
         <p>Loading…</p>
       )}
+      <WorkAtTheTime />
       <FiledNotes section="what" />
     </>
   );
@@ -89,5 +94,24 @@ function IncidentForm({ data, onChange, save }: IncidentFormProps) {
 
       <SaveStatus status={autosave.status} onDismiss={autosave.dismiss} />
     </form>
+  );
+}
+
+/** Work details, for an Industrial Injuries claim. Optional. */
+function WorkAtTheTime() {
+  const work = useItems('workDetails')?.[0];
+  const [open, setOpen] = useState(false);
+  const d = work?.data;
+  return (
+    <section aria-labelledby="work-heading">
+      <h2 id="work-heading">Work at the time (optional)</h2>
+      {d && (d.employer || d.jobTitle || d.workplace) ? (
+        <p>{[d.jobTitle, d.employer, d.workplace].filter(Boolean).join(', ')}</p>
+      ) : (
+        <p>If it happened at work, these details help with an Industrial Injuries claim.</p>
+      )}
+      <Button onPress={() => setOpen(true)}>{work ? 'Edit work details' : 'Add work details'}</Button>
+      <WorkDetailsDialog isOpen={open} existing={work} onClose={() => setOpen(false)} />
+    </section>
   );
 }
