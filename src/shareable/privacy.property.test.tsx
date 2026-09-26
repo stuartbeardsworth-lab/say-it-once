@@ -1,4 +1,5 @@
 import fc from 'fast-check';
+import { strFromU8, unzipSync } from 'fflate';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { blank } from '../domain/blank';
@@ -9,6 +10,7 @@ import { pdfText, reportToPdf } from '../reports/pdf';
 import { purposes } from '../reports/purposes';
 import { ReadingView } from '../reports/ReadingView';
 import { defaultSelection, selectEverything } from '../reports/selection';
+import { makeZip } from '../reports/zip';
 import { shareableFiles, toShareable } from './toShareable';
 
 // The privacy property test (docs/architecture.md, "Tests that prove it").
@@ -18,8 +20,8 @@ import { shareableFiles, toShareable } from './toShareable';
 //
 // For every purpose, with the default selection and with everything
 // selected, no marker from a private item appears in any output: the
-// report model, the reading view's HTML, the PDF's content, or the list of
-// files. And with
+// report model, the reading view's HTML, the PDF's content, the list of
+// files, or the zip (its file names, its HTML page and its attachments). And with
 // everything selected in the full record, every marker from a non-private
 // item does appear, so over-filtering fails too.
 
@@ -276,6 +278,41 @@ describe('toShareable and reports never leak private items', () => {
       { numRuns: 300 },
     );
   }, 180_000);
+
+  it('no private marker or file appears in any zip: its file names, its pages or its attachments', async () => {
+    await fc.assert(
+      fc.asyncProperty(planArb, fc.boolean(), async (plan, selectAll) => {
+        const built = build(plan);
+        const secrets = privateMarkers(built);
+        const secretFiles = [...built.fileOwner].filter(([, owner]) => built.isPrivate.get(owner)).map(([id]) => `BYTES-${id}-END`);
+        // Every file's bytes are unique, so a private file can be spotted anywhere.
+        const readFile = async (id: string) => new Blob([`BYTES-${id}-END`], { type: 'application/pdf' });
+        const { view } = toShareable(RECORD, built.items, 'Sam Example');
+        for (const purpose of purposes) {
+          const selection = selectAll ? selectEverything(purpose, view) : defaultSelection(purpose, view, '2026-06-01');
+          const report = buildReport(view, purpose, selection, { today: '2026-06-01' });
+          const { zip } = await makeZip(report, new Blob(['%PDF']), readFile);
+          const entries = unzipSync(new Uint8Array(await zip.arrayBuffer()));
+          if (selectAll && purpose.key === 'full-record') {
+            // Over-filtering fails too: every letter that isn't private is there.
+            const inZip = Object.values(entries).map((b) => strFromU8(b));
+            for (const d of view.documents) {
+              if (d.data.file) expect(inZip, d.id).toContain(`BYTES-${d.data.file.fileId}-END`);
+            }
+          }
+          for (const [name, bytes] of Object.entries(entries)) {
+            const text = strFromU8(bytes);
+            for (const secret of [...secrets, ...secretFiles]) {
+              // File names are lower-cased in the zip.
+              expect(name.toLowerCase(), `${purpose.key}: ${secret}`).not.toContain(secret.toLowerCase());
+              expect(text, `${purpose.key} ${name}: ${secret}`).not.toContain(secret);
+            }
+          }
+        }
+      }),
+      { numRuns: 100 },
+    );
+  }, 240_000);
 
   it('counts exactly the private items it leaves out', () => {
     fc.assert(

@@ -83,6 +83,8 @@ export const reportWords = {
   evidenceTitle: (kind: Report['kind']) => (kind === 'evidence' ? 'Evidence index' : 'Documents referred to'),
   indexHeadings: ['Ref', 'Document', 'Date', 'From', 'File'],
   paperOnly: 'Paper copy only',
+  photosTitle: 'Photos',
+  photoHeadings: ['Ref', 'Kept with the Quick Note from'],
   confirmation: 'Confirmation',
   confirm: 'I confirm that this is my own account, to the best of my knowledge.',
   signatureLabels: ['Name', 'Signature', 'Date'],
@@ -198,6 +200,28 @@ export function reportToPdf(report: Report): PdfDefinition {
       },
       layout: rows,
       margin: [0, 2, 0, 8],
+    });
+  }
+
+  if (report.photos.length) {
+    content.push({
+      stack: [
+        { text: reportWords.photosTitle, style: 'h2', tocItem: true, headlineLevel: 2 },
+        {
+          table: {
+            widths: ['auto', '*'],
+            headerRows: 1,
+            dontBreakRows: true,
+            body: [
+              reportWords.photoHeadings.map((text) => ({ text, style: 'label' })),
+              ...report.photos.map((p) => [{ text: p.ref }, { text: p.date }]),
+            ],
+          },
+          layout: rows,
+          margin: [0, 2, 0, 8],
+        },
+      ],
+      unbreakable: report.photos.length <= 12,
     });
   }
 
