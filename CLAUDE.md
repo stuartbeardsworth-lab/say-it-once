@@ -353,3 +353,9 @@ Done when:
   "© 2026 Say It Once · version …" (was "Say It Once, test version …").
   The owner's personal name stays out of the app, like their email; the
   version stays so a phone's update can be checked.
+- 27 September 2026, "Keep this private" stays (choosing entries per report
+  isn't a safeguard for someone exhausted; private is decided once, when
+  writing, and covers every output). Its hint is shorter: "Just for you.
+  It's never put in anything you share." Not "only you will see it",
+  because the person's backup includes private entries and anyone using
+  the phone can see the record.
