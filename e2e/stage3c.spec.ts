@@ -78,7 +78,7 @@ test('the Home prompt to add to phone can be dismissed, and stays dismissed', as
   await expect(prompt).toBeVisible();
   await prompt.getByRole('link', { name: /See how/ }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'Keep Say It Once on your phone' })).toBeFocused();
-  await expect(page.getByText('your record doesn’t move with it yet')).toBeVisible();
+  await expect(page.getByText('To bring it across: in Safari, go to Privacy & backup and save a backup.', { exact: false })).toBeVisible();
   await page.goBack();
   // While the box shows, the Add to phone link below isn't repeated.
   const links = page.getByRole('navigation', { name: 'Help and settings' });

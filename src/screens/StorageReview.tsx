@@ -83,7 +83,9 @@ export function StorageReview() {
       </div>
 
       <h3>Quick Notes saved on this device</h3>
-      {notes === undefined ? (
+      {notes === undefined || !recordId ? (
+        // Until the record is open a save can't happen, so say Loading
+        // rather than "None yet" (the browser tests wait for this).
         <p>Loading…</p>
       ) : notes.length === 0 ? (
         <p>None yet.</p>

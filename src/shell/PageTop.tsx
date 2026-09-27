@@ -19,7 +19,7 @@ export function PageTop() {
       </nav>
       {records && records.length > 1 && name && (
         <p className="record-tag">
-          Record: <strong>{name}</strong> <RouteLink to="records">Change</RouteLink>
+          Record: <strong>{name}</strong> · <RouteLink to="records">Change</RouteLink>
         </p>
       )}
     </div>

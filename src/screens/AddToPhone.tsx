@@ -11,15 +11,15 @@ export function AddToPhone() {
       <h1 tabIndex={-1}>Keep Say It Once on your phone</h1>
       <p>Adding it to your home screen puts it one tap away, like an app.</p>
 
-      <div className="notice notice-error">
-        <p className="notice-title">Before you add it: your record doesn’t move with it yet</p>
+      <div className="notice notice-info">
+        <p className="notice-title">One thing to know first, on an iPhone</p>
         <p>
-          On an iPhone, the home screen icon keeps its own separate record. Anything you’ve already written in Safari
-          won’t appear there.
+          The home screen icon keeps its own separate record, so anything you’ve already written in Safari won’t be there
+          at first.
         </p>
         <p>
-          If you’ve already started your record in Safari, keep using Safari for now. A way to copy your record across
-          is coming.
+          To bring it across: in Safari, go to Privacy &amp; backup and save a backup. Then open the new icon, go to
+          Privacy &amp; backup, and choose that backup file.
         </p>
       </div>
 

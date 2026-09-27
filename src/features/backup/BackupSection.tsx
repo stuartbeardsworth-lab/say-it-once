@@ -51,6 +51,18 @@ export function BackupSection() {
         </Button>
       </div>
       {state.step === 'ready' && (
+        // Shown at the moment of choosing where the file goes, because the
+        // backup isn't locked: wherever it's saved, anyone with that account
+        // can read it.
+        <div className="notice notice-info">
+          <p className="notice-title">Where to keep it</p>
+          <ul>
+            <li>Somewhere only you can open: your own email, or your own Google Drive or iCloud.</li>
+            <li>Not a shared family account, a group chat or a work email.</li>
+          </ul>
+        </div>
+      )}
+      {state.step === 'ready' && (
         <DeliverFile
           file={state.file}
           name="backup"

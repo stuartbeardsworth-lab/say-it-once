@@ -29,8 +29,8 @@ export function Privacy() {
 
       <h2>Where is my record?</h2>
       <p>
-        Your record is kept in this browser, on this device. It is not sent anywhere. There is no account and no
-        one at Say It Once can see it. There is no tracking and nothing is measured about how you use it.
+        It stays on this device and isn’t sent anywhere. There’s no account, and no one at Say It Once can see it.
+        Nothing is tracked or measured about how you use it.
       </p>
 
       <p>
@@ -43,8 +43,11 @@ export function Privacy() {
         your record private.
       </p>
 
-      <h2>Space on this device</h2>
-      <StorageSpace />
+      {/* The browser's storage details are technical, so they're folded away. */}
+      <details className="more">
+        <summary>Space on this device</summary>
+        <StorageSpace />
+      </details>
 
       <BackupSection />
       <RestoreSection />

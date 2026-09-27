@@ -10,7 +10,8 @@ import { useLiveQuery } from '../store/useLiveQuery';
 const enoughEntries = 10;
 const day = 24 * 60 * 60 * 1000;
 
-export function BackupReminder() {
+/** Whether Home should show the backup reminder now. Home shows one reminder at a time, this one first. */
+export function useBackupReminder(): boolean {
   const { store } = useStore();
   const recordId = useRecordId();
   const show = useLiveQuery(
@@ -28,8 +29,11 @@ export function BackupReminder() {
     },
     `backup-reminder:${recordId ?? ''}`,
   );
+  return show === true;
+}
 
-  if (!show) return null;
+export function BackupReminder() {
+  const { store } = useStore();
   return (
     <aside aria-labelledby="backup-reminder-title" className="notice">
       <p className="notice-title" id="backup-reminder-title">

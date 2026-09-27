@@ -11,7 +11,7 @@ import { useQuickNoteDialogs } from '../features/quickNotes/useQuickNoteDialogs'
 import { AppointmentDialog } from '../features/track/AppointmentDialog';
 import { navigate, RouteLink, type Route } from '../router';
 import { AddToPhonePrompt, useAddToPhone } from '../shell/AddToPhonePrompt';
-import { BackupReminder } from '../shell/BackupReminder';
+import { BackupReminder, useBackupReminder } from '../shell/BackupReminder';
 import { useItems, useRecordName } from '../store/hooks';
 
 // The eight kinds of thing you can add (docs/spec.md, "Add something").
@@ -46,6 +46,11 @@ export function Home() {
   const appointments = useItems('appointment');
   const recordName = useRecordName();
   const addToPhone = useAddToPhone();
+  // One reminder at a time, backup first: the Add to phone box waits (and
+  // its link stands in for it) while the backup reminder is showing.
+  const backupDue = useBackupReminder();
+  const showPhoneBox = addToPhone.state === 'prompt' && !backupDue;
+  const showPhoneLink = addToPhone.state === 'dismissed' || (addToPhone.state === 'prompt' && backupDue);
   // After Not now, the box goes and the Add to phone link appears in its
   // place further down; focus moves to it rather than being lost.
   const focusAddToPhone = useRef(false);
@@ -195,8 +200,8 @@ export function Home() {
         </div>
       </details>
 
-      <BackupReminder />
-      {addToPhone.state === 'prompt' && (
+      {backupDue && <BackupReminder />}
+      {showPhoneBox && (
         <AddToPhonePrompt
           onDismiss={() => {
             addToPhone.dismiss();
@@ -208,7 +213,7 @@ export function Home() {
       <nav aria-label="Help and settings" className="utility-links">
         <ul>
           {utilityLinks
-            .filter((l) => l.to !== 'add-to-phone' || addToPhone.state === 'dismissed')
+            .filter((l) => l.to !== 'add-to-phone' || showPhoneLink)
             .map((l) => (
               <li key={l.to}>
                 <RouteLink to={l.to}>

@@ -39,7 +39,7 @@ export function Treatment() {
           <Button variant="primary" onPress={() => setTreatmentEdit({})}>
             Add a treatment
           </Button>
-          {previousNames.length > 0 && <Button onPress={() => setRepeating(true)}>Repeat a previous one</Button>}
+          {previousNames.length > 0 && <Button onPress={() => setRepeating(true)}>Add another like one before</Button>}
         </div>
         {incident?.data.treatment && (
           <div className="note-card">

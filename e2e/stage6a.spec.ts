@@ -84,9 +84,15 @@ test('the reminder on Home appears for a record with real content, and Not now h
   await loadExample(page);
   await page.goto('/#home');
   const reminder = page.getByRole('complementary', { name: 'Keep a copy of your record safe' });
+  const phoneBox = page.getByRole('complementary', { name: 'Keep Say It Once on your phone' });
   await expect(reminder).toBeVisible();
+  // One reminder at a time: the Add to phone box waits, and its link is there instead.
+  await expect(phoneBox).toHaveCount(0);
+  const links = page.getByRole('navigation', { name: 'Help and settings' });
+  await expect(links.getByRole('link', { name: 'Add to phone' })).toBeVisible();
   await reminder.getByRole('button', { name: 'Not now' }).click();
   await expect(reminder).toHaveCount(0);
+  await expect(phoneBox).toBeVisible();
   await page.reload();
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(reminder).toHaveCount(0);
