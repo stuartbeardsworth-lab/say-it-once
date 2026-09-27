@@ -8,7 +8,8 @@ import { today } from '../domain/dates';
 import { readableDate } from '../domain/format';
 import { QuickNoteCard } from '../features/quickNotes/QuickNoteCard';
 import { useQuickNoteDialogs } from '../features/quickNotes/useQuickNoteDialogs';
-import { AppointmentDialog } from '../features/track/AppointmentDialog';
+import { AddToCalendarButton, type CalendarAppointment } from '../features/track/AddToCalendar';
+import { AppointmentDialog, appointmentSaved } from '../features/track/AppointmentDialog';
 import { navigate, RouteLink, type Route } from '../router';
 import { AddToPhonePrompt, useAddToPhone } from '../shell/AddToPhonePrompt';
 import { BackupReminder, useBackupReminder } from '../shell/BackupReminder';
@@ -68,6 +69,7 @@ export function Home() {
   const [choosing, setChoosing] = useState(false);
   const [addingAppointment, setAddingAppointment] = useState(false);
   const [message, setMessage] = useState('');
+  const [justAdded, setJustAdded] = useState<CalendarAppointment | null>(null);
   // Home shows only notes still waiting to be filed; filed ones live in
   // their section and on Quick Notes.
   const toFile = (notes ?? []).filter((n) => n.data.filedTo === null);
@@ -124,6 +126,11 @@ export function Home() {
       <p role="status" className="quiet-status">
         {message}
       </p>
+      {justAdded && message === appointmentSaved && (
+        <div className="button-row">
+          <AddToCalendarButton appt={justAdded} onMessage={setMessage} />
+        </div>
+      )}
 
       <TaskLink
         to="support"
@@ -250,7 +257,14 @@ export function Home() {
           </>
         )}
       </Dialog>
-      <AppointmentDialog isOpen={addingAppointment} onClose={() => setAddingAppointment(false)} onSaved={setMessage} />
+      <AppointmentDialog
+        isOpen={addingAppointment}
+        onClose={() => setAddingAppointment(false)}
+        onSaved={(m, forCalendar) => {
+          setMessage(m);
+          setJustAdded(forCalendar ?? null);
+        }}
+      />
       {dialogs}
     </>
   );

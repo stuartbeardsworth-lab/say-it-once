@@ -359,3 +359,9 @@ Done when:
   It's never put in anything you share." Not "only you will see it",
   because the person's backup includes private entries and anyone using
   the phone can see the record.
+- 27 September 2026, calendar after adding: straight after a new upcoming,
+  non-private appointment is saved (from Home or Appointments), "Add to my
+  calendar" appears under "Appointment saved.", while the date is in mind.
+  It goes once another message replaces it. It isn't on Home's "Your next
+  appointment" box, which stays calm; the phone's calendar gives the
+  reminder (`src/features/track/AddToCalendar.tsx`).

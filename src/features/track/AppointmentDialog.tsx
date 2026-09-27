@@ -13,7 +13,10 @@ import { StorageProblem } from '../../store/problems';
 import { newItemId } from '../../store/store';
 import { useItems } from '../../store/hooks';
 import { useRecordId, useStore } from '../../store/StoreContext';
+import { canAddToCalendar, type CalendarAppointment } from './AddToCalendar';
 import { FilePicker } from './FilePicker';
+
+export const appointmentSaved = 'Appointment saved.';
 
 // Add or edit an appointment (docs/spec.md, "Appointment"). Only the date
 // and who it's with are needed.
@@ -27,7 +30,8 @@ export function AppointmentDialog({
   isOpen: boolean;
   existing?: Item<'appointment'> | undefined;
   onClose: () => void;
-  onSaved?: (message: string) => void;
+  /** `forCalendar` is a new, upcoming, non-private appointment, so the screen can offer "Add to my calendar". */
+  onSaved?: (message: string, forCalendar?: CalendarAppointment) => void;
 }) {
   return (
     <EntryDialog
@@ -50,7 +54,7 @@ function AppointmentForm({
 }: {
   existing: Item<'appointment'> | undefined;
   controls: EntryFormControls;
-  onSaved: ((message: string) => void) | undefined;
+  onSaved: ((message: string, forCalendar?: CalendarAppointment) => void) | undefined;
 }) {
   const { store } = useStore();
   const recordId = useRecordId();
@@ -82,7 +86,9 @@ function AppointmentForm({
       ),
     );
     if (ok) {
-      onSaved?.('Appointment saved.');
+      // Offered straight after adding, while the date is in mind.
+      const saved = { id, data: form.data, private: form.isPrivate };
+      onSaved?.(appointmentSaved, !existing && canAddToCalendar(saved) ? saved : undefined);
       controls.done();
     }
   }
