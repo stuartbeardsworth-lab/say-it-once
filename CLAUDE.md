@@ -300,3 +300,8 @@ Done when:
   Privacy & backup. Find support stays just under the four tasks, because
   it leads to urgent help. The footer tagline is smaller (0.75rem), on one
   line from 360px wide, and breaks after an arrow when it has to wrap.
+- 27 September 2026, Add to phone on Home: the green "Keep Say It Once on
+  your phone" box and the Add to phone link never show together. The box
+  shows until Not now; then the link appears in Home's links as the way
+  back, and focus moves to it. Opened from the home screen, neither shows.
+  (`useAddToPhone` in `src/shell/AddToPhonePrompt.tsx`.)
