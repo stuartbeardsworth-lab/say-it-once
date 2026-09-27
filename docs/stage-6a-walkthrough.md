@@ -20,7 +20,7 @@ review)**, **Try the reports**, **Load the example record**.
    backup holds everything, private entries too, and isn't locked with a
    password.
 4. [ ] (Since 27 September 2026 a backup can be locked; see "Locked
-   backups" below.) Choose **Don't lock it**, press **Make a backup**, then **Save the backup to this device**. It
+   backups" below.) Choose **No, don't lock it**, press **Make a backup**, then **Save the backup to this device**. It
    says your browser is saving "Say It Once backup (today's date).zip", and
    "Last backup saved from this device" shows today.
 5. [ ] Unzip it if you like: `manifest.json` (readable, and it says the file
@@ -28,7 +28,7 @@ review)**, **Try the reports**, **Load the example record**.
 
 ## Locked backups (added 27 September 2026)
 
-- [ ] **Lock it (recommended)** is already chosen. Press **Make a backup**
+- [ ] **Yes, lock it** is already chosen. Press **Make a backup**
   with no password: it asks for one and for the "written down" tick.
 - [ ] **Suggest a password** fills in four words. Tick **I've written the
   password down**, make the backup and save it: the file ends

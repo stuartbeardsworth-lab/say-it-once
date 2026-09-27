@@ -65,10 +65,10 @@ export function BackupSection() {
 
       <RadioList<LockChoice>
         label="Lock it with a password?"
-        hint="A backup holds everything, including entries marked “Keep this private”. Locked, only someone with the password can open it, so it’s safe to keep in your email or a cloud drive. Not locked, anyone who has the file can read it."
+        hint="We recommend locking it. A backup holds everything, including entries marked “Keep this private”. Locked, only someone with the password can open it, so it’s safe to keep in your email or a cloud drive. Not locked, anyone who has the file can read it."
         options={[
-          { value: 'lock', label: 'Lock it (recommended)' },
-          { value: 'plain', label: 'Don’t lock it' },
+          { value: 'lock', label: 'Yes, lock it' },
+          { value: 'plain', label: 'No, don’t lock it' },
         ]}
         value={choice}
         onChange={(v) => {

@@ -9,7 +9,7 @@ import { loadExample } from './reports';
 
 async function saveBackup(page: Page, path: string) {
   await page.goto('/#privacy');
-  await page.getByRole('radiogroup', { name: 'Lock it with a password?' }).getByText('Don’t lock it').click();
+  await page.getByRole('radiogroup', { name: 'Lock it with a password?' }).getByText('No, don’t lock it').click();
   await page.getByRole('button', { name: 'Make a backup' }).click();
   const save = page.getByRole('button', { name: 'Save the backup to this device' });
   await expect(save).toBeFocused({ timeout: 30_000 });
@@ -61,7 +61,7 @@ test('a locked backup can only be opened with its password, and then restores ev
   await loadExample(page);
   await page.goto('/#privacy');
   // Locking is the choice already made; a weak password and the unticked box are both caught first.
-  await expect(page.getByRole('radio', { name: 'Lock it (recommended)' })).toBeChecked();
+  await expect(page.getByRole('radio', { name: 'Yes, lock it' })).toBeChecked();
   const password = page.getByRole('textbox', { name: 'Password for this backup' });
   await password.fill('password1234');
   await page.getByRole('button', { name: 'Make a backup' }).click();

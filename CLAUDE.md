@@ -366,7 +366,7 @@ Done when:
   appointment" box, which stays calm; the phone's calendar gives the
   reminder (`src/features/track/AddToCalendar.tsx`).
 - 27 September 2026, locked backups: a backup can be locked with a password
-  the person chooses ("Lock it (recommended)" is the default), so it's safe
+  the person chooses ("Yes, lock it" is the default and recommended), so it's safe
   to keep in email or a cloud drive and survives losing the phone. The zip
   is encrypted on the device with the Stage 7 module (Argon2id key from the
   password, libsodium secretstream in 64 KiB pieces, the readable header
