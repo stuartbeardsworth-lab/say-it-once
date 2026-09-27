@@ -79,8 +79,11 @@ test('an appointment with a letter: saved, shown on Home, added to the calendar,
   await dialog.getByLabel('Time (optional)').fill('09:30');
   await dialog.getByRole('combobox', { name: 'Who is it with?' }).fill('Fracture clinic');
   await dialog.getByRole('textbox', { name: 'What is it for? (optional)' }).fill('Check-up');
+  // A photo of the letter can be taken straight from the camera, or a file chosen.
+  await expect(dialog.getByLabel('Take a photo of the letter')).toHaveAttribute('capture', 'environment');
   await dialog.getByLabel('Choose a file').setInputFiles(pdf);
   await expect(dialog.getByText('Attached: letter.pdf')).toBeVisible();
+  await expect(dialog.getByLabel('Take a photo of the letter')).toHaveCount(0);
   await dialog.getByRole('button', { name: 'Save appointment' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'Appointment saved.' })).toBeVisible();
   await expect(page.getByRole('link', { name: /View the letter/ })).toBeVisible();

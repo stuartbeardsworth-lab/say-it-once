@@ -98,6 +98,12 @@ function AppointmentForm({
         <TextField label="Date" type="date" isRequired {...form.text('date')} />
         <TextField label="Time (optional)" type="time" {...form.text('time')} />
       </div>
+
+      <LetterFields
+        current={letter?.name ?? currentLetter?.data.file?.name ?? null}
+        onPick={setLetter}
+        onTooLarge={() => void form.submit(() => Promise.reject(new StorageProblem('too-large')))}
+      />
       <TextField
         label="Who is it with?"
         hint="For example, the hospital, GP surgery or clinic."
@@ -112,11 +118,6 @@ function AppointmentForm({
       </datalist>
       <TextField label="What is it for? (optional)" hint="For example, physiotherapy or a scan." {...form.text('purpose')} />
 
-      <FileField
-        current={letter?.name ?? currentLetter?.data.file?.name ?? null}
-        onPick={setLetter}
-        onTooLarge={() => void form.submit(() => Promise.reject(new StorageProblem('too-large')))}
-      />
 
       <details className="more">
         <summary>More about the appointment</summary>
@@ -148,7 +149,10 @@ function AppointmentForm({
   );
 }
 
-function FileField({
+// The letter comes near the top, since most appointments arrive as a letter
+// and people copy the details from it. Taking a photo is offered first, as
+// in Letters & documents; once there's a letter, only Replace is shown.
+function LetterFields({
   current,
   onPick,
   onTooLarge,
@@ -158,14 +162,27 @@ function FileField({
   onTooLarge: () => void;
 }) {
   return (
-    <FilePicker
-      label="Letter (optional)"
-      hint="A photo or PDF of the appointment letter, up to 25 MB. It’s also kept in Letters & documents."
-      accept="application/pdf,image/jpeg,image/png,image/webp,image/*"
-      current={current}
-      onPick={onPick}
-      onTooLarge={onTooLarge}
-    />
+    <>
+      {!current && (
+        <FilePicker
+          label="Appointment letter (optional)"
+          buttonLabel="Take a photo of the letter"
+          hint="Opens the camera on a phone."
+          accept="image/*"
+          capture
+          current={null}
+          onPick={onPick}
+          onTooLarge={onTooLarge}
+        />
+      )}
+      <FilePicker
+        label={current ? 'Appointment letter' : 'Or choose a file'}
+        hint="A photo or PDF of the letter, up to 25 MB. It’s also kept in Letters & documents."
+        accept="application/pdf,image/jpeg,image/png,image/webp,image/*"
+        current={current}
+        onPick={onPick}
+        onTooLarge={onTooLarge}
+      />
+    </>
   );
 }
-

@@ -278,3 +278,9 @@ Done when:
   fold-out (`details.more`) is a bordered box with an arrow, like Home's,
   so it's never mistaken for a heading. "Can't find the microphone?" stays
   a small underlined help line.
+- 27 September 2026, appointment letters: the appointment form offers "Take
+  a photo of the letter" (opens the camera) and "Choose a file", straight
+  after the date, as Letters & documents does. The letter is still filed
+  in Letters & documents. The app doesn't read the letter to fill in the
+  details: that would need an online text-reading service (the letter
+  would leave the phone) and would parse text to recover structure.
