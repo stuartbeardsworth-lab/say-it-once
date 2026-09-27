@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { reviewPages } from '../buildInfo';
 import { Button } from '../components/Button';
-import { Dialog } from '../components/Dialog';
+import { Dialog, focusWhenDialogsClose } from '../components/Dialog';
 import { Icon, type IconName } from '../components/icons';
 import { TaskButton, TaskLink } from '../components/TaskCard';
 import { today } from '../domain/dates';
@@ -35,17 +35,27 @@ const utilityLinks: { to: Route; label: string; icon: IconName }[] = [
   { to: 'add-to-phone', label: 'Add to phone', icon: 'phone' },
   { to: 'privacy', label: 'Privacy & backup', icon: 'lock' },
   // Only in Deploy Previews, for the owner's review (src/buildInfo.ts).
-  ...(reviewPages ? [{ to: 'building-blocks' as const, label: 'Building blocks (for review)', icon: 'story' as const }] : []),
+  ...(reviewPages
+    ? [{ to: 'building-blocks' as const, label: 'Building blocks (for review)', icon: 'story' as const }]
+    : []),
 ];
 
 export function Home() {
   const notes = useItems('quickNote');
   const appointments = useItems('appointment');
-  const { dialogs, write, edit, file } = useQuickNoteDialogs();
+  const heading = useRef<HTMLHeadingElement>(null);
+  // A filed note leaves Home, taking its File button with it, so focus goes
+  // to the page heading rather than being lost.
+  const { dialogs, write, edit, file } = useQuickNoteDialogs({
+    onFiled: () => focusWhenDialogsClose(() => heading.current),
+  });
   const [choosing, setChoosing] = useState(false);
   const [addingAppointment, setAddingAppointment] = useState(false);
   const [message, setMessage] = useState('');
-  const latest = notes?.at(-1);
+  // Home shows only notes still waiting to be filed; filed ones live in
+  // their section and on Quick Notes.
+  const toFile = (notes ?? []).filter((n) => n.data.filedTo === null);
+  const latest = toFile.at(-1);
   const now = today();
   const next = [...(appointments ?? [])]
     .filter((a) => a.data.date >= now)
@@ -54,7 +64,7 @@ export function Home() {
   return (
     <>
       <p className="kicker">After an injury, accident or illness&hellip;</p>
-      <h1 tabIndex={-1} className="home-title">
+      <h1 ref={heading} tabIndex={-1} className="home-title">
         Keep everything together, <span className="home-title-soft">so you don&rsquo;t have to start again.</span>
       </h1>
 
@@ -122,9 +132,15 @@ export function Home() {
       {latest && (
         <section aria-labelledby="latest-note">
           <h2 id="latest-note" className="home-section-title">
-            Your latest Quick Note
+            A Quick Note to file
           </h2>
           <QuickNoteCard note={latest} onEdit={edit} onFile={file} showDelete={false} />
+          {toFile.length > 1 && (
+            <p>
+              {toFile.length - 1 === 1 ? '1 more note' : `${toFile.length - 1} more notes`} to file when you&rsquo;re
+              ready.
+            </p>
+          )}
           <p>
             <RouteLink to="quick-notes">See all Quick Notes</RouteLink>
           </p>

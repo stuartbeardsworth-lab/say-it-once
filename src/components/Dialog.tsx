@@ -114,3 +114,21 @@ export function Dialog({
     </DialogTrigger>
   );
 }
+
+/**
+ * Moves focus to `target` once every dialog has left the page. For when the
+ * button that opened a dialog is gone by the time it closes (a filed note
+ * leaving Home). Focus moved while a dialog is still on the page would be
+ * pulled back into it, and React Aria restores focus a frame after the
+ * dialog goes, so this waits for both.
+ */
+export function focusWhenDialogsClose(target: () => HTMLElement | null, maxFrames = 120): void {
+  let frames = 0;
+  requestAnimationFrame(function check() {
+    if (document.querySelector('.dialog-overlay') && ++frames < maxFrames) {
+      requestAnimationFrame(check);
+      return;
+    }
+    requestAnimationFrame(() => target()?.focus());
+  });
+}
