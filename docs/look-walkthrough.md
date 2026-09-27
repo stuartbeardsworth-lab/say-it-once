@@ -9,7 +9,9 @@ Open the Deploy Preview on your iPhone, and on a computer if you can.
 ## Looks right
 
 1. [ ] The navy header has the speech-bubble logo with the orange dot,
-   **Say It Once**, and **No need to relive it.** underneath.
+   and **Say It Once**, larger than anything else in the header (no line
+   underneath). **Text size** and **Listen** are small, quiet buttons on
+   the right, but still easy to tap.
 2. [ ] Home starts with **After an injury, accident or illness…** and
    **Keep everything together, so you don't have to start again.**
 3. [ ] Under **What do you need today?** are cards for **Add something**

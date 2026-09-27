@@ -229,41 +229,29 @@ main:focus {
 
 .brand-mark {
   flex: none;
-  width: 3rem;
-  height: 3rem;
+  width: 3.5rem;
+  height: 3.5rem;
   overflow: visible;
 }
 
+/* The name is the one thing that stands out in the header. */
 .brand-text {
-  display: flex;
-  flex-direction: column;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   line-height: 1.1;
-}
-
-.brand-tagline {
-  font-family: var(--font-text);
-  font-weight: 500;
-  font-size: 0.8125rem;
-  letter-spacing: 0.01em;
-  margin-top: 0.25rem;
+  letter-spacing: -0.01em;
 }
 
 /* On phones the logo and name are a little smaller, so the tools fit beside them. */
 @media (max-width: 26em) {
   .brand-mark {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
   .brand-text {
-    font-size: 1.1875rem;
-  }
-
-  .brand-tagline {
-    font-size: 0.6875rem;
+    font-size: 1.3125rem;
   }
 }
 
@@ -408,7 +396,7 @@ main:focus {
 .header-button {
   font: inherit;
   font-family: var(--font-heading);
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   font-weight: 700;
   line-height: 1.1;
   display: inline-flex;
@@ -416,12 +404,14 @@ main:focus {
   align-items: center;
   justify-content: center;
   gap: 0.125rem;
+  /* Quiet to look at, so the logo stands out, but still a fingertip-sized
+     place to tap (WCAG 2.2 target size, and shaky hands). */
   min-height: 2.75rem;
   min-width: 2.75rem;
-  padding: 0.25rem 0.375rem;
+  padding: 0.25rem 0.3125rem;
   color: #fff;
   background: transparent;
-  border: var(--border-thin) solid rgb(255 255 255 / 0.5);
+  border: var(--border-thin) solid rgb(255 255 255 / 0.25);
   border-radius: var(--radius);
   cursor: pointer;
 }
@@ -438,8 +428,8 @@ main:focus {
 }
 
 .header-button .icon {
-  width: 1rem;
-  height: 1rem;
+  width: 0.875rem;
+  height: 0.875rem;
 }
 
 .listen-bar {
@@ -468,7 +458,7 @@ main:focus {
 }
 
 .header-button-glyph {
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;

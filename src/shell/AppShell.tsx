@@ -47,10 +47,7 @@ export function AppShell({ location, children }: AppShellProps) {
         <div className="container site-header-inner">
           <RouteLink to="home" className="site-name">
             <Logo className="brand-mark" />
-            <span className="brand-text">
-              Say It Once
-              <span className="brand-tagline">No need to relive it.</span>
-            </span>
+            <span className="brand-text">Say It Once</span>
           </RouteLink>
           <div className="header-tools">
             <TextSizeControl />
