@@ -263,3 +263,9 @@ Done when:
   "This site is private", and installed copies couldn't fetch updates. The
   owner turned it off. Keep Visitor access at "No protection" for
   production (see `docs/play-store.md`); the site holds no records.
+- 27 September 2026, header: the tagline "No need to relive it." is gone,
+  so the logo and "Say It Once" (now larger) are what stand out. Text size
+  and Listen look smaller and quieter (smaller icons and labels, fainter
+  outline) but keep a 44-pixel tap area for WCAG 2.2 target size and
+  shaky hands; their small labels stay, because an icon alone is hard to
+  work out.
