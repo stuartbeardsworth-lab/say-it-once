@@ -35,7 +35,7 @@ function size(bytes: number): string {
 
 async function build(kind: Kind, report: Report, readFile: SendReportProps['readFile']) {
   const base = safeFileName('Say It Once', report.title, report.recordName);
-  const pdf = await makePdf(report);
+  const pdf = await makePdf(report, readFile);
   if (kind === 'pdf') return { file: new File([pdf], `${base}.pdf`, { type: 'application/pdf' }), missing: [] };
   // The zip maker (and the HTML copy inside it) loads only when first needed.
   const { makeZip } = await import('../../reports/zip');

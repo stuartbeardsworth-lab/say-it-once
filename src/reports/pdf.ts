@@ -23,6 +23,9 @@ export type PdfNode =
       toc?: { title: PdfNode };
       pageBreak?: 'before' | 'after';
       unbreakable?: boolean;
+      /** A picture, as a data: URL (JPEG or PNG). Never a web address. */
+      image?: string;
+      fit?: [number, number];
       headlineLevel?: number;
       id?: string;
     };
@@ -84,6 +87,10 @@ export const reportWords = {
   indexHeadings: ['Ref', 'Document', 'Date', 'From', 'File'],
   paperOnly: 'Paper copy only',
   photosTitle: 'Photos',
+  lettersNote: (hasPictures: boolean) =>
+    'The letters themselves come in the zip file made from this report, named to match (E1, E2 and so on).' +
+    (hasPictures ? ' Photos are also shown at the end of this PDF.' : ''),
+  picturesTitle: 'Pictures',
   photoHeadings: ['Ref', 'Kept with the Quick Note from'],
   confirmation: 'Confirmation',
   confirm: 'I confirm that this is my own account, to the best of my knowledge.',
@@ -155,7 +162,13 @@ function keepHeadingsWithNext(nodes: PdfNode[]): PdfNode[] {
   return out;
 }
 
-export function reportToPdf(report: Report): PdfDefinition {
+/**
+ * `pictures` holds photos of letters (E refs) and Quick Note photos (P refs)
+ * as data: URLs, keyed by reference. makePdf.ts reads and shrinks them; the
+ * report model already decided which may be shared. Letters that are PDF
+ * files can't be drawn inside another PDF, so they're only listed.
+ */
+export function reportToPdf(report: Report, pictures: ReadonlyMap<string, string> = new Map()): PdfDefinition {
   const content: PdfNode[] = [
     { text: report.title, style: 'h1' },
     { text: report.intro, margin: [0, 0, 0, 8] },
@@ -201,6 +214,9 @@ export function reportToPdf(report: Report): PdfDefinition {
       layout: rows,
       margin: [0, 2, 0, 8],
     });
+    if (report.evidence.some((e) => e.fileId)) {
+      content.push({ text: reportWords.lettersNote(pictures.size > 0), style: 'small', margin: [0, 0, 0, 8] });
+    }
   }
 
   if (report.photos.length) {
@@ -223,6 +239,24 @@ export function reportToPdf(report: Report): PdfDefinition {
       ],
       unbreakable: report.photos.length <= 12,
     });
+  }
+
+  // Each picture on its own, under its reference, in the order of the lists above.
+  const pictured = [
+    ...report.evidence.map((e) => ({ ref: e.ref, label: `${e.ref}: ${e.title}` })),
+    ...report.photos.map((p) => ({ ref: p.ref, label: `${p.ref}: ${reportWords.photoHeadings[1]} ${p.date}` })),
+  ].filter((p) => pictures.has(p.ref));
+  if (pictured.length) {
+    content.push({ text: reportWords.picturesTitle, style: 'h2', tocItem: true, headlineLevel: 2 });
+    for (const p of pictured) {
+      content.push({
+        stack: [
+          { text: p.label, style: 'h4' },
+          { image: pictures.get(p.ref) ?? '', fit: [483, 560], margin: [0, 2, 0, 12] },
+        ],
+        unbreakable: true,
+      });
+    }
   }
 
   if (report.signature) {

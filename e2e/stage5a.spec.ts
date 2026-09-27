@@ -50,6 +50,8 @@ test('a PDF is made on the device and saved as a download', async ({ page }) => 
   const pdf = Buffer.concat(bytes);
   expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
   expect(pdf.length).toBeGreaterThan(10_000);
+  // The example's photos are drawn inside the PDF, not only listed.
+  expect(pdf.toString('latin1')).toMatch(/\/Subtype\s*\/Image/);
   await expect(page.getByText(/Your browser is saving “Say It Once/)).toBeVisible();
   // Nothing was blocked by the site's security rules while making it.
   expect(problems.filter((p) => /Content Security Policy|Refused/.test(p))).toEqual([]);

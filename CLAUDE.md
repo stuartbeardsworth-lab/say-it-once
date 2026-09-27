@@ -323,3 +323,10 @@ Done when:
     together; the full record puts work straight after what happened and
     the chronology near the end. "How things are now" is the one name for
     that section, and the cost totals no longer show a count of entries.
+- 27 September 2026, pictures in the PDF: photos of letters (E refs) and
+  Quick Note photos (P refs) in a report are drawn in the PDF under
+  "Pictures", each under its reference, shrunk to 1400px JPEGs on the
+  device (`makePdf.ts`, canvas). Only the report's own E and P references
+  are drawn, so private files can't appear. Letters that are PDF files
+  can't be drawn inside a PDF; a note under the letters list says the
+  letters themselves come in the zip, named to match.
