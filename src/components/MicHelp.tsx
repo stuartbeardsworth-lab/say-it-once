@@ -1,4 +1,4 @@
-// "Can't find the microphone?": help for speaking instead of typing with the
+// "Rather talk than type?": help for speaking instead of typing with the
 // phone keyboard's own microphone. Say It Once has no microphone of its own
 // (decision Q8: in a web app the recording would go to Google or Apple).
 //
@@ -60,7 +60,7 @@ export function MicHelp({ phone = currentPhone() }: { phone?: Phone }) {
   const others = (Object.keys(steps) as (keyof typeof steps)[]).filter((p) => p !== phone);
   return (
     <details className="mic-help">
-      <summary>Can’t find the microphone?</summary>
+      <summary>Rather talk than type?</summary>
       <div className="mic-help-body">
         <p>
           <strong>Tap in the box, then tap the microphone on your keyboard.</strong>
