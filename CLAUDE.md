@@ -276,7 +276,7 @@ Done when:
   know from the start there can be more than one record and which one
   they're adding to; My records suggests renaming "My record". Every
   fold-out (`details.more`) is a bordered box with an arrow, like Home's,
-  so it's never mistaken for a heading. "Can't find the microphone?" stays
+  so it's never mistaken for a heading. "Rather talk than type?" stays
   a small underlined help line.
 - 27 September 2026, appointment letters: the appointment form offers "Take
   a photo of the letter" (opens the camera) and "Choose a file", straight
@@ -330,3 +330,10 @@ Done when:
   are drawn, so private files can't appear. Letters that are PDF files
   can't be drawn inside a PDF; a note under the letters list says the
   letters themselves come in the zip, named to match.
+- 27 September 2026, the microphone help line now reads "Rather talk than
+  type?" (was "Can't find the microphone?"), so it tells everyone they can
+  speak, not only those who already know. Same fold-out and steps; no
+  microphone icon, since that would look like a button that records.
+  Its Samsung steps say the microphone is at the bottom left, under the
+  keys (as on the owner's S23), then the row above the keys. Quick Note and
+  How it affects me no longer repeat the microphone in their hint.

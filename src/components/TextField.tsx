@@ -52,7 +52,7 @@ export function TextField({ label, hint, errorMessage, list, ...props }: TextFie
 
 export interface TextAreaProps extends Omit<TextFieldProps, 'list'> {
   rows?: number;
-  /** Shows "Can't find the microphone?" under the box. Use once per screen or dialog, on its main box. */
+  /** Shows "Rather talk than type?" under the box. Use once per screen or dialog, on its main box. */
   micHelp?: boolean;
 }
 

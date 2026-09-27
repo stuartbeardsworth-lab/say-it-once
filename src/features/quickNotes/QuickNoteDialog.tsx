@@ -134,7 +134,7 @@ function QuickNoteForm({ note, onDirtyChange, onCancel, onSaved }: FormProps) {
     >
       <TextArea
         label="Your note"
-        hint="A few words are enough. To speak instead of typing, use the microphone on your phone’s keyboard."
+        hint="A few words are enough."
         value={text}
         onChange={setText}
         errorMessage={error}

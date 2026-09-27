@@ -32,7 +32,7 @@ export const faq: FaqTopic[] = [
         q: 'Can I speak instead of typing?',
         a: [
           'Yes. Use the microphone on your phone’s keyboard. Say It Once doesn’t record sound itself.',
-          'If you can’t find it, choose “Can’t find the microphone?” under the main writing boxes (in What happened, a Quick Note, and How it affects me). It shows the steps for iPhone, Android and Samsung phones, including how to turn the microphone on.',
+          'If you can’t find it, choose “Rather talk than type?” under the main writing boxes (in What happened, a Quick Note, and How it affects me). It shows the steps for iPhone, Android and Samsung phones, including how to turn the microphone on.',
         ],
       },
     ],

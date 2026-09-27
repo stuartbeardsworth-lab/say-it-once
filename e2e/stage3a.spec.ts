@@ -212,7 +212,7 @@ test('a Quick Note explains how to find the keyboard microphone, and the help pa
   await page.goto('/');
   await page.getByRole('button', { name: 'Quick Note', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: 'Quick Note' });
-  await dialog.getByText('Can’t find the microphone?').click();
+  await dialog.getByText('Rather talk than type?').click();
   await expect(dialog.getByText('Tap in the box, then tap the microphone on your keyboard.')).toBeVisible();
   await dialog.getByText(/Not an iPhone\?|Not a Samsung phone\?|A different phone\?|Steps for each phone/).click();
   await expect(

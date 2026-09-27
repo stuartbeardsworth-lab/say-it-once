@@ -49,23 +49,23 @@ describe('microphone help', () => {
     render(<MicHelp phone="iphone" />);
     const main = screen.getByText('Tap in the box, then tap the microphone on your keyboard.');
     expect(main).not.toBeVisible();
-    await user.click(screen.getByText('Can’t find the microphone?'));
+    await user.click(screen.getByText('Rather talk than type?'));
     expect(main).toBeVisible();
     expect(screen.getByText(/On an iPhone it’s at the bottom right/)).toBeVisible();
     // Turning it on, and other phones, stay folded until asked for.
     expect(screen.getByText(/turn on Dictation/)).not.toBeVisible();
-    expect(screen.getByText(/On a Samsung phone/)).not.toBeVisible();
+    expect(screen.getByText(/On most Samsung phones/)).not.toBeVisible();
     await user.click(screen.getByText('Still can’t see it?'));
     expect(screen.getByText(/turn on Dictation/)).toBeVisible();
     await user.click(screen.getByText('Not an iPhone?'));
-    expect(screen.getByText(/On a Samsung phone/)).toBeVisible();
+    expect(screen.getByText(/On most Samsung phones/)).toBeVisible();
     expect(screen.getByText(/On most Android phones/)).toBeVisible();
   });
 
   it('on a computer, gives the short instruction and every phone’s steps behind one fold', async () => {
     const user = userEvent.setup();
     render(<MicHelp phone="other" />);
-    await user.click(screen.getByText('Can’t find the microphone?'));
+    await user.click(screen.getByText('Rather talk than type?'));
     expect(screen.queryByText('Still can’t see it?')).not.toBeInTheDocument();
     await user.click(screen.getByText('Steps for each phone'));
     expect(screen.getByRole('heading', { name: 'iPhone or iPad' })).toBeVisible();
@@ -74,9 +74,9 @@ describe('microphone help', () => {
 
   it('is only shown under a box when asked for', () => {
     const { rerender } = render(<TextArea label="Your note" />);
-    expect(screen.queryByText('Can’t find the microphone?')).not.toBeInTheDocument();
+    expect(screen.queryByText('Rather talk than type?')).not.toBeInTheDocument();
     rerender(<TextArea label="Your note" micHelp />);
-    expect(screen.getByText('Can’t find the microphone?')).toBeInTheDocument();
+    expect(screen.getByText('Rather talk than type?')).toBeInTheDocument();
   });
 });
 
