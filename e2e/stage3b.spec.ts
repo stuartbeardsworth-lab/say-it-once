@@ -124,7 +124,7 @@ test('treatment can be repeated, and medication added', async ({ page }) => {
   const treat = page.getByRole('dialog', { name: 'Add a treatment' });
   await treat.getByRole('textbox', { name: 'What was the treatment?' }).fill('Physiotherapy');
   await treat.getByRole('button', { name: 'Save treatment' }).click();
-  await page.getByRole('button', { name: 'Repeat a previous one' }).click();
+  await page.getByRole('button', { name: 'Add another like one before' }).click();
   await page.getByRole('dialog', { name: 'Repeat a previous treatment' }).getByRole('button', { name: 'Physiotherapy' }).click();
   await expect(treat.getByRole('textbox', { name: 'What was the treatment?' })).toHaveValue('Physiotherapy');
   await treat.getByRole('button', { name: 'Save treatment' }).click();

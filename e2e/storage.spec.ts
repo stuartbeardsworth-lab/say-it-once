@@ -90,5 +90,6 @@ test('the text size is remembered after reloading', async ({ page }) => {
 
 test('Privacy & backup shows the space used on this device', async ({ page }) => {
   await page.goto('/#privacy');
+  await page.getByText('Space on this device').click();
   await expect(page.getByText(/Say It Once is using .* of storage on this device/)).toBeVisible();
 });

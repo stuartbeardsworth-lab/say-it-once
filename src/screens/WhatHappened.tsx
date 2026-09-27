@@ -32,7 +32,7 @@ export function WhatHappened() {
       <h1 tabIndex={-1}>What happened</h1>
       <p>
         Write as much or as little as you like. A few words are enough, and you can come back to it any time. It
-        saves as you type. To speak instead of typing, use the microphone on your phone’s keyboard.
+        saves as you type.
       </p>
       <MicHelp />
       {draft ? (

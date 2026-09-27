@@ -48,11 +48,12 @@ export function Track() {
           title="Costs & lost income"
           detail={costs && costs.length > 0 ? `${formatPence(spent)} spent · ${formatPence(lost)} lost` : countText(costs?.length, 'entry', 'entries')}
         />
+        <Card
+          to="contacts"
+          title="Contacts & important numbers"
+          detail={countText(contacts?.length, 'contact', 'contacts')}
+        />
       </ul>
-      <p>
-        <RouteLink to="contacts">Contacts &amp; important numbers</RouteLink>
-        {contacts && contacts.length > 0 && ` (${contacts.length})`}
-      </p>
     </>
   );
 }

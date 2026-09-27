@@ -59,7 +59,7 @@ test('a summary has no signature lines', async ({ page }) => {
   await choose(page, 'A doctor, nurse or therapist', 'Getting ready for an appointment');
   await create(page);
   const report = page.getByRole('article', { name: 'Appointment brief' });
-  await expect(report.getByRole('heading', { name: 'Current position' })).toBeVisible();
+  await expect(report.getByRole('heading', { name: 'How things are now' })).toBeVisible();
   await expect(report.getByRole('heading', { name: 'Confirmation' })).toHaveCount(0);
 });
 

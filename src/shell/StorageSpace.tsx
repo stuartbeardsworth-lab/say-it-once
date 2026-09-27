@@ -33,14 +33,14 @@ export function StorageSpace() {
       {space.usedBytes !== null && (
         <p>
           Say It Once is using {formatBytes(space.usedBytes)} of storage on this device
-          {space.quotaBytes !== null && `, out of ${formatBytes(space.quotaBytes)} this browser allows`}.
+          {space.quotaBytes !== null && `, and has room for ${formatBytes(space.quotaBytes)}`}.
         </p>
       )}
       {space.persisted === true && <p>This browser has agreed to keep your record, even if the device runs low on space.</p>}
       {space.persisted === false && (
         <p>
-          This browser hasn’t yet agreed to keep your record permanently. If the device runs very low on space, it
-          could clear it. Browsers usually agree once Say It Once is used regularly or added to the home screen.
+          If this device runs very low on space, the browser could clear your record. Using Say It Once regularly, or
+          adding it to your home screen, usually stops that. A backup keeps you safe either way.
         </p>
       )}
     </>

@@ -305,3 +305,21 @@ Done when:
   shows until Not now; then the link appears in Home's links as the way
   back, and focus moves to it. Opened from the home screen, neither shows.
   (`useAddToPhone` in `src/shell/AddToPhonePrompt.tsx`.)
+- 27 September 2026, fixes from the end-to-end review:
+  - Add to phone says how to bring a record across on an iPhone (a backup
+    in Safari, restored in the new icon) instead of "a way is coming".
+  - Home shows one reminder at a time, the backup reminder first; while it
+    shows, the Add to phone box waits and its link stands in.
+  - Privacy & backup: "only on this device" said once; the storage details
+    are folded into "Space on this device", in plainer words.
+  - What happened no longer mentions the microphone twice; the record line
+    reads "Record: <name> · Change" everywhere; Contacts is a card on Keep
+    track; "Add another like one before"; documents say "Relates to:".
+  - After making a backup, "Where to keep it": somewhere only you can
+    open, not a shared family account, a group chat or a work email.
+  - Reports follow one pattern: background, treatment, effects, money,
+    timeline, supporting papers, contacts last. The PIP pack starts with
+    injuries and symptoms; the personal injury summary keeps its costs
+    together; the full record puts work straight after what happened and
+    the chronology near the end. "How things are now" is the one name for
+    that section, and the cost totals no longer show a count of entries.

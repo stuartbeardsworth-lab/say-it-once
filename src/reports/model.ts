@@ -415,7 +415,6 @@ const builders: Record<SectionKey, Builder> = {
       {
         type: 'totals',
         rows: [
-          { label: 'Entries', value: String(view.costs.length) },
           { label: 'Money spent', value: formatPence(spent) },
           { label: 'Income lost', value: formatPence(lost) },
           { label: 'Together', value: formatPence(spent + lost) },

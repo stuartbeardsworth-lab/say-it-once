@@ -37,7 +37,7 @@ export function Documents() {
                 {[
                   d.data.date && readableDate(d.data.date),
                   d.data.from && `From ${d.data.from}`,
-                  d.data.relatedTo && `About ${sectionLabels[d.data.relatedTo.section]}`,
+                  d.data.relatedTo && `Relates to: ${sectionLabels[d.data.relatedTo.section]}`,
                 ]
                   .filter(Boolean)
                   .join(' · ')}
