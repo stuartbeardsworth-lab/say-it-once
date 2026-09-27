@@ -7,7 +7,7 @@ import { navigate, RouteLink } from '../../router';
 import { useStore } from '../../store/StoreContext';
 
 // Load the made-up example record, with private entries of every kind, to
-// try the reports without using real details. Shown in How to use.
+// try the reports without using real details. Shown in Help.
 
 export function TryExample() {
   const { store, switchRecord } = useStore();

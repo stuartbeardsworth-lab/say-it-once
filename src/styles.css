@@ -1010,7 +1010,12 @@ h3 {
   font-weight: 800;
   color: var(--colour-navy);
   text-align: center;
-  font-size: 0.9375rem;
+  /* Small enough to fit on one line on most phones (360px and up). */
+  font-size: 0.75rem;
+}
+
+.brand-phrase {
+  white-space: nowrap;
 }
 
 .brand-promise [aria-hidden] {
@@ -1375,7 +1380,7 @@ td {
   padding-left: 1.5rem;
 }
 
-.steps h2 {
+.steps h3 {
   margin-top: var(--space-4);
 }
 

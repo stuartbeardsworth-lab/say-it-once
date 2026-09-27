@@ -8,9 +8,8 @@ import { Changes } from './screens/Changes';
 import { Contacts } from './screens/Contacts';
 import { Costs } from './screens/Costs';
 import { Documents } from './screens/Documents';
-import { Faq } from './screens/Faq';
 import { Find } from './screens/Find';
-import { HowToUse } from './screens/HowToUse';
+import { Help } from './screens/Help';
 import { Impact } from './screens/Impact';
 import { Track } from './screens/Track';
 import { Treatment } from './screens/Treatment';
@@ -56,10 +55,10 @@ function Screen({ location }: { location: ReturnType<typeof useLocation> }) {
       return <UseRecord />;
     case 'support':
       return <Support />;
+    case 'help':
     case 'faq':
-      return <Faq />;
     case 'how-to-use':
-      return <HowToUse />;
+      return <Help />;
     case 'add-to-phone':
       return <AddToPhone />;
     case 'records':

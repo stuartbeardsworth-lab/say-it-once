@@ -291,3 +291,12 @@ Done when:
   report stays plain evidence; no on/off setting. No web address yet: add
   one once there's a Google Play listing or the owner's own address. The
   PDF font (Roboto) has no arrow, so the line uses commas.
+- 27 September 2026, one Help screen: How to use and Questions and answers
+  are merged into **Help** (`src/screens/Help.tsx`): Getting started (the
+  four steps, Load the example record, Print these steps) then Questions
+  and answers with its search. Someone looking for help shouldn't have to
+  decide first whether theirs is a "how to" or a "question". `#how-to-use`
+  and `#faq` still open Help. Home's links are Help, Add to phone and
+  Privacy & backup. Find support stays just under the four tasks, because
+  it leads to urgent help. The footer tagline is smaller (0.75rem), on one
+  line from 360px wide, and breaks after an arrow when it has to wrap.

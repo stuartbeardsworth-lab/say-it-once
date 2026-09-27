@@ -21,7 +21,7 @@ async function settle() {
   await page.waitForTimeout(400);
 }
 
-await page.goto(`${base}#how-to-use`);
+await page.goto(`${base}#help`);
 await page.getByRole('button', { name: 'Load the example record' }).click();
 await page.getByRole('heading', { level: 1, name: 'Use my record' }).waitFor();
 

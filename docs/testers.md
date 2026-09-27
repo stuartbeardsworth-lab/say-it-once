@@ -23,8 +23,8 @@ and follow the steps for your phone. On an iPhone, do this before you start
 writing, because the home-screen version keeps its own separate record
 (you can move a record across with a backup, see below).
 
-**Try it without your own details:** open **How to use** and press **Load
-the example record**. It adds a made-up record you can delete afterwards.
+**Try it without your own details:** open **Help** (at the bottom of Home)
+and press **Load the example record**. It adds a made-up record you can delete afterwards.
 
 **Keep a backup:** in **Privacy & backup**, press **Make a backup** now and
 then, and keep the file somewhere safe, such as your email. The backup is

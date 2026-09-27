@@ -17,8 +17,10 @@ export const screens = [
   { hash: '#find', heading: 'Find in my record' },
   { hash: '#use', heading: 'Use my record' },
   { hash: '#support', heading: 'Find support' },
-  { hash: '#faq', heading: 'Questions and answers' },
-  { hash: '#how-to-use', heading: 'How to use Say It Once' },
+  { hash: '#help', heading: 'Help' },
+  // Older addresses still open Help.
+  { hash: '#faq', heading: 'Help' },
+  { hash: '#how-to-use', heading: 'Help' },
   { hash: '#add-to-phone', heading: 'Keep Say It Once on your phone' },
   { hash: '#privacy', heading: 'Privacy & backup' },
   { hash: '#building-blocks', heading: 'Building blocks' },

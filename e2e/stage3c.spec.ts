@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { expectNoAxeViolations } from './helpers';
 
-// Stage 3c: Find, Find support, FAQ, How to use, Add to phone.
+// Stage 3c: Find, Find support, Help (getting started and the FAQ), Add to phone.
 
 async function open(page: Page, hash: string) {
   await page.goto(`/${hash}`);
@@ -57,10 +57,16 @@ test('Find support lists urgent help first, with links that work', async ({ page
   await expectNoAxeViolations(page);
 });
 
-test('the FAQ can be searched', async ({ page }) => {
-  await open(page, '#faq');
+test('Help is reached from Home, and its questions can be searched', async ({ page }) => {
+  await open(page, '#home');
+  await page.getByRole('navigation', { name: 'Help and settings' }).getByRole('link', { name: 'Help' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Help' })).toBeFocused();
+  await expect(page.getByRole('heading', { level: 2, name: 'Getting started' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Load the example record' })).toBeVisible();
   await page.getByRole('searchbox', { name: 'Search the questions' }).fill('private');
-  await expect(page.getByRole('status')).toContainText(/questions? match/);
+  await expect(page.getByRole('region', { name: 'Questions and answers' }).getByRole('status')).toContainText(
+    /questions? match/,
+  );
   await expect(page.getByText('What does “Keep this private” do?')).toBeVisible();
   await page.getByRole('searchbox', { name: 'Search the questions' }).fill('xylophone');
   await expect(page.getByText('No questions match that.')).toBeVisible();
