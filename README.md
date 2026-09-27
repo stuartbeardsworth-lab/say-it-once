@@ -60,3 +60,11 @@ Open `src/content/support.json` on GitHub, press the pencil icon, edit, and
 commit. Netlify publishes the change in a few minutes. A check on every push
 makes sure each entry has a name, a description, a secure website and a
 phone number written as digits.
+
+## Keep the live site public
+
+In Netlify (say-it-once-home → Project configuration → Access & security →
+Visitor access), production must be **No protection**. If visitor
+protection is switched on, everyone but you sees "This site is private",
+testers and Google Play can't open the app, and installed copies stop
+updating. The site holds no one's records, so public is safe.

@@ -257,3 +257,9 @@ Done when:
   (`src/shell/watchForUpdates.ts`); Netlify serves `sw.js` and `index.html`
   with `Cache-Control: no-cache`. Switching still waits for the person to
   choose "Use the new version".
+- 27 September 2026, the live site must stay public: Netlify's visitor
+  protection ("Team protection") had been switched on for production, so
+  only the owner's Netlify account could open it, testers would have seen
+  "This site is private", and installed copies couldn't fetch updates. The
+  owner turned it off. Keep Visitor access at "No protection" for
+  production (see `docs/play-store.md`); the site holds no records.

@@ -178,6 +178,13 @@ testers for 14 days in a row** before they can publish to everyone.
 
 ## Things to know
 
+- **The live site must stay public.** In Netlify, say-it-once-home →
+  Project configuration → Access & security → Visitor access must be **No
+  protection** for the production site. If it's switched on, everyone except
+  you sees "This site is private": testers can't open the app, Google can't
+  review it, and every installed copy stops updating (this happened on
+  27 September 2026). The site holds no one's records, so public is safe.
+
 - **Where the record lives.** In the Play Store app, the record is kept in
   Chrome's storage on the phone for this website. So the Play Store app and
   the website opened in Chrome on the same phone share one record.
