@@ -334,3 +334,6 @@ Done when:
   type?" (was "Can't find the microphone?"), so it tells everyone they can
   speak, not only those who already know. Same fold-out and steps; no
   microphone icon, since that would look like a button that records.
+  Its Samsung steps say the microphone is at the bottom left, under the
+  keys (as on the owner's S23), then the row above the keys. Quick Note and
+  How it affects me no longer repeat the microphone in their hint.

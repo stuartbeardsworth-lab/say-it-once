@@ -54,11 +54,11 @@ describe('microphone help', () => {
     expect(screen.getByText(/On an iPhone it’s at the bottom right/)).toBeVisible();
     // Turning it on, and other phones, stay folded until asked for.
     expect(screen.getByText(/turn on Dictation/)).not.toBeVisible();
-    expect(screen.getByText(/On a Samsung phone/)).not.toBeVisible();
+    expect(screen.getByText(/On most Samsung phones/)).not.toBeVisible();
     await user.click(screen.getByText('Still can’t see it?'));
     expect(screen.getByText(/turn on Dictation/)).toBeVisible();
     await user.click(screen.getByText('Not an iPhone?'));
-    expect(screen.getByText(/On a Samsung phone/)).toBeVisible();
+    expect(screen.getByText(/On most Samsung phones/)).toBeVisible();
     expect(screen.getByText(/On most Android phones/)).toBeVisible();
   });
 

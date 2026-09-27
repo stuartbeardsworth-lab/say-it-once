@@ -38,7 +38,8 @@ const steps: Record<Exclude<Phone, 'other'>, PhoneSteps> = {
   },
   samsung: {
     name: 'Samsung phone',
-    where: 'On a Samsung phone it’s in the row above the keys. If you can’t see it, tap the three dots there.',
+    where:
+      'On most Samsung phones it’s at the bottom left, under the keys. If it isn’t there, look in the row above the keys, or tap the three dots in that row.',
     turnOn: 'Open Settings, search for Samsung Keyboard, and turn on voice input.',
   },
 };
