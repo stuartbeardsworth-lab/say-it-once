@@ -74,7 +74,7 @@ export function AppShell({ location, children }: AppShellProps) {
             </span>{' '}
             <span className="brand-phrase">Use it when you need it</span>
           </p>
-          <p className="field-hint">Say It Once, test version {appVersion}</p>
+          <p className="field-hint">© 2026 Say It Once · version {appVersion}</p>
         </div>
       </footer>
     </>

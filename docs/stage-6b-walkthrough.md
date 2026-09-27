@@ -7,7 +7,7 @@ Use the Deploy Preview.
 ## What changed in 6b
 
 1. [ ] The footer has no **Building blocks** link, and ends with "Say It
-   Once, test version 0.6.0". Going to the address ending `#building-blocks`
+   Once, test version 0.6.0" (since 27 September 2026: "© 2026 Say It Once · version …"). Going to the address ending `#building-blocks`
    shows **Page not found**.
 2. [ ] **Help**: step 4 describes Use my record, PDFs and zips. Below
    the steps, **Try it with a made-up record** has **Load the example

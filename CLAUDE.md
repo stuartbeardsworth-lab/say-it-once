@@ -349,3 +349,7 @@ Done when:
   ran out. CI now runs once per change, on pull requests and on main after
   a merge (not also on every branch push), and a newer push to a pull
   request cancels the older run. Nothing is paid for.
+- 27 September 2026, footer: the small line under the tagline reads
+  "© 2026 Say It Once · version …" (was "Say It Once, test version …").
+  The owner's personal name stays out of the app, like their email; the
+  version stays so a phone's update can be checked.
