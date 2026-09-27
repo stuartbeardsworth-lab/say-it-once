@@ -1,8 +1,17 @@
 name: CI
 
+# Checks run once per change, to stay within GitHub's free minutes for
+# private repositories: on pull requests, and on main when one is merged.
+# (Running on every branch push as well ran everything twice.) A newer push
+# to a pull request stops the checks still running for the older one.
 on:
   push:
+    branches: [main]
   pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   checks:

@@ -344,3 +344,8 @@ Done when:
   `src/assets/icons/`); iPhone and Samsung use our own close drawings,
   because Apple's and Samsung's icons can't be used in a web app
   (`src/components/MicIcon.tsx`).
+- 27 September 2026, CI minutes: the repository is private, so GitHub
+  Actions has a free monthly allowance, and checks stopped starting once it
+  ran out. CI now runs once per change, on pull requests and on main after
+  a merge (not also on every branch push), and a newer push to a pull
+  request cancels the older run. Nothing is paid for.
