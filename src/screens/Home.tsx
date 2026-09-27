@@ -30,8 +30,7 @@ const addChoices: {
 ];
 
 const utilityLinks: { to: Route; label: string; icon: IconName }[] = [
-  { to: 'how-to-use', label: 'How to use', icon: 'story' },
-  { to: 'faq', label: 'Questions and answers', icon: 'question' },
+  { to: 'help', label: 'Help', icon: 'question' },
   { to: 'add-to-phone', label: 'Add to phone', icon: 'phone' },
   { to: 'privacy', label: 'Privacy & backup', icon: 'lock' },
   // Only in Deploy Previews, for the owner's review (src/buildInfo.ts).

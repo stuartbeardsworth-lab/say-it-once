@@ -27,9 +27,12 @@ Open the Deploy Preview on your iPhone, and on a computer if you can.
    None looks like a plain heading.
    There's no "Only on this phone" box on Home any more (it's still on
    Privacy & backup).
-5. [ ] Near the bottom is a box with How to use, Questions and answers, Add
-   to phone and Privacy & backup, and the footer ends with
-   **Record it → Keep it together → Use it when you need it**.
+5. [ ] Near the bottom is a box with Help, Add to phone and Privacy &
+   backup, and the footer ends with
+   **Record it → Keep it together → Use it when you need it**, on one line
+   on most phones (on the smallest it breaks after an arrow).
+5a. [ ] **Help** has **Getting started** (the four steps and the example
+   record) and then **Questions and answers** with a search box.
 6. [ ] The headings use the rounder Manrope font, like the old app. This
    works with Wi-Fi off too, because the fonts are part of the app.
 7. [ ] Add Say It Once to your home screen again (delete the old icon

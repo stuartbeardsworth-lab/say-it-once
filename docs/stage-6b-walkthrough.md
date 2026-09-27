@@ -9,7 +9,7 @@ Use the Deploy Preview.
 1. [ ] The footer has no **Building blocks** link, and ends with "Say It
    Once, test version 0.6.0". Going to the address ending `#building-blocks`
    shows **Page not found**.
-2. [ ] **How to use**: step 4 describes Use my record, PDFs and zips. Below
+2. [ ] **Help**: step 4 describes Use my record, PDFs and zips. Below
    the steps, **Try it with a made-up record** has **Load the example
    record**. Press it: you're taken to Use my record, with the example shown.
 3. [ ] **Privacy & backup** starts with **A test version**: the version
@@ -27,8 +27,8 @@ Use only Tab, Shift+Tab, Enter, Space, arrow keys and Escape.
    visible.
 6. [ ] Open each screen from the footer in turn: What happened, How it
    affects me, Keep track (and each of its sections), Quick Notes, My
-   records, Find in my record, Use my record, Find support, How to use,
-   Questions and answers, Add to phone, Privacy & backup. On each, focus
+   records, Find in my record, Use my record, Find support, Help,
+   Add to phone, Privacy & backup. On each, focus
    lands on the page heading.
 7. [ ] Add a Quick Note, an appointment and a cost. In each window, focus
    starts inside it, Tab stays inside it, Escape closes it (asking first if

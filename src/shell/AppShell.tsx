@@ -63,9 +63,16 @@ export function AppShell({ location, children }: AppShellProps) {
       </main>
       <footer className="site-footer">
         <div className="container">
+          {/* Each phrase keeps its arrow, so if the line has to wrap (a very
+              small phone, or larger text) it breaks after an arrow. */}
           <p className="brand-promise">
-            Record it <span aria-hidden="true">→</span> <span className="brand-keep">Keep it together</span>{' '}
-            <span aria-hidden="true">→</span> Use it when you need it
+            <span className="brand-phrase">
+              Record it <span aria-hidden="true">→</span>
+            </span>{' '}
+            <span className="brand-phrase">
+              <span className="brand-keep">Keep it together</span> <span aria-hidden="true">→</span>
+            </span>{' '}
+            <span className="brand-phrase">Use it when you need it</span>
           </p>
           <p className="field-hint">Say It Once, test version {appVersion}</p>
         </div>

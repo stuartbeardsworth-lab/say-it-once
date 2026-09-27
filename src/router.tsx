@@ -19,8 +19,10 @@ export const routes = {
   find: { title: 'Find in my record' },
   use: { title: 'Use my record' },
   support: { title: 'Find support' },
-  faq: { title: 'Questions and answers' },
-  'how-to-use': { title: 'How to use Say It Once' },
+  help: { title: 'Help' },
+  // Older addresses, kept so saved links still work; both open Help.
+  faq: { title: 'Help' },
+  'how-to-use': { title: 'Help' },
   'add-to-phone': { title: 'Keep Say It Once on your phone' },
   records: { title: 'My records' },
   privacy: { title: 'Privacy & backup' },

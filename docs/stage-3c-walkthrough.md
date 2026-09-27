@@ -26,11 +26,11 @@ Please try them once yourself on the Deploy Preview. Tick each box as you go.
 
 ## Help
 
-8. [ ] **Questions and answers**: search for "private". Read every answer
-   and tell me what to change. These are drafts, written to describe only
-   what the app does now.
-9. [ ] **How to use**: read the four steps. **Print this guide** prints the
-   steps without the menus.
+8. [ ] **Help** (at the bottom of Home): under **Questions and answers**,
+   search for "private". Read every answer and tell me what to change.
+   These are drafts, written to describe only what the app does now.
+9. [ ] **Help**, **Getting started**: read the four steps. **Print these
+   steps** prints them without the menus or the questions.
 10. [ ] On Home, **Keep Say It Once on your phone** appears. Tap **See how**
     and read the warning about the home screen keeping a separate record.
     Go back and tap **Not now**: it goes, and stays gone after reloading.
