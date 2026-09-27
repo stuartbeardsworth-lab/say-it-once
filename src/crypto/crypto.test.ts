@@ -227,17 +227,26 @@ describe('the recovery key', () => {
     const text = formatRecoveryKey(sodium, sodium.randombytes_buf(32));
     expectProblem(() => parseRecoveryKey(sodium, text.slice(0, -1)), 'recovery-key-typo');
     expectProblem(() => parseRecoveryKey(sodium, `O${text.slice(1)}`), 'recovery-key-typo');
-    // Changing one character is caught by the check 15 times in 16; count how often.
+    // Changing one character is caught by the check 15 times in 16 (93.75%).
+    // Measured over many keys, not one: with a single key, 7 or more of the
+    // 31 changes slip through by chance about 1 run in 250. Over 40 keys
+    // (1,240 changes) the rate sits within about 0.7% of 93.75%, so a floor of
+    // 88% never fails by chance but still catches a check that's broken.
     let caught = 0;
-    for (const c of alphabet) {
-      if (c === text[0]) continue;
-      try {
-        parseRecoveryKey(sodium, c + text.slice(1));
-      } catch {
-        caught++;
+    let tried = 0;
+    for (let k = 0; k < 40; k++) {
+      const key = formatRecoveryKey(sodium, sodium.randombytes_buf(32));
+      for (const c of alphabet) {
+        if (c === key[0]) continue;
+        tried++;
+        try {
+          parseRecoveryKey(sodium, c + key.slice(1));
+        } catch {
+          caught++;
+        }
       }
     }
-    expect(caught).toBeGreaterThanOrEqual(25);
+    expect(caught / tried).toBeGreaterThanOrEqual(0.88);
   });
 });
 
