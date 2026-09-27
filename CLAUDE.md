@@ -365,3 +365,17 @@ Done when:
   It goes once another message replaces it. It isn't on Home's "Your next
   appointment" box, which stays calm; the phone's calendar gives the
   reminder (`src/features/track/AddToCalendar.tsx`).
+- 27 September 2026, locked backups: a backup can be locked with a password
+  the person chooses ("Lock it (recommended)" is the default), so it's safe
+  to keep in email or a cloud drive and survives losing the phone. The zip
+  is encrypted on the device with the Stage 7 module (Argon2id key from the
+  password, libsodium secretstream in 64 KiB pieces, the readable header
+  bound to the contents; `src/crypto/backup.ts`) and saved as
+  `… (locked).sayitonce`. At least 12 characters, not a well-known
+  password; "Suggest a password" gives four words; the person ticks "I've
+  written the password down" first, because nobody can reset it. Restore
+  asks for the password and says plainly when it doesn't match. Unlocked
+  backups stay available. This is the first use of `src/crypto/` in the
+  app; the independent cryptography review is still wanted before sync,
+  and should cover this too. The browser is already asked to keep the
+  record after the first save (`requestPersistence` in the store).

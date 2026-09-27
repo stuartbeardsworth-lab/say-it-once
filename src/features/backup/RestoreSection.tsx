@@ -1,10 +1,13 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { Button } from '../../components/Button';
 import { RadioList } from '../../components/RadioList';
+import { TextField } from '../../components/TextField';
+import { CryptoProblem } from '../../crypto/problems';
 import { readableDate } from '../../domain/format';
 import { RouteLink } from '../../router';
 import { useStore } from '../../store/StoreContext';
 import { checkBackup, type CheckedBackup } from './backupFile';
+import { isLockedBackup, lockedBackupCreatedAt, unlock } from './lock';
 
 // Restore from a backup. The file is checked first and what it holds is
 // shown, problems included, before anything changes. Restoring only ever
@@ -17,6 +20,7 @@ type Checked = Extract<CheckedBackup, { ok: true }>;
 type State =
   | { step: 'start' }
   | { step: 'checking' }
+  | { step: 'locked'; file: File; createdAt: string; unlocking: boolean; error: string | null }
   | { step: 'checked'; backup: Checked; choices: Choice[] }
   | { step: 'restoring'; backup: Checked; choices: Choice[] }
   | { step: 'done'; names: string[] }
@@ -30,11 +34,47 @@ export function RestoreSection() {
 
   // Move to what the backup holds, and to the result, as each appears.
   useEffect(() => {
-    if (state.step === 'checked' || state.step === 'done') headingRef.current?.focus();
+    if (state.step === 'checked' || state.step === 'done' || state.step === 'locked') headingRef.current?.focus();
   }, [state.step]);
 
   async function check(file: File) {
     setState({ step: 'checking' });
+    try {
+      if (await isLockedBackup(file)) {
+        const createdAt = await lockedBackupCreatedAt(file);
+        setState({ step: 'locked', file, createdAt, unlocking: false, error: null });
+        return;
+      }
+      await checkUnlocked(file);
+    } catch (error) {
+      setState({ step: 'failed', reason: unlockFailure(error) });
+    }
+  }
+
+  async function unlockAndCheck(file: File, createdAt: string, password: string) {
+    setState({ step: 'locked', file, createdAt, unlocking: true, error: null });
+    let zip: Blob;
+    try {
+      zip = await unlock(file, password);
+    } catch (error) {
+      if (error instanceof CryptoProblem && error.kind === 'wrong-passphrase') {
+        setState({
+          step: 'locked',
+          file,
+          createdAt,
+          unlocking: false,
+          error: 'That password doesn’t open this backup. Check for typing mistakes, spaces and capital letters, then try again.',
+        });
+      } else {
+        setState({ step: 'failed', reason: unlockFailure(error) });
+      }
+      return;
+    }
+    setState({ step: 'checking' });
+    await checkUnlocked(zip);
+  }
+
+  async function checkUnlocked(file: Blob) {
     try {
       const backup = await checkBackup(file, store);
       if (!backup.ok) setState({ step: 'failed', reason: backup.reason });
@@ -69,7 +109,7 @@ export function RestoreSection() {
         its records to this device; it never replaces or changes what’s already here.
       </p>
 
-      {!showing && (
+      {!showing && state.step !== 'locked' && (
         <div className="button-row">
           <label htmlFor={inputId} className="button button-secondary file-button">
             {state.step === 'checking' ? 'Opening the backup…' : 'Choose a backup file'}
@@ -77,7 +117,6 @@ export function RestoreSection() {
           <input
             id={inputId}
             type="file"
-            accept=".zip,application/zip"
             className="visually-hidden-input"
             disabled={state.step === 'checking'}
             onChange={(e) => {
@@ -88,6 +127,8 @@ export function RestoreSection() {
           />
         </div>
       )}
+
+      {state.step === 'locked' && <UnlockForm state={state} headingRef={headingRef} onUnlock={(p) => void unlockAndCheck(state.file, state.createdAt, p)} onCancel={() => setState({ step: 'start' })} />}
 
       {showing && (
         <div className="note-card">
@@ -171,5 +212,56 @@ export function RestoreSection() {
         )}
       </div>
     </section>
+  );
+}
+
+function unlockFailure(error: unknown): string {
+  if (error instanceof CryptoProblem && error.kind === 'newer-format') {
+    return 'This backup was made by a newer version of Say It Once. Update the app, then try again. Nothing has been changed.';
+  }
+  return 'This backup has been damaged, so it can’t be opened. Nothing has been changed.';
+}
+
+function UnlockForm({
+  state,
+  headingRef,
+  onUnlock,
+  onCancel,
+}: {
+  state: { createdAt: string; unlocking: boolean; error: string | null };
+  headingRef: React.RefObject<HTMLHeadingElement | null>;
+  onUnlock: (password: string) => void;
+  onCancel: () => void;
+}) {
+  const [password, setPassword] = useState('');
+  return (
+    <form
+      className="note-card"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (password && !state.unlocking) onUnlock(password);
+      }}
+    >
+      <h3 ref={headingRef} tabIndex={-1}>
+        This backup is locked
+      </h3>
+      <p>Saved {readableDate(state.createdAt.slice(0, 10))}. Type the password chosen when it was made.</p>
+      <TextField
+        label="Password"
+        value={password}
+        onChange={setPassword}
+        autoComplete="off"
+        spellCheck="false"
+        errorMessage={state.error ?? undefined}
+      />
+      <div className="button-row">
+        <Button type="submit" variant="primary" isDisabled={!password || state.unlocking}>
+          {state.unlocking ? 'Unlocking…' : 'Unlock'}
+        </Button>
+        <Button onPress={onCancel} isDisabled={state.unlocking}>
+          Cancel
+        </Button>
+      </div>
+    </form>
   );
 }

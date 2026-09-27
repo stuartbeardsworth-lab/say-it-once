@@ -13,7 +13,10 @@ people. Optional sync will store only ciphertext on our server.
 **Size:** about 800 lines of TypeScript (much of it comments) using libsodium (XChaCha20-Poly1305,
 secretstream, Argon2id, BLAKE2b) and WebCrypto AES-GCM for one
 non-extractable device key. There is a design document and tests with test
-vectors. The server and sync protocol are not in this review.
+vectors. The server and sync protocol are not in this review. One part is
+already in use: password-locked backup files (`src/crypto/backup.ts`, an
+Argon2id key and secretstream over the backup zip, with the readable header
+as associated data), so please look at that first.
 
 **What's attached:**
 

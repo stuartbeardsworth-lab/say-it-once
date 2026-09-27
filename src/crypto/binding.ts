@@ -20,7 +20,9 @@ export type Purpose =
   /** The account key, wrapped by the recovery wrapping key. */
   | 'account-key/recovery'
   /** The account key, wrapped by this device's key. */
-  | 'account-key/device';
+  | 'account-key/device'
+  /** A locked backup file's contents, sealed with its passphrase key (bound to the file's header). */
+  | 'backup';
 
 export interface Binding {
   purpose: Purpose;
