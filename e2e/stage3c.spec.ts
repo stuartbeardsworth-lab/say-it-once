@@ -80,10 +80,17 @@ test('the Home prompt to add to phone can be dismissed, and stays dismissed', as
   await expect(page.getByRole('heading', { level: 1, name: 'Keep Say It Once on your phone' })).toBeFocused();
   await expect(page.getByText('your record doesn’t move with it yet')).toBeVisible();
   await page.goBack();
+  // While the box shows, the Add to phone link below isn't repeated.
+  const links = page.getByRole('navigation', { name: 'Help and settings' });
+  await expect(links.getByRole('link', { name: 'Help' })).toBeVisible();
+  await expect(links.getByRole('link', { name: 'Add to phone' })).toHaveCount(0);
   await prompt.getByRole('button', { name: 'Not now' }).click();
   await expect(prompt).toBeHidden();
+  // Once it's put away, the link is the way back, and focus goes to it.
+  await expect(links.getByRole('link', { name: 'Add to phone' })).toBeFocused();
   await page.reload();
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Find support' }).first()).toBeVisible();
   await expect(prompt).toBeHidden();
+  await expect(links.getByRole('link', { name: 'Add to phone' })).toBeVisible();
 });

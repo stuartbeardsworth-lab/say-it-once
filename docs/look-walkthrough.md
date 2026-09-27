@@ -27,8 +27,11 @@ Open the Deploy Preview on your iPhone, and on a computer if you can.
    None looks like a plain heading.
    There's no "Only on this phone" box on Home any more (it's still on
    Privacy & backup).
-5. [ ] Near the bottom is a box with Help, Add to phone and Privacy &
-   backup, and the footer ends with
+5. [ ] Near the bottom is a box with Help and Privacy & backup. While the
+   green **Keep Say It Once on your phone** box is showing, there's no
+   separate Add to phone link; tap **Not now** and the box goes, **Add to
+   phone** appears in the links, and focus moves to it. Opened from the
+   home screen, neither shows. The footer ends with
    **Record it → Keep it together → Use it when you need it**, on one line
    on most phones (on the smallest it breaks after an arrow).
 5a. [ ] **Help** has **Getting started** (the four steps and the example

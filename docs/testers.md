@@ -18,8 +18,10 @@ and what doesn't.
 
 **Open it:** https://say-it-once-home.netlify.app
 
-**Put it on your phone:** open **Add to phone** at the bottom of any page
-and follow the steps for your phone. On an iPhone, do this before you start
+**Put it on your phone:** on Home, tap **See how, and one thing to know
+first** in the **Keep Say It Once on your phone** box (or, if you've put
+that box away, **Add to phone** at the bottom of Home), and follow the steps
+for your phone. On an iPhone, do this before you start
 writing, because the home-screen version keeps its own separate record
 (you can move a record across with a backup, see below).
 

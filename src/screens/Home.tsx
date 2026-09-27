@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { reviewPages } from '../buildInfo';
 import { Button } from '../components/Button';
 import { Dialog, focusWhenDialogsClose } from '../components/Dialog';
@@ -10,7 +10,7 @@ import { QuickNoteCard } from '../features/quickNotes/QuickNoteCard';
 import { useQuickNoteDialogs } from '../features/quickNotes/useQuickNoteDialogs';
 import { AppointmentDialog } from '../features/track/AppointmentDialog';
 import { navigate, RouteLink, type Route } from '../router';
-import { AddToPhonePrompt } from '../shell/AddToPhonePrompt';
+import { AddToPhonePrompt, useAddToPhone } from '../shell/AddToPhonePrompt';
 import { BackupReminder } from '../shell/BackupReminder';
 import { useItems, useRecordName } from '../store/hooks';
 
@@ -31,6 +31,8 @@ const addChoices: {
 
 const utilityLinks: { to: Route; label: string; icon: IconName }[] = [
   { to: 'help', label: 'Help', icon: 'question' },
+  // Only once the "Keep Say It Once on your phone" box has been put away
+  // (see useAddToPhone), so the two never show together.
   { to: 'add-to-phone', label: 'Add to phone', icon: 'phone' },
   { to: 'privacy', label: 'Privacy & backup', icon: 'lock' },
   // Only in Deploy Previews, for the owner's review (src/buildInfo.ts).
@@ -43,6 +45,15 @@ export function Home() {
   const notes = useItems('quickNote');
   const appointments = useItems('appointment');
   const recordName = useRecordName();
+  const addToPhone = useAddToPhone();
+  // After Not now, the box goes and the Add to phone link appears in its
+  // place further down; focus moves to it rather than being lost.
+  const focusAddToPhone = useRef(false);
+  useEffect(() => {
+    if (!focusAddToPhone.current || addToPhone.state !== 'dismissed') return;
+    focusAddToPhone.current = false;
+    document.querySelector<HTMLElement>('.utility-links a[href="#add-to-phone"]')?.focus();
+  }, [addToPhone.state]);
   const heading = useRef<HTMLHeadingElement>(null);
   // A filed note leaves Home, taking its File button with it, so focus goes
   // to the page heading rather than being lost.
@@ -185,18 +196,27 @@ export function Home() {
       </details>
 
       <BackupReminder />
-      <AddToPhonePrompt />
+      {addToPhone.state === 'prompt' && (
+        <AddToPhonePrompt
+          onDismiss={() => {
+            addToPhone.dismiss();
+            focusAddToPhone.current = true;
+          }}
+        />
+      )}
 
       <nav aria-label="Help and settings" className="utility-links">
         <ul>
-          {utilityLinks.map((l) => (
-            <li key={l.to}>
-              <RouteLink to={l.to}>
-                <Icon name={l.icon} />
-                {l.label}
-              </RouteLink>
-            </li>
-          ))}
+          {utilityLinks
+            .filter((l) => l.to !== 'add-to-phone' || addToPhone.state === 'dismissed')
+            .map((l) => (
+              <li key={l.to}>
+                <RouteLink to={l.to}>
+                  <Icon name={l.icon} />
+                  {l.label}
+                </RouteLink>
+              </li>
+            ))}
         </ul>
       </nav>
 
