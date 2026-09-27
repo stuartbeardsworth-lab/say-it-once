@@ -52,6 +52,9 @@ describe('microphone help', () => {
     await user.click(screen.getByText('Rather talk than type?'));
     expect(main).toBeVisible();
     expect(screen.getByText(/On an iPhone it’s at the bottom right/)).toBeVisible();
+    // A picture of the key to look for, which is only a picture.
+    expect(screen.getAllByRole('img', { name: 'a microphone symbol' })[0]).toBeVisible();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
     // Turning it on, and other phones, stay folded until asked for.
     expect(screen.getByText(/turn on Dictation/)).not.toBeVisible();
     expect(screen.getByText(/On most Samsung phones/)).not.toBeVisible();

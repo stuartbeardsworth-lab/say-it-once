@@ -337,3 +337,10 @@ Done when:
   Its Samsung steps say the microphone is at the bottom left, under the
   keys (as on the owner's S23), then the row above the keys. Quick Note and
   How it affects me no longer repeat the microphone in their hint.
+- 27 September 2026, microphone picture: "Rather talk than type?" shows
+  what the key looks like ("It looks like this:"), matched to the phone,
+  inside the fold-out only and never as a button. Android uses Google's
+  Material "mic" icon (the one Gboard uses, Apache 2.0, licence in
+  `src/assets/icons/`); iPhone and Samsung use our own close drawings,
+  because Apple's and Samsung's icons can't be used in a web app
+  (`src/components/MicIcon.tsx`).
