@@ -24,11 +24,11 @@ async function writeNote(page: Page, text: string, how: 'save' | 'file' = 'save'
   await dialog.getByRole('button', { name: how === 'save' ? 'Save as Quick Note' : 'Save and file it now' }).click();
 }
 
-test('a Quick Note saved from Home appears as the latest note and on Quick Notes', async ({ page }) => {
+test('a Quick Note saved from Home waits there to be filed and is on Quick Notes', async ({ page }) => {
   await openApp(page);
   await writeNote(page, 'Physio said keep doing the stretches');
   await expect(page.getByRole('status').filter({ hasText: 'Quick Note saved.' })).toBeVisible();
-  const latest = page.getByRole('region', { name: 'Your latest Quick Note' });
+  const latest = page.getByRole('region', { name: 'A Quick Note to file' });
   await expect(latest).toContainText('Physio said keep doing the stretches');
   await expect(latest).toContainText('Not filed yet');
   await page.getByRole('link', { name: 'See all Quick Notes' }).click();
@@ -47,12 +47,37 @@ test('a note can be filed in an area of How it affects me, then unfiled', async 
   await dialog.getByText('Walking and moving around').click();
   await dialog.getByRole('button', { name: 'File note' }).click();
   await expect(dialog).toBeHidden();
-  const latest = page.getByRole('region', { name: 'Your latest Quick Note' });
-  await expect(latest).toContainText('Filed in How it affects me: Walking and moving around');
+  // Filed notes leave Home; focus goes to the heading, and the message says where it went.
+  await expect(page.getByRole('region', { name: 'A Quick Note to file' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
+  await expect(
+    page.getByRole('status').filter({ hasText: 'Quick Note filed in How it affects me: Walking and moving around.' }),
+  ).toBeVisible();
 
-  await latest.getByRole('button', { name: 'Change where it’s filed' }).click();
+  await openFromHome(page, 'Quick Notes');
+  const card = page.getByRole('main').locator('.note-card').filter({ hasText: 'Stairs are hard today' });
+  await expect(card).toContainText('Filed in How it affects me: Walking and moving around');
+  await card.getByRole('button', { name: 'Change where it’s filed' }).click();
   await dialog.getByRole('button', { name: 'Remove from How it affects me' }).click();
-  await expect(latest).toContainText('Not filed yet');
+  await expect(card).toContainText('Not filed yet');
+});
+
+test('Home shows the newest unfiled note and how many more are waiting', async ({ page }) => {
+  await openApp(page);
+  await writeNote(page, 'First thought');
+  await writeNote(page, 'Second thought');
+  await writeNote(page, 'Third thought');
+  const toFile = page.getByRole('region', { name: 'A Quick Note to file' });
+  await expect(toFile).toContainText('Third thought');
+  await expect(toFile).toContainText('2 more notes to file when you’re ready.');
+
+  await toFile.getByRole('button', { name: /^File/ }).click();
+  const dialog = page.getByRole('dialog', { name: 'File this Quick Note' });
+  await dialog.getByText('Appointments', { exact: true }).click();
+  await dialog.getByRole('button', { name: 'File note' }).click();
+  await expect(toFile).toContainText('Second thought');
+  await expect(toFile).toContainText('1 more note to file when you’re ready.');
+  await expectNoAxeViolations(page);
 });
 
 test('filing asks you to choose a section first', async ({ page }) => {
@@ -81,8 +106,8 @@ test('a note with a photo filed in Letters & documents keeps the photo', async (
   const filing = page.getByRole('dialog', { name: 'File this Quick Note' });
   await filing.getByText('Letters & documents', { exact: true }).click();
   await filing.getByRole('button', { name: 'File note' }).click();
-  await expect(page.getByRole('region', { name: 'Your latest Quick Note' })).toContainText('Filed in Letters & documents');
-  await page.reload();
+  await expect(page.getByRole('status').filter({ hasText: 'Quick Note filed in Letters & documents.' })).toBeVisible();
+  await openFromHome(page, 'Quick Notes');
   await expect(page.getByRole('img', { name: /Photo saved with this note/ })).toBeVisible();
 });
 
@@ -190,6 +215,11 @@ test('a Quick Note explains how to find the keyboard microphone, and the help pa
   await dialog.getByText('Can’t find the microphone?').click();
   await expect(dialog.getByText('Tap in the box, then tap the microphone on your keyboard.')).toBeVisible();
   await dialog.getByText(/Not an iPhone\?|Not a Samsung phone\?|A different phone\?|Steps for each phone/).click();
-  await expect(dialog.getByRole('heading', { name: 'Samsung phone' }).or(dialog.getByRole('heading', { name: 'iPhone or iPad' })).first()).toBeVisible();
+  await expect(
+    dialog
+      .getByRole('heading', { name: 'Samsung phone' })
+      .or(dialog.getByRole('heading', { name: 'iPhone or iPad' }))
+      .first(),
+  ).toBeVisible();
   await expectNoAxeViolations(page);
 });

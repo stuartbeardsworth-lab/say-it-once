@@ -24,17 +24,38 @@ const areaOptions: { value: AreaChoice; label: string }[] = [
 interface FileNoteDialogProps {
   note: Item<'quickNote'> | null;
   onOpenChange: (isOpen: boolean) => void;
+  /** Called after the note is filed (or unfiled) and the dialog has closed. */
+  onFiled?: (filedTo: Item<'quickNote'>['data']['filedTo']) => void;
 }
 
-export function FileNoteDialog({ note, onOpenChange }: FileNoteDialogProps) {
+export function FileNoteDialog({ note, onOpenChange, onFiled }: FileNoteDialogProps) {
   return (
     <Dialog isOpen={note !== null} onOpenChange={onOpenChange} title="File this Quick Note">
-      {(close, { finish }) => note && <FileNoteForm note={note} onCancel={close} onDone={finish} />}
+      {(close, { finish }) =>
+        note && (
+          <FileNoteForm
+            note={note}
+            onCancel={close}
+            onDone={(filedTo) => {
+              finish();
+              onFiled?.(filedTo);
+            }}
+          />
+        )
+      }
     </Dialog>
   );
 }
 
-function FileNoteForm({ note, onCancel, onDone }: { note: Item<'quickNote'>; onCancel: () => void; onDone: () => void }) {
+function FileNoteForm({
+  note,
+  onCancel,
+  onDone,
+}: {
+  note: Item<'quickNote'>;
+  onCancel: () => void;
+  onDone: (filedTo: Item<'quickNote'>['data']['filedTo']) => void;
+}) {
   const { store } = useStore();
   const current = note.data.filedTo;
   const [section, setSection] = useState<SectionKey | null>(current?.section ?? null);
@@ -47,7 +68,7 @@ function FileNoteForm({ note, onCancel, onDone }: { note: Item<'quickNote'>; onC
     setStatus({ kind: 'saving' });
     try {
       await store.fileQuickNote(note.id, filedTo);
-      onDone();
+      onDone(filedTo);
     } catch (e) {
       setStatus({ kind: 'failed', message: messageFor(e) });
     }
@@ -64,7 +85,10 @@ function FileNoteForm({ note, onCancel, onDone }: { note: Item<'quickNote'>; onC
         void file({ section, impactArea: section === 'impact' && area !== 'not-sure' ? area : null });
       }}
     >
-      <p className="dialog-quote">“{note.data.text.slice(0, 120) || 'Photo'}{note.data.text.length > 120 ? '…' : ''}”</p>
+      <p className="dialog-quote">
+        “{note.data.text.slice(0, 120) || 'Photo'}
+        {note.data.text.length > 120 ? '…' : ''}”
+      </p>
       <RadioList
         label="Where should it go?"
         options={sectionOptions}
@@ -75,9 +99,7 @@ function FileNoteForm({ note, onCancel, onDone }: { note: Item<'quickNote'>; onC
         }}
         errorMessage={error}
         hint={
-          hasPhoto
-            ? 'Filing it in Letters & documents or Appointments also keeps the photo as a document.'
-            : undefined
+          hasPhoto ? 'Filing it in Letters & documents or Appointments also keeps the photo as a document.' : undefined
         }
       />
       {section === 'impact' && (

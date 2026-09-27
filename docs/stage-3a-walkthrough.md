@@ -7,7 +7,7 @@ Preview link on the pull request. Tick each box as you go.
 ## Quick Notes
 
 1. [ ] On Home, tap **Quick Note**. Write a sentence and tap **Save as Quick
-   Note**. The note appears under **Your latest Quick Note**, marked "Not filed yet".
+   Note**. The note appears under **A Quick Note to file**, marked "Not filed yet". Once filed, it leaves Home.
 2. [ ] Tap **Quick Note** again, write something, then tap **Cancel**. You're
    asked "This hasn’t been saved". Tap **Keep editing**: your words are still
    there. Tap **Cancel** again, then **Discard this note**.

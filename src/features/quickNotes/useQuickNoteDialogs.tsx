@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import type { Item } from '../../domain/types';
 import { FileNoteDialog } from './FileNoteDialog';
+import { whereFiled } from './format';
 import { QuickNoteDialog } from './QuickNoteDialog';
 
 // The write, edit and file dialogs, wired together so "Save and file it
 // now" leads straight on to filing. Any screen that shows Quick Notes uses it.
 
-export function useQuickNoteDialogs() {
+export function useQuickNoteDialogs({ onFiled }: { onFiled?: () => void } = {}) {
   const [writing, setWriting] = useState<{ note?: Item<'quickNote'> } | null>(null);
   const [filing, setFiling] = useState<Item<'quickNote'> | null>(null);
   const [message, setMessage] = useState('');
@@ -33,6 +34,12 @@ export function useQuickNoteDialogs() {
         onOpenChange={(open) => {
           if (!open) setFiling(null);
         }}
+        onFiled={(filedTo) => {
+          // Said out loud as well as shown, because on Home the note leaves
+          // the screen once it's filed.
+          setMessage(filedTo ? `Quick Note ${lowerFirst(whereFiled(filedTo))}.` : 'Quick Note unfiled.');
+          onFiled?.();
+        }}
       />
     </>
   );
@@ -47,6 +54,13 @@ export function useQuickNoteDialogs() {
       setMessage('');
       setWriting({ note });
     },
-    file: (note: Item<'quickNote'>) => setFiling(note),
+    file: (note: Item<'quickNote'>) => {
+      setMessage('');
+      setFiling(note);
+    },
   };
+}
+
+function lowerFirst(text: string): string {
+  return text.charAt(0).toLowerCase() + text.slice(1);
 }
