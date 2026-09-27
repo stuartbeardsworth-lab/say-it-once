@@ -6,7 +6,7 @@ Tick each box as you go.
 
 ## How it affects me
 
-1. [ ] Open **How it affects me** (footer, or Home → Your record). Tap
+1. [ ] Open **How it affects me** (Home → Look back at your record). Tap
    **Choose an area that’s changed**, pick an area, choose how it is now,
    write a sentence and **Save**.
 2. [ ] Tap **Something has changed**, pick the same area, change the words

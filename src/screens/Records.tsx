@@ -31,6 +31,12 @@ export function Records() {
         Keep a separate record for each injury or illness, so each one stays clear. Everything you add goes into the
         record being shown.
       </p>
+      {records?.length === 1 && records[0]?.data.name === 'My record' && (
+        <p className="field-hint">
+          Tip: give it a name you&rsquo;ll recognise, like &ldquo;Car accident, March 2026&rdquo;. The name goes on
+          anything you share.
+        </p>
+      )}
       <p role="status" className="quiet-status">
         {message}
       </p>

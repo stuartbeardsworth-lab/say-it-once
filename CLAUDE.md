@@ -269,3 +269,12 @@ Done when:
   outline) but keep a 44-pixel tap area for WCAG 2.2 target size and
   shaky hands; their small labels stay, because an icon alone is hard to
   work out.
+- 27 September 2026, Home and fold-outs: Home's fold-out is "Look back at
+  your record" ("See and change what you've already added"), so it's clear
+  it's for going back to entries, while Add something is for new ones.
+  Home always shows "Record: <name> · Change" under the title, so people
+  know from the start there can be more than one record and which one
+  they're adding to; My records suggests renaming "My record". Every
+  fold-out (`details.more`) is a bordered box with an arrow, like Home's,
+  so it's never mistaken for a heading. "Can't find the microphone?" stays
+  a small underlined help line.

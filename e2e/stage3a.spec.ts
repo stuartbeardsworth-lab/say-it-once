@@ -9,10 +9,10 @@ async function openApp(page: Page, hash = '#home') {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 }
 
-/** Opens a screen from Home's folded-away "Your record" section, as a person would. */
+/** Opens a screen from Home's folded-away "Look back at your record" section, as a person would. */
 async function openFromHome(page: Page, name: 'My records' | 'Quick Notes') {
   await page.getByRole('link', { name: /Say It Once/ }).click();
-  await page.getByText('Your record', { exact: true }).click();
+  await page.getByText('Look back at your record', { exact: true }).click();
   await page.getByRole('link', { name, exact: true }).click();
   await expect(page.getByRole('heading', { level: 1, name })).toBeFocused();
 }
@@ -221,5 +221,14 @@ test('a Quick Note explains how to find the keyboard microphone, and the help pa
       .or(dialog.getByRole('heading', { name: 'iPhone or iPad' }))
       .first(),
   ).toBeVisible();
+  await expectNoAxeViolations(page);
+});
+
+test('Home says which record is shown, and Change opens My records with a tip to rename it', async ({ page }) => {
+  await openApp(page);
+  await expect(page.getByText('Record: My record · Change')).toBeVisible();
+  await page.getByRole('link', { name: 'Change', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'My records' })).toBeFocused();
+  await expect(page.getByText(/give it a name you’ll recognise/)).toBeVisible();
   await expectNoAxeViolations(page);
 });
