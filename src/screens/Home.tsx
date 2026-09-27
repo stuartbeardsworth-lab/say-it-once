@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { reviewPages } from '../buildInfo';
 import { Button } from '../components/Button';
-import { Dialog } from '../components/Dialog';
+import { Dialog, focusWhenDialogsClose } from '../components/Dialog';
 import { Icon, type IconName } from '../components/icons';
 import { TaskButton, TaskLink } from '../components/TaskCard';
 import { today } from '../domain/dates';
@@ -47,7 +47,7 @@ export function Home() {
   // A filed note leaves Home, taking its File button with it, so focus goes
   // to the page heading rather than being lost.
   const { dialogs, write, edit, file } = useQuickNoteDialogs({
-    onFiled: () => requestAnimationFrame(() => heading.current?.focus()),
+    onFiled: () => focusWhenDialogsClose(() => heading.current),
   });
   const [choosing, setChoosing] = useState(false);
   const [addingAppointment, setAddingAppointment] = useState(false);
