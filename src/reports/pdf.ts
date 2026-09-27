@@ -1,4 +1,4 @@
-import type { Block, Field, Report } from './model';
+import { madeWith, type Block, type Field, type Report } from './model';
 
 // The PDF renderer's first half (docs/architecture.md, "Renderers"): the
 // document model turned into pdfmake's description of a document. It is
@@ -259,13 +259,17 @@ export function reportToPdf(report: Report): PdfDefinition {
       const page = node.pageNumbers[0];
       return !queries
         .getFollowingNodesOnPage()
-        .some((n) => n.id !== 'page-footer' && n.text !== undefined && n.pageNumbers[0] === page);
+        .some((n) => !n.id?.startsWith('page-footer') && n.text !== undefined && n.pageNumbers[0] === page);
     },
+    // Each line's id starts "page-footer", so headings never count the footer
+    // as words following them on the page. pdfmake needs every id to differ.
     footer: (page, pages) => ({
       id: 'page-footer',
-      text: `${report.title} · Page ${page} of ${pages}`,
-      style: 'small',
-      margin: [56, 24, 56, 0],
+      stack: [
+        { id: 'page-footer-number', text: `${report.title} · Page ${page} of ${pages}`, style: 'small' },
+        { id: 'page-footer-brand', text: madeWith, style: 'small' },
+      ],
+      margin: [56, 16, 56, 0],
     }),
     styles: {
       h1: { fontSize: 20, bold: true, margin: [0, 0, 0, 8] },

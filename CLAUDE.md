@@ -284,3 +284,10 @@ Done when:
   in Letters & documents. The app doesn't read the letter to fill in the
   details: that would need an online text-reading service (the letter
   would leave the phone) and would parse text to recover structure.
+- 27 September 2026, report branding: every PDF page ends with a small grey
+  line "Made with Say It Once · Record it, keep it together, use it when
+  you need it" under the page number, and the HTML copy ends with the same
+  line (`madeWith` in `src/reports/model.ts`). No logo or colours, so the
+  report stays plain evidence; no on/off setting. No web address yet: add
+  one once there's a Google Play listing or the owner's own address. The
+  PDF font (Roboto) has no arrow, so the line uses commas.

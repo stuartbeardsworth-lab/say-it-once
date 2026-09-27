@@ -1,4 +1,4 @@
-import type { Block, Field, Report } from './model';
+import { madeWith, type Block, type Field, type Report } from './model';
 import { reportWords } from './pdf';
 
 // The reading view (docs/architecture.md, "Renderers"): the accessible
@@ -180,6 +180,7 @@ export function ReadingView({ report, fileLinks, standalone = false }: ReadingVi
 
       <footer className="report-footer">
         <p>{report.disclaimer}</p>
+        <p className="report-brand">{madeWith}</p>
       </footer>
     </article>
   );

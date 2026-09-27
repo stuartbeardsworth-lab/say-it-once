@@ -25,6 +25,7 @@ table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 1rem; }
 th, td { text-align: left; vertical-align: top; padding: 0.35rem 0.5rem 0.35rem 0; border-bottom: 1px solid #ccc; }
 .report-signature dd { min-height: 2.5rem; }
 .report-footer { margin-top: 2rem; font-size: 0.9rem; color: #444; }
+.report-brand { margin-top: 1rem; font-size: 0.8rem; }
 a { color: #1d4f5c; }
 @media print { body { max-width: none; padding: 0; } }
 `;

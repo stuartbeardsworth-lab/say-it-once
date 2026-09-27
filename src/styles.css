@@ -1458,6 +1458,10 @@ td {
   font-size: 0.9375rem;
 }
 
+.report-brand {
+  font-size: 0.8125rem;
+}
+
 @media (max-width: 30em) {
   .report-fields {
     grid-template-columns: 1fr;

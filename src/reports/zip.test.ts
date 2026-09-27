@@ -3,7 +3,7 @@ import { strFromU8, unzipSync } from 'fflate';
 import { describe, expect, it } from 'vitest';
 import { exampleRecord, exampleItems } from '../fixtures/example';
 import { toShareable } from '../shareable/toShareable';
-import { buildReport, reportText } from './model';
+import { buildReport, madeWith, reportText } from './model';
 import { purposeByKey } from './purposes';
 import { selectEverything } from './selection';
 import { makeZip } from './zip';
@@ -59,6 +59,7 @@ describe('the zip', () => {
     expect(html).toContain('href="attachments/P1-photo.png"');
     const text = html.replace(/<[^>]+>/g, '\n').replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&amp;/g, '&');
     for (const t of reportText(report)) expect(text).toContain(t);
+    expect(text).toContain(madeWith);
   });
 
   it('never contains anything private', async () => {
