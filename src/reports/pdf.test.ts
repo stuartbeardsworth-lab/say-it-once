@@ -54,7 +54,10 @@ describe('the PDF', () => {
   it('has a contents page for longer reports, and page numbers', () => {
     const long = reportToPdf(reportFor('full-record', true));
     expect(pdfText(long)).toContain('Contents');
-    expect(long.footer(2, 7)).toMatchObject({ text: 'Full record · Page 2 of 7' });
+    expect(pdfText({ ...long, content: [long.footer(2, 7)] })).toEqual([
+      'Full record · Page 2 of 7',
+      'Made with Say It Once · Record it, keep it together, use it when you need it',
+    ]);
     expect(pdfText(reportToPdf(reportFor('appointment-brief')))).not.toContain('Contents');
   });
 

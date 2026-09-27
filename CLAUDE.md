@@ -269,3 +269,25 @@ Done when:
   outline) but keep a 44-pixel tap area for WCAG 2.2 target size and
   shaky hands; their small labels stay, because an icon alone is hard to
   work out.
+- 27 September 2026, Home and fold-outs: Home's fold-out is "Look back at
+  your record" ("See and change what you've already added"), so it's clear
+  it's for going back to entries, while Add something is for new ones.
+  Home always shows "Record: <name> · Change" under the title, so people
+  know from the start there can be more than one record and which one
+  they're adding to; My records suggests renaming "My record". Every
+  fold-out (`details.more`) is a bordered box with an arrow, like Home's,
+  so it's never mistaken for a heading. "Can't find the microphone?" stays
+  a small underlined help line.
+- 27 September 2026, appointment letters: the appointment form offers "Take
+  a photo of the letter" (opens the camera) and "Choose a file", straight
+  after the date, as Letters & documents does. The letter is still filed
+  in Letters & documents. The app doesn't read the letter to fill in the
+  details: that would need an online text-reading service (the letter
+  would leave the phone) and would parse text to recover structure.
+- 27 September 2026, report branding: every PDF page ends with a small grey
+  line "Made with Say It Once · Record it, keep it together, use it when
+  you need it" under the page number, and the HTML copy ends with the same
+  line (`madeWith` in `src/reports/model.ts`). No logo or colours, so the
+  report stays plain evidence; no on/off setting. No web address yet: add
+  one once there's a Google Play listing or the owner's own address. The
+  PDF font (Roboto) has no arrow, so the line uses commas.

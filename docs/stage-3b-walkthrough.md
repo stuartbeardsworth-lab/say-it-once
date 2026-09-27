@@ -6,7 +6,7 @@ Tick each box as you go.
 
 ## How it affects me
 
-1. [ ] Open **How it affects me** (footer, or Home → Your record). Tap
+1. [ ] Open **How it affects me** (Home → Look back at your record). Tap
    **Choose an area that’s changed**, pick an area, choose how it is now,
    write a sentence and **Save**.
 2. [ ] Tap **Something has changed**, pick the same area, change the words
@@ -23,8 +23,10 @@ Tick each box as you go.
 
 5. [ ] Open **Keep track**. Each card says how many entries it has.
 6. [ ] **Appointments** → **Add an appointment**. Tap **Save appointment**
-   straight away: it asks for the date and who it's with. Fill those in,
-   attach a letter (a photo or PDF), and save.
+   straight away: it asks for the date and who it's with. Under the date are
+   **Take a photo of the letter** (on a phone, the camera opens) and
+   **Choose a file**. Fill in the date and who it's with, attach a letter
+   (a photo or PDF), and save.
 7. [ ] Tap **Add to my calendar**. On the iPhone, the share sheet opens; on a
    computer, a calendar file is saved. Open it, and the appointment goes into
    your calendar.

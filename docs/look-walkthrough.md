@@ -17,8 +17,14 @@ Open the Deploy Preview on your iPhone, and on a computer if you can.
 3. [ ] Under **What do you need today?** are cards for **Add something**
    (with an orange +), **Quick Note**, **Find in my record** and
    **Use my record**, then a peach **Find support** card.
-4. [ ] **Your record** is folded away. Tap it to see cards for What
-   happened, How it affects me and Keep track; tap again to fold it.
+4. [ ] Under the title is **Record: My record · Change**; **Change** opens
+   My records. **Look back at your record** is folded away. Tap it to see
+   cards for What happened, How it affects me, Keep track, Quick Notes and
+   My records; tap again to fold it.
+4a. [ ] Every fold-out in the app (for example **Treatment and what came
+   next** on What happened, and **More detail (optional)** in the dialogs)
+   is a white box with an arrow on the right, which turns over when open.
+   None looks like a plain heading.
    There's no "Only on this phone" box on Home any more (it's still on
    Privacy & backup).
 5. [ ] Near the bottom is a box with How to use, Questions and answers, Add

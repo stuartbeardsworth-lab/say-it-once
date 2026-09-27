@@ -12,7 +12,7 @@ import { AppointmentDialog } from '../features/track/AppointmentDialog';
 import { navigate, RouteLink, type Route } from '../router';
 import { AddToPhonePrompt } from '../shell/AddToPhonePrompt';
 import { BackupReminder } from '../shell/BackupReminder';
-import { useItems } from '../store/hooks';
+import { useItems, useRecordName } from '../store/hooks';
 
 // The eight kinds of thing you can add (docs/spec.md, "Add something").
 const addChoices: {
@@ -43,6 +43,7 @@ const utilityLinks: { to: Route; label: string; icon: IconName }[] = [
 export function Home() {
   const notes = useItems('quickNote');
   const appointments = useItems('appointment');
+  const recordName = useRecordName();
   const heading = useRef<HTMLHeadingElement>(null);
   // A filed note leaves Home, taking its File button with it, so focus goes
   // to the page heading rather than being lost.
@@ -67,6 +68,13 @@ export function Home() {
       <h1 ref={heading} tabIndex={-1} className="home-title">
         Keep everything together, <span className="home-title-soft">so you don&rsquo;t have to start again.</span>
       </h1>
+      {/* Always on Home, so people know from the start that they can keep
+          more than one record, and can see which one they're adding to. */}
+      {recordName && (
+        <p className="record-tag home-record-tag">
+          Record: <strong>{recordName}</strong> · <RouteLink to="records">Change</RouteLink>
+        </p>
+      )}
 
       <h2 id="today" className="home-section-title">
         What do you need today?
@@ -150,8 +158,8 @@ export function Home() {
       {/* Folded away, as in the original app, so Home isn't overwhelming. */}
       <details className="home-more">
         <summary>
-          <span className="home-more-title">Your record</span>
-          <span className="home-more-detail">What happened, how it affects you, keeping track, and your notes</span>
+          <span className="home-more-title">Look back at your record</span>
+          <span className="home-more-detail">See and change what you&rsquo;ve already added</span>
         </summary>
         <div className="record-cards">
           <TaskLink to="what" icon="story" title="What happened" detail="The event, in your own words." />

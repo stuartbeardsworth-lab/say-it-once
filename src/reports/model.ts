@@ -583,6 +583,13 @@ export function buildReport(view: ShareableRecord, purpose: Purpose, selection: 
   };
 }
 
+/**
+ * The small line at the foot of every report page (and of the HTML copy),
+ * so whoever receives a report can see where it came from. No arrows: the
+ * PDF font has no arrow character.
+ */
+export const madeWith = 'Made with Say It Once · Record it, keep it together, use it when you need it';
+
 /** Every piece of text in a report, in reading order. Used to prove renderers match. */
 export function reportText(report: Report): string[] {
   const out = [report.title, report.intro, report.personName, report.recordName, report.preparedOn];
