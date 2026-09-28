@@ -379,3 +379,9 @@ Done when:
   app; the independent cryptography review is still wanted before sync,
   and should cover this too. The browser is already asked to keep the
   record after the first save (`requestPersistence` in the store).
+- 28 September 2026, CI minutes, second step: each pull request push runs
+  the unit tests, the server tests and the Chromium browser tests only.
+  The slower WebKit and iPhone browser tests run on the final version: when
+  the pull request is labelled "ready to merge" (Claude adds it on the
+  owner's "merge when green"), and on main after every merge. Nothing is
+  merged without them passing.
