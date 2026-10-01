@@ -385,3 +385,8 @@ Done when:
   the pull request is labelled "ready to merge" (Claude adds it on the
   owner's "merge when green"), and on main after every merge. Nothing is
   merged without them passing.
+- 1 October 2026, brand files: logos (circle, badge with the name, wide,
+  and with the tagline, each for light and dark backgrounds, as PNG and
+  SVG), previews and a PowerPoint slide template are kept in `brand/`,
+  with a usage note (`brand/README.md`). They are drawn from the app's
+  logo, aren't part of the app and aren't published with the site.
