@@ -1060,6 +1060,16 @@ details.more {
   margin: var(--space-3) 0;
 }
 
+/* "That's enough to save…", just above a form's fold-out (MoreDetail). */
+.enough-note {
+  color: var(--colour-text-muted);
+  margin: var(--space-3) 0 0;
+}
+
+.enough-note + details.more {
+  margin-top: var(--space-2);
+}
+
 /* Every fold-out looks like Home's "Look back at your record" box: a
    bordered box with an arrow, so it's clearly something to tap and never
    mistaken for a heading. */

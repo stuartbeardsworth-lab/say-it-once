@@ -1,4 +1,5 @@
 import { MicHelp } from '../components/MicHelp';
+import { anyFilled, MoreDetail } from '../components/MoreDetail';
 import { SaveStatus } from '../components/SaveStatus';
 import { TextArea, TextField } from '../components/TextField';
 import { blank } from '../domain/blank';
@@ -78,21 +79,30 @@ function IncidentForm({ data, onChange, save }: IncidentFormProps) {
       <TextArea label="What happened?" {...field('what')} rows={6} />
       <TextArea label="What happened next?" {...field('after')} rows={4} />
 
-      <details className="more">
-        <summary>Treatment and what came next</summary>
+      {/* It saves as the person types, so the line says "enough", not
+          "enough to save". */}
+      <MoreDetail
+        note="That’s enough. You can add more later, or never."
+        hasContent={anyFilled(
+          data.treatment,
+          data.complications,
+          data.ongoingCare,
+          data.injuries,
+          data.before,
+          data.told,
+          data.witnesses,
+          data.services,
+        )}
+      >
+        <TextArea label="Injuries or symptoms" {...field('injuries')} />
         <TextArea label="Treatment straight afterwards" hint="For example, at the scene or in A&E." {...field('treatment')} />
         <TextArea label="Complications" {...field('complications')} />
         <TextArea label="Ongoing care" {...field('ongoingCare')} />
-      </details>
-
-      <details className="more">
-        <summary>Other details</summary>
-        <TextArea label="Injuries or symptoms" {...field('injuries')} />
         <TextArea label="Beforehand" hint="What you were doing, or how you were, before it happened." {...field('before')} />
         <TextArea label="What were you told at the time?" {...field('told')} />
         <TextArea label="Other people there" {...field('witnesses')} />
         <TextArea label="Police, ambulance or fire service" {...field('services')} />
-      </details>
+      </MoreDetail>
 
       <SaveStatus status={autosave.status} onDismiss={autosave.dismiss} />
     </form>

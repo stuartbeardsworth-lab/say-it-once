@@ -21,8 +21,8 @@ Open the Deploy Preview on your iPhone, and on a computer if you can.
    My records. **Look back at your record** is folded away. Tap it to see
    cards for What happened, How it affects me, Keep track, Quick Notes and
    My records; tap again to fold it.
-4a. [ ] Every fold-out in the app (for example **Treatment and what came
-   next** on What happened, and **More detail (optional)** in the dialogs)
+4a. [ ] Every fold-out in the app (for example **Add more detail (only if
+   it helps)** on What happened and in the dialogs)
    is a white box with an arrow on the right, which turns over when open.
    None looks like a plain heading.
    There's no "Only on this phone" box on Home any more (it's still on

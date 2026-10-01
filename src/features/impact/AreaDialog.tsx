@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../../components/Button';
 import { KeepPrivate } from '../../components/Checkbox';
+import { anyFilled, MoreDetail } from '../../components/MoreDetail';
 import { EntryDialog, type EntryFormControls } from '../../components/EntryDialog';
 import { RadioList } from '../../components/RadioList';
 import { SaveStatus } from '../../components/SaveStatus';
@@ -99,8 +100,16 @@ function AreaForm({ edit, controls }: { edit: AreaEdit; controls: EntryFormContr
         rows={4}
         micHelp
       />
-      <details className="more">
-        <summary>More detail (optional)</summary>
+      <MoreDetail
+        hasContent={anyFilled(
+          edit.existing?.data.help,
+          edit.existing?.data.aid,
+          edit.existing?.data.often,
+          edit.existing?.data.safety,
+          edit.existing?.data.timeLonger,
+          edit.existing?.data.standard,
+        )}
+      >
         <TextArea label="Help I need" {...form.text('help')} />
         <TextArea label="Aids or equipment I use" {...form.text('aid')} />
         <RadioList
@@ -112,7 +121,7 @@ function AreaForm({ edit, controls }: { edit: AreaEdit; controls: EntryFormContr
         <TextArea label="Doing it safely, and more than once" {...form.text('safety')} />
         <TextArea label="The time it takes" {...form.text('timeLonger')} />
         <TextArea label="Doing it properly, to a good standard" {...form.text('standard')} />
-      </details>
+      </MoreDetail>
       <KeepPrivate isSelected={form.isPrivate} onChange={form.setPrivate} />
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />
       <div className="dialog-actions">

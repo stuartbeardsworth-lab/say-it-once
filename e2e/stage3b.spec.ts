@@ -206,11 +206,54 @@ test('contacts: added, linked, exported, and private ones are left out of export
   await expectNoAxeViolations(page);
 });
 
-test('Add something offers all eight kinds, and opens the appointment form from Home', async ({ page }) => {
+test('Add something offers four choices, with the rest under Something else, each opening its form', async ({ page }) => {
   await open(page, '#home');
   await page.getByRole('button', { name: 'Add something' }).click();
   const chooser = page.getByRole('dialog', { name: 'Add something' });
-  await expect(chooser.getByRole('button')).toHaveCount(9);
+  // Four choices and Cancel.
+  await expect(chooser.getByRole('button')).toHaveCount(5);
   await chooser.getByRole('button', { name: 'An appointment' }).click();
-  await expect(page.getByRole('dialog', { name: 'Add an appointment' })).toBeVisible();
+  const appointment = page.getByRole('dialog', { name: 'Add an appointment' });
+  await expect(appointment).toBeVisible();
+  await expect(appointment.getByText('That’s enough to save. You can add more later, or never.')).toBeVisible();
+  await appointment.getByRole('button', { name: 'Cancel' }).click();
+
+  await page.getByRole('button', { name: 'Add something' }).click();
+  await chooser.getByRole('button', { name: 'A photo of a letter or receipt' }).click();
+  const letter = page.getByRole('dialog', { name: 'Add a letter or document' });
+  await expect(letter.getByLabel('Take a photo', { exact: true })).toHaveAttribute('capture', 'environment');
+  await letter.getByRole('button', { name: 'Cancel' }).click();
+
+  await page.getByRole('button', { name: 'Add something' }).click();
+  await chooser.getByRole('button', { name: 'Something else…' }).click();
+  const more = page.getByRole('dialog', { name: 'Something else' });
+  // Six kinds, Back and Cancel.
+  await expect(more.getByRole('button')).toHaveCount(8);
+  await expectNoAxeViolations(page);
+  await more.getByRole('button', { name: 'Back' }).click();
+  await expect(chooser).toBeVisible();
+  await chooser.getByRole('button', { name: 'Something else…' }).click();
+  await more.getByRole('button', { name: 'A cost or lost income' }).click();
+  const cost = page.getByRole('dialog', { name: 'Add money spent' });
+  await cost.getByRole('textbox', { name: 'What was it for?' }).fill('Taxi to hospital');
+  await cost.getByLabel('Date').fill('2026-09-01');
+  await cost.getByRole('button', { name: 'Save' }).click();
+  await expect(cost).toHaveCount(0);
+  await expect(page.getByRole('status').filter({ hasText: 'Saved in Costs & lost income.' })).toBeVisible();
+});
+
+test('a form opens its extra details when they already hold something', async ({ page }) => {
+  await open(page, '#appointments');
+  await page.getByRole('button', { name: 'Add an appointment' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Add an appointment' });
+  await expect(dialog.getByRole('textbox', { name: 'What I was told' })).toBeHidden();
+  await dialog.getByLabel('Date').fill('2026-09-01');
+  await dialog.getByRole('combobox', { name: 'Who is it with?' }).fill('Fracture clinic');
+  await dialog.getByText('Add more detail (only if it helps)').click();
+  await dialog.getByRole('textbox', { name: 'What I was told' }).fill('Six more weeks in the cast.');
+  await dialog.getByRole('button', { name: 'Save appointment' }).click();
+  await expect(dialog).toHaveCount(0);
+  await page.getByText('Earlier appointments (1)').click();
+  await page.getByRole('button', { name: 'Edit', exact: true }).click();
+  await expect(page.getByRole('dialog').getByRole('textbox', { name: 'What I was told' })).toHaveValue('Six more weeks in the cast.');
 });

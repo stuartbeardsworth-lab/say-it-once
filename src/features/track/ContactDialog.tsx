@@ -12,7 +12,15 @@ import { newItemId } from '../../store/store';
 import { useRecordId, useStore } from '../../store/StoreContext';
 import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
-export function ContactDialog({ edit, onClose }: { edit: { existing?: Item<'contact'> } | null; onClose: () => void }) {
+export function ContactDialog({
+  edit,
+  onClose,
+  onDone,
+}: {
+  edit: { existing?: Item<'contact'> } | null;
+  onClose: () => void;
+  onDone?: () => void;
+}) {
   return (
     <EntryDialog
       isOpen={edit !== null}
@@ -21,6 +29,7 @@ export function ContactDialog({ edit, onClose }: { edit: { existing?: Item<'cont
       }}
       title={edit?.existing ? 'Edit contact' : 'Add a contact'}
       unsavedLabel="this contact"
+      {...(onDone && { onDone })}
     >
       {(controls) => edit && <ContactForm existing={edit.existing} controls={controls} />}
     </EntryDialog>

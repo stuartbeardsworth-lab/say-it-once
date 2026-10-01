@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import { Button } from '../../components/Button';
 import { KeepPrivate } from '../../components/Checkbox';
+import { anyFilled, MoreDetail } from '../../components/MoreDetail';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { EntryDialog, type EntryFormControls } from '../../components/EntryDialog';
 import { RadioList } from '../../components/RadioList';
@@ -19,7 +20,7 @@ import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
 export type CostEdit = { existing?: Item<'cost'>; kind?: CostData['kind'] };
 
-export function CostDialog({ edit, onClose }: { edit: CostEdit | null; onClose: () => void }) {
+export function CostDialog({ edit, onClose, onDone }: { edit: CostEdit | null; onClose: () => void; onDone?: () => void }) {
   const kind = edit?.existing?.data.kind ?? edit?.kind ?? 'expense';
   return (
     <EntryDialog
@@ -29,6 +30,7 @@ export function CostDialog({ edit, onClose }: { edit: CostEdit | null; onClose: 
       }}
       title={edit?.existing ? 'Edit this entry' : kind === 'income' ? 'Add income lost' : 'Add money spent'}
       unsavedLabel="this entry"
+      {...(onDone && { onDone })}
     >
       {(controls) => edit && <CostForm edit={edit} controls={controls} />}
     </EntryDialog>
@@ -102,31 +104,33 @@ function CostForm({ edit, controls }: { edit: CostEdit; controls: EntryFormContr
         }}
         errorMessage={form.errors.amountPence || undefined}
       />
-      <TextField
-        label="Proof (optional)"
-        hint="For example, “receipt in the kitchen drawer” or “on my bank statement”."
-        {...form.text('evidence')}
-      />
-      {(documents ?? []).length > 0 && (
-        <div className="field">
-          <label className="field-label" htmlFor={selectId}>
-            Link a document (optional)
-          </label>
-          <select
-            id={selectId}
-            className="field-input"
-            value={form.data.documentId ?? ''}
-            onChange={(e) => form.set('documentId', e.target.value || null)}
-          >
-            <option value="">No document</option>
-            {(documents ?? []).map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.data.title || d.data.file?.name || 'Untitled document'}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+      <MoreDetail hasContent={anyFilled(edit.existing?.data.evidence, edit.existing?.data.documentId)}>
+        <TextField
+          label="Proof"
+          hint="For example, “receipt in the kitchen drawer” or “on my bank statement”."
+          {...form.text('evidence')}
+        />
+        {(documents ?? []).length > 0 && (
+          <div className="field">
+            <label className="field-label" htmlFor={selectId}>
+              Link a document
+            </label>
+            <select
+              id={selectId}
+              className="field-input"
+              value={form.data.documentId ?? ''}
+              onChange={(e) => form.set('documentId', e.target.value || null)}
+            >
+              <option value="">No document</option>
+              {(documents ?? []).map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.data.title || d.data.file?.name || 'Untitled document'}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      </MoreDetail>
       <KeepPrivate isSelected={form.isPrivate} onChange={form.setPrivate} />
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />
       <div className="dialog-actions">

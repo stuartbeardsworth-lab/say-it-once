@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../../components/Button';
 import { KeepPrivate } from '../../components/Checkbox';
+import { anyFilled, MoreDetail } from '../../components/MoreDetail';
 import { EntryDialog, type EntryFormControls } from '../../components/EntryDialog';
 import { RadioList } from '../../components/RadioList';
 import { SaveStatus } from '../../components/SaveStatus';
@@ -124,9 +125,9 @@ function AppointmentForm({
       </datalist>
       <TextField label="What is it for? (optional)" hint="For example, physiotherapy or a scan." {...form.text('purpose')} />
 
-
-      <details className="more">
-        <summary>More about the appointment</summary>
+      <MoreDetail hasContent={anyFilled(existing?.data.type, existing?.data.person, existing?.data.location, existing?.data.told, existing?.data.next)}>
+        <TextArea label="What I was told" hint="After the appointment, if you want to." {...form.text('told')} />
+        <TextArea label="What happens next" {...form.text('next')} />
         <RadioList
           label="Type"
           options={appointmentTypes.map((t) => ({ value: t, label: t }))}
@@ -135,13 +136,7 @@ function AppointmentForm({
         />
         <TextField label="Person you’re seeing" {...form.text('person')} />
         <TextField label="Where" hint="For example, the ward, room or address." {...form.text('location')} />
-      </details>
-
-      <details className="more">
-        <summary>After the appointment</summary>
-        <TextArea label="What I was told" {...form.text('told')} />
-        <TextArea label="What happens next" {...form.text('next')} />
-      </details>
+      </MoreDetail>
 
       <KeepPrivate isSelected={form.isPrivate} onChange={form.setPrivate} />
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />
