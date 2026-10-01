@@ -390,22 +390,7 @@ Done when:
   SVG), previews and a PowerPoint slide template are kept in `brand/`,
   with a usage note (`brand/README.md`). They are drawn from the app's
   logo, aren't part of the app and aren't published with the site.
-- 1 October 2026, lighter adding (after an end-to-end look at what a
-  person in trauma would really fill in: mostly Quick Notes, photos of
-  letters and the date and place of appointments):
-  - Home's Add something offers four choices: "Write or say something"
-    (a Quick Note), "A photo of a letter or receipt" (the letter form,
-    camera first), "An appointment" and "Something else…", which lists
-    What happened, Treatment, Medication, A cost or lost income, A contact
-    and Something has changed, with Back. Each opens its form straight
-    away; What happened and Something has changed open their screens,
-    which are the form. After saving, Home says where it went ("Saved in
-    Costs & lost income.").
-  - Every form has at most one fold-out, "Add more detail (only if it
-    helps)", under "That's enough to save. You can add more later, or
-    never." (`src/components/MoreDetail.tsx`; What happened says "That's
-    enough…", since it saves as you type). It opens when an entry being
-    edited already holds something there, so nothing is hidden.
-  - Check-ins no longer ask for a pulse: a record-keeping app shouldn't
-    look like a medical one. A pulse saved before is kept and still shown.
-  - The forms and the data stay structured; only the way in is lighter.
+- 1 October 2026, "lighter adding" was tried and undone at the owner's
+  request: they prefer the way it was. Add something keeps its eight
+  choices, forms keep their own fold-outs, and check-ins keep the pulse.
+  Don't suggest that change again unless testers' use shows a need.

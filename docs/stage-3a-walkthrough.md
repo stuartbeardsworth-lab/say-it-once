@@ -23,8 +23,7 @@ Preview link on the pull request. Tick each box as you go.
 ## What happened
 
 6. [ ] From the footer, open **What happened**. Type in "What happened?" and
-   stop. "Saved" appears. Open **Add more detail (only if it helps)** and
-   fill in one box.
+   stop. "Saved" appears. Open **Other details** and fill in one box.
 7. [ ] Reload. Everything you typed is still there.
 8. [ ] File a Quick Note in **What happened**. It appears at the bottom of the
    What happened screen under **Quick Notes filed here**.

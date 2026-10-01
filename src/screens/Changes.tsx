@@ -34,7 +34,6 @@ export function Changes() {
 
   const earlier = [...(snapshots ?? [])].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const checks = [...(checkIns ?? [])].sort((a, b) => b.data.date.localeCompare(a.data.date));
-  const showPulse = checks.some((c) => c.data.pulse !== null);
 
   return (
     <>
@@ -96,8 +95,7 @@ export function Changes() {
                   <th scope="col">Date</th>
                   <th scope="col">Pain</th>
                   <th scope="col">How I feel</th>
-                  {/* Pulse is no longer asked for; one saved before still shows. */}
-                  {showPulse && <th scope="col">Pulse</th>}
+                  <th scope="col">Pulse</th>
                   <th scope="col">Note</th>
                 </tr>
               </thead>
@@ -107,7 +105,7 @@ export function Changes() {
                     <td>{readableDate(c.data.date)}</td>
                     <td>{c.data.pain || '–'}</td>
                     <td>{c.data.feeling || '–'}</td>
-                    {showPulse && <td>{c.data.pulse ?? '–'}</td>}
+                    <td>{c.data.pulse ?? '–'}</td>
                     <td>{c.data.note}</td>
                   </tr>
                 ))}
