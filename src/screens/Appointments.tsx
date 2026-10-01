@@ -4,15 +4,14 @@ import { Checkbox } from '../components/Checkbox';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { TextField } from '../components/TextField';
 import { today } from '../domain/dates';
-import { appointmentCalendar, safeFileName } from '../domain/exports';
 import { readableDate } from '../domain/format';
 import type { Item } from '../domain/types';
 import { FiledNotes } from '../features/quickNotes/FiledNotes';
-import { AppointmentDialog } from '../features/track/AppointmentDialog';
+import { AddToCalendarButton, type CalendarAppointment } from '../features/track/AddToCalendar';
+import { AppointmentDialog, appointmentSaved } from '../features/track/AppointmentDialog';
 import { FileLink } from '../features/track/FileLink';
-import { deliverFile, deliveryMessage } from '../forms/deliverFile';
 import { PageTop } from '../shell/PageTop';
-import { useItems, useRecordName } from '../store/hooks';
+import { useItems } from '../store/hooks';
 import { useStore } from '../store/StoreContext';
 import { SharedCopiesNote } from '../features/deliver/SharedCopiesNote';
 
@@ -28,6 +27,7 @@ export function Appointments() {
   const documents = useItems('document');
   const [editing, setEditing] = useState<{ existing?: Item<'appointment'> } | null>(null);
   const [message, setMessage] = useState('');
+  const [justAdded, setJustAdded] = useState<CalendarAppointment | null>(null);
   const [search, setSearch] = useState('');
   const now = today();
 
@@ -72,6 +72,11 @@ export function Appointments() {
       <p role="status" className="quiet-status">
         {message}
       </p>
+      {justAdded && message === appointmentSaved && (
+        <div className="button-row">
+          <AddToCalendarButton appt={justAdded} onMessage={setMessage} />
+        </div>
+      )}
 
       <h2>Coming up</h2>
       {appointments === undefined ? (
@@ -98,7 +103,10 @@ export function Appointments() {
         isOpen={editing !== null}
         existing={editing?.existing}
         onClose={() => setEditing(null)}
-        onSaved={setMessage}
+        onSaved={(m, forCalendar) => {
+          setMessage(m);
+          setJustAdded(forCalendar ?? null);
+        }}
       />
     </>
   );
@@ -118,15 +126,8 @@ function AppointmentCard({
   onMessage: (message: string) => void;
 }) {
   const { store } = useStore();
-  const recordName = useRecordName() ?? 'My record';
   const [alsoLetter, setAlsoLetter] = useState(false);
   const d = appt.data;
-
-  async function addToCalendar() {
-    const name = safeFileName(`${d.organisation} ${d.date}`, 'ics');
-    const result = await deliverFile(appointmentCalendar(appt.id, d, recordName), name, 'text/calendar');
-    onMessage(deliveryMessage(result, name, 'Open it to add the appointment to your calendar.'));
-  }
 
   return (
     <li className="note-card">
@@ -153,7 +154,7 @@ function AppointmentCard({
       )}
       <div className="button-row">
         <Button onPress={onEdit}>Edit</Button>
-        {isUpcoming && !appt.private && <Button onPress={() => void addToCalendar()}>Add to my calendar</Button>}
+        {isUpcoming && !appt.private && <AddToCalendarButton appt={appt} onMessage={onMessage} />}
         <ConfirmDialog
           trigger={<Button variant="danger">Delete</Button>}
           title="Delete this appointment?"

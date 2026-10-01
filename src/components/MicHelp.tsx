@@ -1,3 +1,5 @@
+import { MicIcon } from './MicIcon';
+
 // "Rather talk than type?": help for speaking instead of typing with the
 // phone keyboard's own microphone. Say It Once has no microphone of its own
 // (decision Q8: in a web app the recording would go to Google or Apple).
@@ -66,6 +68,9 @@ export function MicHelp({ phone = currentPhone() }: { phone?: Phone }) {
         <p>
           <strong>Tap in the box, then tap the microphone on your keyboard.</strong>
         </p>
+        <p className="mic-looks">
+          It looks like this: <MicIcon phone={phone} />
+        </p>
         {mine && <p>{mine.where}</p>}
         <p>Speak, then tap it again to stop. Mistakes don’t matter.</p>
 
@@ -81,7 +86,9 @@ export function MicHelp({ phone = currentPhone() }: { phone?: Phone }) {
           {others.map((p) => (
             <div key={p}>
               <h3>{steps[p].name}</h3>
-              <p>{steps[p].where}</p>
+              <p className="mic-looks">
+                {steps[p].where} <MicIcon phone={p} />
+              </p>
               <p>If it’s not there: {lowerFirst(steps[p].turnOn)}</p>
             </div>
           ))}

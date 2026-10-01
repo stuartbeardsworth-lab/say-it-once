@@ -88,10 +88,14 @@ test('an appointment with a letter: saved, shown on Home, added to the calendar,
   await expect(page.getByRole('status').filter({ hasText: 'Appointment saved.' })).toBeVisible();
   await expect(page.getByRole('link', { name: /View the letter/ })).toBeVisible();
 
+  // Straight after adding, the calendar is offered under the message, as well as on the card.
+  const addToCalendar = page.getByRole('button', { name: 'Add to my calendar' });
+  await expect(addToCalendar).toHaveCount(2);
   const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Add to my calendar' }).click();
+  await addToCalendar.first().click();
   expect((await download).suggestedFilename()).toMatch(/Fracture-clinic.*\.ics$/);
   await expect(page.getByRole('status').filter({ hasText: /saving .*\.ics/ })).toBeVisible();
+  await expect(addToCalendar).toHaveCount(1);
 
   await open(page, '#home');
   await expect(page.getByRole('region', { name: 'Your next appointment' })).toContainText('Fracture clinic');

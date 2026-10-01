@@ -1,8 +1,20 @@
 name: CI
 
+# Checks run once per change, to stay within GitHub's free minutes for
+# private repositories: on pull requests, and on main when one is merged.
+# (Running on every branch push as well ran everything twice.) A newer push
+# to a pull request stops the checks still running for the older one.
+# The slow Safari-engine and iPhone browser tests run only on the final
+# version: when a pull request is labelled "ready to merge", and on main.
 on:
   push:
+    branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   checks:
@@ -57,7 +69,7 @@ jobs:
       - run: npm test
 
   e2e:
-    name: Browser tests with axe (Chromium, WebKit, iPhone)
+    name: Browser tests with axe (Chromium)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -66,12 +78,35 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chromium webkit
-      - run: npm run test:e2e
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --project=chromium
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: playwright-report
+          name: playwright-report-chromium
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+
+  e2e-safari:
+    name: Browser tests with axe (WebKit, iPhone)
+    # Only on the final version, to save minutes: see the note at the top.
+    if: github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'ready to merge')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps webkit
+      - run: npx playwright test --project=webkit --project=iphone
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-safari
           path: |
             playwright-report/
             test-results/

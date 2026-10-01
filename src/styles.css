@@ -908,6 +908,23 @@ h3 {
   border-radius: var(--radius);
 }
 
+.mic-icon {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1.75rem;
+  vertical-align: middle;
+  fill: none;
+  stroke: var(--colour-navy);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mic-icon-filled {
+  fill: var(--colour-navy);
+  stroke: none;
+}
+
 .mic-help-more {
   margin-top: var(--space-1);
 }

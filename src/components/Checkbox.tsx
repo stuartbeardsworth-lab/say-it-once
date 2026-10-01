@@ -40,7 +40,7 @@ export function KeepPrivate({ isSelected, onChange }: Pick<CheckboxProps, 'isSel
   return (
     <Checkbox
       label="Keep this private"
-      hint="It stays in your record but is never included in anything you create to share."
+      hint="Just for you. It’s never put in anything you share."
       isSelected={isSelected}
       onChange={onChange}
     />

@@ -337,3 +337,51 @@ Done when:
   Its Samsung steps say the microphone is at the bottom left, under the
   keys (as on the owner's S23), then the row above the keys. Quick Note and
   How it affects me no longer repeat the microphone in their hint.
+- 27 September 2026, microphone picture: "Rather talk than type?" shows
+  what the key looks like ("It looks like this:"), matched to the phone,
+  inside the fold-out only and never as a button. Android uses Google's
+  Material "mic" icon (the one Gboard uses, Apache 2.0, licence in
+  `src/assets/icons/`); iPhone and Samsung use our own close drawings,
+  because Apple's and Samsung's icons can't be used in a web app
+  (`src/components/MicIcon.tsx`).
+- 27 September 2026, CI minutes: the repository is private, so GitHub
+  Actions has a free monthly allowance, and checks stopped starting once it
+  ran out. CI now runs once per change, on pull requests and on main after
+  a merge (not also on every branch push), and a newer push to a pull
+  request cancels the older run. Nothing is paid for.
+- 27 September 2026, footer: the small line under the tagline reads
+  "© 2026 Say It Once · version …" (was "Say It Once, test version …").
+  The owner's personal name stays out of the app, like their email; the
+  version stays so a phone's update can be checked.
+- 27 September 2026, "Keep this private" stays (choosing entries per report
+  isn't a safeguard for someone exhausted; private is decided once, when
+  writing, and covers every output). Its hint is shorter: "Just for you.
+  It's never put in anything you share." Not "only you will see it",
+  because the person's backup includes private entries and anyone using
+  the phone can see the record.
+- 27 September 2026, calendar after adding: straight after a new upcoming,
+  non-private appointment is saved (from Home or Appointments), "Add to my
+  calendar" appears under "Appointment saved.", while the date is in mind.
+  It goes once another message replaces it. It isn't on Home's "Your next
+  appointment" box, which stays calm; the phone's calendar gives the
+  reminder (`src/features/track/AddToCalendar.tsx`).
+- 27 September 2026, locked backups: a backup can be locked with a password
+  the person chooses ("Yes, lock it" is the default and recommended), so it's safe
+  to keep in email or a cloud drive and survives losing the phone. The zip
+  is encrypted on the device with the Stage 7 module (Argon2id key from the
+  password, libsodium secretstream in 64 KiB pieces, the readable header
+  bound to the contents; `src/crypto/backup.ts`) and saved as
+  `… (locked).sayitonce`. At least 12 characters, not a well-known
+  password; "Suggest a password" gives four words; the person ticks "I've
+  written the password down" first, because nobody can reset it. Restore
+  asks for the password and says plainly when it doesn't match. Unlocked
+  backups stay available. This is the first use of `src/crypto/` in the
+  app; the independent cryptography review is still wanted before sync,
+  and should cover this too. The browser is already asked to keep the
+  record after the first save (`requestPersistence` in the store).
+- 28 September 2026, CI minutes, second step: each pull request push runs
+  the unit tests, the server tests and the Chromium browser tests only.
+  The slower WebKit and iPhone browser tests run on the final version: when
+  the pull request is labelled "ready to merge" (Claude adds it on the
+  owner's "merge when green"), and on main after every merge. Nothing is
+  merged without them passing.

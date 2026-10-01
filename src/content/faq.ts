@@ -107,7 +107,14 @@ export const faq: FaqTopic[] = [
         q: 'How do I save a backup?',
         a: [
           'Go to Privacy & backup and press Make a backup. When it’s ready, share it to your email or a cloud drive, or save it to your phone or computer.',
-          'A backup holds every record on this device, including entries marked “Keep this private”, and it isn’t locked with a password. Keep it somewhere only you can open.',
+          'A backup holds every record on this device, including entries marked “Keep this private”. You can lock it with a password, so only someone with the password can open it. Then it’s safe to keep in your email or a cloud drive, where it’s kept even if you lose your phone.',
+        ],
+      },
+      {
+        q: 'What if I forget the password for a locked backup?',
+        a: [
+          'The backup can’t be opened without it, and nobody can reset it, not even Say It Once. That’s what keeps it private. Write the password down when you make the backup, and keep it apart from the backup.',
+          'If you’ve forgotten it but still have your record on this phone, make a new backup with a new password.',
         ],
       },
       {

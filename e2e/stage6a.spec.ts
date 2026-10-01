@@ -9,6 +9,7 @@ import { loadExample } from './reports';
 
 async function saveBackup(page: Page, path: string) {
   await page.goto('/#privacy');
+  await page.getByRole('radiogroup', { name: 'Lock it with a password?' }).getByText('No, don’t lock it').click();
   await page.getByRole('button', { name: 'Make a backup' }).click();
   const save = page.getByRole('button', { name: 'Save the backup to this device' });
   await expect(save).toBeFocused({ timeout: 30_000 });
@@ -51,6 +52,53 @@ test('a backup made on one device restores everything on another, private entrie
   await phone.goto('/#documents');
   await expect(phone.getByText('Discharge letter')).toBeVisible();
   await expect(phone.getByText('PRIVATE: Counselling assessment')).toBeVisible();
+  await other.close();
+});
+
+test('a locked backup can only be opened with its password, and then restores everything', async ({ page, browser }, info) => {
+  test.setTimeout(90_000);
+  const path = info.outputPath('backup.sayitonce');
+  await loadExample(page);
+  await page.goto('/#privacy');
+  // Locking is the choice already made; a weak password and the unticked box are both caught first.
+  await expect(page.getByRole('radio', { name: 'Yes, lock it' })).toBeChecked();
+  const password = page.getByRole('textbox', { name: 'Password for this backup' });
+  await password.fill('password1234');
+  await page.getByRole('button', { name: 'Make a backup' }).click();
+  await expect(page.getByText('That password is too well known. Try four ordinary words instead.')).toBeVisible();
+  await expect(page.getByText('Please write the password down first, then tick the box.')).toBeVisible();
+  await page.getByRole('button', { name: 'Suggest a password' }).click();
+  await expect(password).toHaveValue(/^\S+ \S+ \S+ \S+$/);
+  await password.fill('purple harbour lantern seven');
+  await page.getByRole('checkbox', { name: 'I’ve written the password down' }).check();
+  await expectNoAxeViolations(page);
+  await page.getByRole('button', { name: 'Make a backup' }).click();
+  const save = page.getByRole('button', { name: 'Save the backup to this device' });
+  await expect(save).toBeFocused({ timeout: 60_000 });
+  const [download] = await Promise.all([page.waitForEvent('download'), save.click()]);
+  expect(download.suggestedFilename()).toMatch(/^Say It Once backup \d{4}-\d{2}-\d{2} \(locked\)\.sayitonce$/);
+  await download.saveAs(path);
+
+  // Nothing in the file can be read without the password.
+  const bytes = await readFile(path);
+  expect(bytes.subarray(0, 23).toString()).toBe('SAYITONCE-LOCKED-BACKUP');
+  expect(bytes.includes(Buffer.from('PRIVATE'))).toBe(false);
+  expect(bytes.includes(Buffer.from('Discharge letter'))).toBe(false);
+
+  const other = await browser.newContext();
+  const phone = await other.newPage();
+  await chooseBackup(phone, path);
+  await expect(phone.getByRole('heading', { name: 'This backup is locked' })).toBeFocused();
+  await expectNoAxeViolations(phone);
+  const typed = phone.getByRole('textbox', { name: 'Password', exact: true });
+  await typed.fill('purple harbour lantern');
+  await phone.getByRole('button', { name: 'Unlock' }).click();
+  await expect(phone.getByText(/^That password doesn’t open this backup/)).toBeVisible({ timeout: 30_000 });
+  await typed.fill('purple harbour lantern seven');
+  await phone.getByRole('button', { name: 'Unlock' }).click();
+  await expect(phone.getByRole('heading', { name: /^In this backup, saved / })).toBeFocused({ timeout: 30_000 });
+  await phone.getByRole('button', { name: 'Restore 2 records' }).click();
+  await expect(phone.getByRole('heading', { name: 'Restored' })).toBeFocused();
   await other.close();
 });
 
