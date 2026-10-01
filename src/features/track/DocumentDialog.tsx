@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../../components/Button';
 import { Checkbox, KeepPrivate } from '../../components/Checkbox';
+import { anyFilled, MoreDetail } from '../../components/MoreDetail';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { EntryDialog, type EntryFormControls } from '../../components/EntryDialog';
 import { RadioList } from '../../components/RadioList';
@@ -26,7 +27,15 @@ const relatesOptions: { value: SectionKey | 'none'; label: string }[] = [
   ...sections.filter((s) => s !== 'documents').map((s) => ({ value: s, label: sectionLabels[s] })),
 ];
 
-export function DocumentDialog({ edit, onClose }: { edit: { existing?: Item<'document'> } | null; onClose: () => void }) {
+export function DocumentDialog({
+  edit,
+  onClose,
+  onDone,
+}: {
+  edit: { existing?: Item<'document'> } | null;
+  onClose: () => void;
+  onDone?: () => void;
+}) {
   return (
     <EntryDialog
       isOpen={edit !== null}
@@ -35,6 +44,7 @@ export function DocumentDialog({ edit, onClose }: { edit: { existing?: Item<'doc
       }}
       title={edit?.existing ? 'Edit document details' : 'Add a letter or document'}
       unsavedLabel="this document"
+      {...(onDone && { onDone })}
     >
       {(controls) => edit && <DocumentForm existing={edit.existing} controls={controls} />}
     </EntryDialog>
@@ -73,18 +83,11 @@ function DocumentForm({ existing, controls }: { existing: Item<'document'> | und
         void save();
       }}
     >
-      <FilePicker
-        label="The document"
-        buttonLabel="Choose a file"
-        hint="A PDF or photo, up to 25 MB. You can also just write down the details of a paper copy."
-        accept="application/pdf,image/jpeg,image/png,image/webp,image/*"
-        current={attached}
-        onPick={(f) => setFile({ file: f, fromCamera: false })}
-        onTooLarge={tooLarge}
-      />
+      {/* Taking a photo comes first, as in the appointment form: most
+          letters and receipts arrive on paper. */}
       {!attached && (
         <FilePicker
-          label="Or take a photo of it"
+          label="Take a photo of it"
           buttonLabel="Take a photo"
           hint="Opens the camera on a phone."
           accept="image/*"
@@ -94,13 +97,32 @@ function DocumentForm({ existing, controls }: { existing: Item<'document'> | und
           onTooLarge={tooLarge}
         />
       )}
+      <FilePicker
+        label={attached ? 'The document' : 'Or choose a file'}
+        buttonLabel="Choose a file"
+        hint="A PDF or photo, up to 25 MB. You can also just write down the details of a paper copy."
+        accept="application/pdf,image/jpeg,image/png,image/webp,image/*"
+        current={attached}
+        onPick={(f) => setFile({ file: f, fromCamera: false })}
+        onTooLarge={tooLarge}
+      />
       <TextField
         label="Name"
-        hint="For example, “Letter from the fracture clinic”. Needed if there’s no file."
+        hint="For example, “Letter from the fracture clinic” or “Taxi receipt”. Needed if there’s no file."
         {...form.text('title')}
       />
-      <details className="more">
-        <summary>More details (optional)</summary>
+      <MoreDetail
+        hasContent={anyFilled(
+          existing?.data.date,
+          existing?.data.actBy,
+          existing?.data.from,
+          existing?.data.relatedTo,
+          existing?.data.point,
+          existing?.data.wording,
+          existing?.data.paperCopy,
+          existing?.data.done,
+        )}
+      >
         <div className="field-row">
           <TextField label="Date on it" type="date" {...form.text('date')} />
           <TextField label="Reply or act by" type="date" {...form.text('actBy')} />
@@ -116,7 +138,7 @@ function DocumentForm({ existing, controls }: { existing: Item<'document'> | und
         <TextArea label="Important wording" hint="Copy any words that matter exactly as written." {...form.text('wording')} />
         <TextField label="Where the paper copy is" hint="For example, “blue folder, kitchen drawer”." {...form.text('paperCopy')} />
         <Checkbox label="Done, or no action needed" isSelected={form.data.done} onChange={(v) => form.set('done', v)} />
-      </details>
+      </MoreDetail>
       <KeepPrivate isSelected={form.isPrivate} onChange={form.setPrivate} />
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />
       <div className="dialog-actions">

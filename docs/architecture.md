@@ -137,7 +137,7 @@ written_by     device id
 | `impactArea` | Area per record | areaKey, difficulty, detail, help, aid, often, safety, timeLonger, standard | Yes |
 | `impactNote` | Record | Free text "something else this has changed" | Yes |
 | `impactSnapshot` | Change | Date, copies of the area and note items as they were, each with its item ID | Follows the live items (see Privacy filter) |
-| `checkIn` | Check-in | Date, pain, feeling, pulse, note | Yes |
+| `checkIn` | Check-in | Date, pain, feeling, pulse (no longer asked for since 1 October 2026; kept if saved before), note | Yes |
 | `appointment` | Appointment | Date, time, organisation, person, purpose, location, type, told, next, documentId | Yes |
 | `treatment` | Treatment | Name, date, effect, note | Yes |
 | `medication` | Medication | Name, forWhat, status, dose, often, started, effect, sideEffects | Yes |

@@ -18,10 +18,13 @@ interface EntryDialogProps {
   onOpenChange: (isOpen: boolean) => void;
   title: string;
   unsavedLabel: string;
+  /** After a successful save (or a delete, when editing). Home uses it to
+   *  say where a new entry went, since its list isn't on screen. */
+  onDone?: () => void;
   children: (controls: EntryFormControls) => ReactNode;
 }
 
-export function EntryDialog({ isOpen, onOpenChange, title, unsavedLabel, children }: EntryDialogProps) {
+export function EntryDialog({ isOpen, onOpenChange, title, unsavedLabel, onDone, children }: EntryDialogProps) {
   const [dirty, setDirty] = useState(false);
   return (
     <Dialog
@@ -41,6 +44,7 @@ export function EntryDialog({ isOpen, onOpenChange, title, unsavedLabel, childre
           done: () => {
             setDirty(false);
             finish();
+            onDone?.();
           },
         })
       }

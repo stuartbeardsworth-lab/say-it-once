@@ -130,7 +130,7 @@ export function exampleRecord(today: string): ExampleRecord {
     note: { itemId: 'ex-note', text: 'I could not leave the house much.' },
   });
 
-  add('ex-check-1', 'checkIn', { date: day(-60), pain: 'High', feeling: 'Struggling', pulse: 82, note: 'Bad night after physio.' });
+  add('ex-check-1', 'checkIn', { date: day(-60), pain: 'High', feeling: 'Struggling', pulse: null, note: 'Bad night after physio.' });
   add('ex-check-2', 'checkIn', { date: day(-20), pain: 'Medium', feeling: 'Okay', pulse: null, note: '' });
   add('ex-check-3', 'checkIn', { date: day(-5), pain: 'Medium', feeling: 'Struggling', pulse: null, note: 'PRIVATE: feeling very low this week.' }, true);
 

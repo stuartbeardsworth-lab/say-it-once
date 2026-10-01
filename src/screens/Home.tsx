@@ -10,25 +10,41 @@ import { QuickNoteCard } from '../features/quickNotes/QuickNoteCard';
 import { useQuickNoteDialogs } from '../features/quickNotes/useQuickNoteDialogs';
 import { AddToCalendarButton, type CalendarAppointment } from '../features/track/AddToCalendar';
 import { AppointmentDialog, appointmentSaved } from '../features/track/AppointmentDialog';
+import { ContactDialog } from '../features/track/ContactDialog';
+import { CostDialog } from '../features/track/CostDialog';
+import { DocumentDialog } from '../features/track/DocumentDialog';
+import { MedicationDialog, TreatmentDialog } from '../features/track/TreatmentDialogs';
+import { sectionLabels } from '../domain/vocab';
 import { navigate, RouteLink, type Route } from '../router';
 import { AddToPhonePrompt, useAddToPhone } from '../shell/AddToPhonePrompt';
 import { BackupReminder, useBackupReminder } from '../shell/BackupReminder';
 import { useItems, useRecordName } from '../store/hooks';
 
-// The eight kinds of thing you can add (docs/spec.md, "Add something").
-const addChoices: {
-  label: string;
-  to: Route | 'appointment' | 'quick-note';
-}[] = [
-  { label: 'What happened', to: 'what' },
+// Add something (docs/spec.md; made lighter 1 October 2026). Four big
+// choices cover most of what people really add; the rest are one step
+// further, under "Something else". Each opens its form straight away,
+// except What happened and How it affects me, whose screens are the form.
+type AddForm = 'quick-note' | 'letter' | 'appointment' | 'treatment' | 'medication' | 'cost' | 'contact';
+
+const addChoices: { label: string; to: AddForm | 'more' }[] = [
+  { label: 'Write or say something', to: 'quick-note' },
+  { label: 'A photo of a letter or receipt', to: 'letter' },
   { label: 'An appointment', to: 'appointment' },
-  { label: 'Treatment or medication', to: 'treatment' },
-  { label: 'Something has changed', to: 'impact' },
-  { label: 'A letter or document', to: 'documents' },
-  { label: 'A cost or lost income', to: 'costs' },
-  { label: 'A contact', to: 'contacts' },
-  { label: 'A Quick Note', to: 'quick-note' },
+  { label: 'Something else…', to: 'more' },
 ];
+
+const moreChoices: { label: string; to: AddForm | Route }[] = [
+  { label: 'What happened', to: 'what' },
+  { label: 'Treatment', to: 'treatment' },
+  { label: 'Medication', to: 'medication' },
+  { label: 'A cost or lost income', to: 'cost' },
+  { label: 'A contact', to: 'contact' },
+  { label: 'Something has changed', to: 'impact' },
+];
+
+// Said once a form opened from Home is saved, since the list it went into
+// isn't on screen.
+const savedIn = (section: keyof typeof sectionLabels) => `Saved in ${sectionLabels[section]}.`;
 
 const utilityLinks: { to: Route; label: string; icon: IconName }[] = [
   { to: 'help', label: 'Help', icon: 'question' },
@@ -67,11 +83,22 @@ export function Home() {
     onFiled: () => focusWhenDialogsClose(() => heading.current),
   });
   const [choosing, setChoosing] = useState(false);
-  const [addingAppointment, setAddingAppointment] = useState(false);
+  const [choosingMore, setChoosingMore] = useState(false);
+  const [adding, setAdding] = useState<AddForm | null>(null);
   const [message, setMessage] = useState('');
   const [justAdded, setJustAdded] = useState<CalendarAppointment | null>(null);
   // Home shows only notes still waiting to be filed; filed ones live in
   // their section and on Quick Notes.
+  function startAdding(form: AddForm) {
+    setMessage('');
+    setJustAdded(null);
+    if (form === 'quick-note') write();
+    else setAdding(form);
+  }
+  function said(text: string) {
+    setMessage(text);
+    setJustAdded(null);
+  }
   const toFile = (notes ?? []).filter((n) => n.data.filedTo === null);
   const latest = toFile.at(-1);
   const now = today();
@@ -101,7 +128,7 @@ export function Home() {
           tone="add"
           icon="add"
           title="Add something"
-          detail="What happened, an appointment, treatment, a change, a letter or anything else."
+          detail="A note, a photo of a letter, an appointment or anything else."
           onPress={() => setChoosing(true)}
         />
         <TaskButton
@@ -242,9 +269,8 @@ export function Home() {
                   key={c.label}
                   onPress={() => {
                     finish();
-                    if (c.to === 'quick-note') write();
-                    else if (c.to === 'appointment') setAddingAppointment(true);
-                    else navigate(c.to);
+                    if (c.to === 'more') setChoosingMore(true);
+                    else startAdding(c.to);
                   }}
                 >
                   {c.label}
@@ -257,14 +283,51 @@ export function Home() {
           </>
         )}
       </Dialog>
+      <Dialog isOpen={choosingMore} onOpenChange={setChoosingMore} title="Something else">
+        {(close, { finish }) => (
+          <>
+            <p>What would you like to add?</p>
+            <div className="chooser chooser-list">
+              {moreChoices.map((c) => (
+                <Button
+                  key={c.label}
+                  onPress={() => {
+                    finish();
+                    if (c.to === 'what' || c.to === 'impact') navigate(c.to);
+                    else startAdding(c.to as AddForm);
+                  }}
+                >
+                  {c.label}
+                </Button>
+              ))}
+            </div>
+            <div className="dialog-actions">
+              <Button
+                onPress={() => {
+                  finish();
+                  setChoosing(true);
+                }}
+              >
+                Back
+              </Button>
+              <Button onPress={close}>Cancel</Button>
+            </div>
+          </>
+        )}
+      </Dialog>
       <AppointmentDialog
-        isOpen={addingAppointment}
-        onClose={() => setAddingAppointment(false)}
+        isOpen={adding === 'appointment'}
+        onClose={() => setAdding(null)}
         onSaved={(m, forCalendar) => {
           setMessage(m);
           setJustAdded(forCalendar ?? null);
         }}
       />
+      <DocumentDialog edit={adding === 'letter' ? {} : null} onClose={() => setAdding(null)} onDone={() => said(savedIn('documents'))} />
+      <TreatmentDialog edit={adding === 'treatment' ? {} : null} onClose={() => setAdding(null)} onDone={() => said(savedIn('treatment'))} />
+      <MedicationDialog edit={adding === 'medication' ? {} : null} onClose={() => setAdding(null)} onDone={() => said(savedIn('treatment'))} />
+      <CostDialog edit={adding === 'cost' ? {} : null} onClose={() => setAdding(null)} onDone={() => said(savedIn('costs'))} />
+      <ContactDialog edit={adding === 'contact' ? {} : null} onClose={() => setAdding(null)} onDone={() => said(savedIn('contacts'))} />
       {dialogs}
     </>
   );

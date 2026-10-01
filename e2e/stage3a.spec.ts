@@ -154,7 +154,7 @@ test('What happened saves as you type and is there after reloading', async ({ pa
   await page.getByRole('textbox', { name: 'What happened?' }).fill('I slipped on the stairs at work.');
   await page.getByRole('textbox', { name: 'Where did it happen?' }).fill('Office stairwell');
   await expect(page.getByRole('status').filter({ hasText: /^Saved$/ })).toBeVisible();
-  await page.getByText('Other details').click();
+  await page.getByText('Add more detail (only if it helps)').click();
   await page.getByRole('textbox', { name: 'Injuries or symptoms' }).fill('Sprained wrist');
   await page.getByRole('textbox', { name: 'Injuries or symptoms' }).blur();
   await expect(page.getByRole('status').filter({ hasText: /^Saved$/ })).toBeVisible();
