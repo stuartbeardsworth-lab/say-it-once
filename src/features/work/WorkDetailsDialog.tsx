@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../../components/Button';
 import { EntryDialog, type EntryFormControls } from '../../components/EntryDialog';
-import { anyFilled, MoreDetail } from '../../components/MoreDetail';
 import { RadioList } from '../../components/RadioList';
 import { SaveStatus } from '../../components/SaveStatus';
 import { TextField } from '../../components/TextField';
@@ -54,17 +53,8 @@ function WorkForm({ existing, controls }: { existing: Item<'workDetails'> | unde
       <TextField label="Employer" {...form.text('employer')} />
       <TextField label="Your job" {...form.text('jobTitle')} />
       <TextField label="Where you worked" {...form.text('workplace')} />
-      <MoreDetail
-        hasContent={anyFilled(
-          existing?.data.employmentStart,
-          existing?.data.employmentEnd,
-          existing?.data.payrollRef,
-          existing?.data.accidentReported,
-          existing?.data.reportedTo,
-          existing?.data.reportDate,
-          existing?.data.employmentSince,
-        )}
-      >
+      <details className="more">
+        <summary>More about your work (optional)</summary>
         <div className="field-row">
           <TextField label="Started working there" type="date" {...form.text('employmentStart')} />
           <TextField label="Left (if you have)" type="date" {...form.text('employmentEnd')} />
@@ -81,7 +71,7 @@ function WorkForm({ existing, controls }: { existing: Item<'workDetails'> | unde
           <TextField label="Date reported" type="date" {...form.text('reportDate')} />
           <TextField label="Back at work since" type="date" {...form.text('employmentSince')} />
         </div>
-      </MoreDetail>
+      </details>
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />
       <div className="dialog-actions">
         <Button onPress={controls.cancel}>Cancel</Button>

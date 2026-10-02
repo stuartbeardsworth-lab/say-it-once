@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../../components/Button';
 import { KeepPrivate } from '../../components/Checkbox';
-import { anyFilled, MoreDetail } from '../../components/MoreDetail';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { EntryDialog, type EntryFormControls } from '../../components/EntryDialog';
 import { RadioList } from '../../components/RadioList';
@@ -39,11 +38,9 @@ function DeleteEntry({ id, what, onDone }: { id: string; what: string; onDone: (
 export function TreatmentDialog({
   edit,
   onClose,
-  onDone,
 }: {
   edit: { existing?: Item<'treatment'>; prefill?: Partial<TreatmentData> } | null;
   onClose: () => void;
-  onDone?: () => void;
 }) {
   return (
     <EntryDialog
@@ -53,7 +50,6 @@ export function TreatmentDialog({
       }}
       title={edit?.existing ? 'Edit treatment' : 'Add a treatment'}
       unsavedLabel="this treatment"
-      {...(onDone && { onDone })}
     >
       {(controls) => edit && <TreatmentForm edit={edit} controls={controls} />}
     </EntryDialog>
@@ -87,10 +83,11 @@ function TreatmentForm({
     >
       <TextField label="What was the treatment?" hint="For example, physiotherapy, an injection or an operation." isRequired {...form.text('name')} />
       <TextField label="Date (optional)" type="date" {...form.text('date')} />
-      <MoreDetail hasContent={anyFilled(edit.existing?.data.effect, edit.existing?.data.note)}>
+      <details className="more">
+        <summary>How it went (optional)</summary>
         <RadioList label="Did it help?" options={effectOptions} value={form.data.effect || null} onChange={(v) => form.set('effect', v)} />
         <TextArea label="Note" {...form.text('note')} />
-      </MoreDetail>
+      </details>
       <KeepPrivate isSelected={form.isPrivate} onChange={form.setPrivate} />
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />
       <div className="dialog-actions">
@@ -104,15 +101,7 @@ function TreatmentForm({
   );
 }
 
-export function MedicationDialog({
-  edit,
-  onClose,
-  onDone,
-}: {
-  edit: { existing?: Item<'medication'> } | null;
-  onClose: () => void;
-  onDone?: () => void;
-}) {
+export function MedicationDialog({ edit, onClose }: { edit: { existing?: Item<'medication'> } | null; onClose: () => void }) {
   return (
     <EntryDialog
       isOpen={edit !== null}
@@ -121,7 +110,6 @@ export function MedicationDialog({
       }}
       title={edit?.existing ? 'Edit medication' : 'Add a medication'}
       unsavedLabel="this medication"
-      {...(onDone && { onDone })}
     >
       {(controls) => edit && <MedicationForm existing={edit.existing} controls={controls} />}
     </EntryDialog>
@@ -145,16 +133,8 @@ function MedicationForm({ existing, controls }: { existing: Item<'medication'> |
     >
       <TextField label="Name of the medication" isRequired {...form.text('name')} />
       <TextField label="What it’s for (optional)" {...form.text('forWhat')} />
-      <MoreDetail
-        hasContent={anyFilled(
-          existing?.data.status,
-          existing?.data.dose,
-          existing?.data.often,
-          existing?.data.started,
-          existing?.data.effect,
-          existing?.data.sideEffects,
-        )}
-      >
+      <details className="more">
+        <summary>More detail (optional)</summary>
         <RadioList
           label="Are you still taking it?"
           options={medicationStatuses.map((s) => ({ value: s, label: s }))}
@@ -166,7 +146,7 @@ function MedicationForm({ existing, controls }: { existing: Item<'medication'> |
         <TextField label="Started" type="date" {...form.text('started')} />
         <RadioList label="Has it helped?" options={effectOptions} value={form.data.effect || null} onChange={(v) => form.set('effect', v)} />
         <TextArea label="Side effects" {...form.text('sideEffects')} />
-      </MoreDetail>
+      </details>
       <KeepPrivate isSelected={form.isPrivate} onChange={form.setPrivate} />
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />
       <div className="dialog-actions">

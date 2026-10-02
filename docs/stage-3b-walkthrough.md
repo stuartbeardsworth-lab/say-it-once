@@ -47,19 +47,9 @@ Tick each box as you go.
     rings it. **Add to my contacts** saves a contact card. Add a private
     contact: it has no "Add to my contacts", and **Print the contact list**
     leaves it out.
-15. [ ] On Home, **Add something** offers four choices: **Write or say
-    something** (a Quick Note), **A photo of a letter or receipt**, **An
-    appointment** and **Something else…**. Something else lists What
-    happened, Treatment, Medication, A cost or lost income, A contact and
-    Something has changed, with **Back**. Each opens its form straight away
-    (What happened and Something has changed open their screens), and after
-    saving, Home says where it went, for example "Saved in Costs & lost
-    income."
-16. [ ] Every form with extra details has one fold-out, **Add more detail
-    (only if it helps)**, under the line "That's enough to save. You can add
-    more later, or never." Editing an entry whose extra details hold
-    something opens the fold-out, so nothing is hidden.
-17. [ ] A check-in asks for pain, how you feel and a note, with no pulse. A
+15. [ ] On Home, **Add something** lists eight kinds of thing, and each one
+    goes to the right place.
+16. [ ] A check-in asks for pain, how you feel and a note, with no pulse. A
     pulse saved before still shows on Changes over time and in reports.
 
 ## Result
