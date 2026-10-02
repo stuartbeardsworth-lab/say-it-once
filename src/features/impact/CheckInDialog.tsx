@@ -15,7 +15,7 @@ import { newItemId } from '../../store/store';
 import { useRecordId, useStore } from '../../store/StoreContext';
 import { SharedCopiesNote } from '../deliver/SharedCopiesNote';
 
-// A dated health and wellbeing check-in: pain, how I feel, pulse, a note.
+// A dated health and wellbeing check-in: pain, how I feel and a note.
 // The app records these; it never scores or interprets them.
 
 export function CheckInDialog({
@@ -46,19 +46,13 @@ function CheckInForm({ existing, controls }: { existing: Item<'checkIn'> | undef
   const recordId = useRecordId();
   const [id] = useState(() => existing?.id ?? newItemId());
   const form = useEntryForm(existing?.data ?? blank('checkIn', { date: today() }), existing?.private ?? false, controls.onDirtyChange);
-  const [pulseText, setPulseText] = useState(existing?.data.pulse?.toString() ?? '');
 
   async function save() {
     if (!recordId) return;
-    const trimmed = pulseText.trim();
-    const pulse = trimmed === '' ? null : Number(trimmed);
-    if (pulse !== null && Number.isNaN(pulse)) {
-      form.setErrors({ ...form.errors, pulse: 'Pulse must be a whole number between 20 and 250.' });
-      return;
-    }
-    const ok = await form.submit(() =>
-      store.save('checkIn', recordId, { ...form.data, pulse }, { id, private: form.isPrivate }),
-    );
+    // Pulse is no longer asked for (decided 1 October 2026): a record-keeping
+    // app shouldn't look like a medical one. A pulse saved before is kept
+    // as it was, untouched, since form.data carries it through.
+    const ok = await form.submit(() => store.save('checkIn', recordId, form.data, { id, private: form.isPrivate }));
     if (ok) controls.done();
   }
 
@@ -83,16 +77,6 @@ function CheckInForm({ existing, controls }: { existing: Item<'checkIn'> | undef
         value={form.data.feeling || null}
         onChange={(v) => form.set('feeling', v)}
       />
-      <details className="more">
-        <summary>Pulse (optional)</summary>
-        <TextField
-          label="Pulse, in beats per minute"
-          inputMode="numeric"
-          value={pulseText}
-          onChange={setPulseText}
-          errorMessage={form.errors.pulse}
-        />
-      </details>
       <TextArea label="Note (optional)" {...form.text('note')} rows={3} />
       <KeepPrivate isSelected={form.isPrivate} onChange={form.setPrivate} />
       <SaveStatus status={form.status} onDismiss={form.dismissStatus} />

@@ -49,6 +49,8 @@ Tick each box as you go.
     leaves it out.
 15. [ ] On Home, **Add something** lists eight kinds of thing, and each one
     goes to the right place.
+16. [ ] A check-in asks for pain, how you feel and a note, with no pulse. A
+    pulse saved before still shows on Changes over time and in reports.
 
 ## Result
 

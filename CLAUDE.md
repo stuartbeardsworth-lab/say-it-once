@@ -392,5 +392,9 @@ Done when:
   logo, aren't part of the app and aren't published with the site.
 - 1 October 2026, "lighter adding" was tried and undone at the owner's
   request: they prefer the way it was. Add something keeps its eight
-  choices, forms keep their own fold-outs, and check-ins keep the pulse.
-  Don't suggest that change again unless testers' use shows a need.
+  choices and forms keep their own fold-outs. Don't suggest that change
+  again unless testers' use shows a need.
+- 2 October 2026, the one part kept: check-ins no longer ask for a pulse
+  (the owner asked). A record-keeping app shouldn't look like a medical
+  one. A pulse saved before is kept, and still shows on Changes over time
+  and in reports.
