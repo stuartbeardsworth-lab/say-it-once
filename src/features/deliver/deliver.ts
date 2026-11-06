@@ -9,6 +9,9 @@
 //   tell a page when a download has finished, so this is not called "saved".
 // - failed: something went wrong; the person is told plainly.
 
+import { isNative } from '../../platform';
+import { shareFileNative } from '../../platform/shareNative';
+
 export type DeliveryResult =
   | { outcome: 'shared' }
   | { outcome: 'cancelled' }
@@ -17,6 +20,8 @@ export type DeliveryResult =
 
 /** Whether this device can hand a file of this kind to the share options. */
 export function canShareFile(file: File): boolean {
+  // The iPhone and Android apps always have the phone's own share sheet.
+  if (isNative()) return true;
   try {
     return typeof navigator.share === 'function' && typeof navigator.canShare === 'function' && navigator.canShare({ files: [file] });
   } catch {
@@ -33,6 +38,9 @@ export function isAppleHomeScreenApp(): boolean {
 }
 
 export async function shareFile(file: File, title: string): Promise<DeliveryResult> {
+  // Inside the apps the share sheet takes a file on disk, not one held in
+  // the page, so it goes through the cache folder (see platform/shareNative).
+  if (isNative()) return shareFileNative(file, title);
   try {
     await navigator.share({ files: [file], title });
     return { outcome: 'shared' };
@@ -46,6 +54,12 @@ export async function shareFile(file: File, title: string): Promise<DeliveryResu
 }
 
 export function downloadFile(file: File): DeliveryResult {
+  // A download link does nothing inside an app's web view; the share sheet
+  // (“Save to Files”, “Save to Drive”) is how a file is kept there instead,
+  // so DeliverFile hides this button on a phone app.
+  if (isNative()) {
+    return { outcome: 'failed', reason: 'Use Share to save this file on your phone.' };
+  }
   let url: string | null = null;
   try {
     url = URL.createObjectURL(file);

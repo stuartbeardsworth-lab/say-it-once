@@ -8,6 +8,13 @@ import { VitePWA } from 'vite-plugin-pwa';
 const csp = /Content-Security-Policy = "([^"]+)"/.exec(readFileSync(new URL('./netlify.toml', import.meta.url), 'utf8'))?.[1];
 if (!csp) throw new Error('netlify.toml has no Content-Security-Policy');
 
+// Building for the iPhone or Android app (npm run build:native). Capacitor
+// bundles every file inside the app, so a service worker has nothing to
+// cache, and updates arrive through the stores rather than the “Use the new
+// version” notice. The plugin stays loaded but switched off, so
+// `virtual:pwa-register/react` still resolves and UpdateNotice still builds.
+const native = Boolean(process.env.NATIVE);
+
 const { version } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string };
 
 export default defineConfig({
@@ -17,6 +24,7 @@ export default defineConfig({
     // (docs/architecture.md, "Offline"). Every file the app needs, including
     // the PDF maker and its font, is kept on the device when it's installed.
     VitePWA({
+      disable: native,
       // A new version waits until the person chooses to use it (see
       // UpdateNotice), so an update never reloads the page in the middle of
       // writing something.

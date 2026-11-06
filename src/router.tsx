@@ -79,6 +79,15 @@ export function navigate(route: Route) {
   notify();
 }
 
+/**
+ * Whether there is a screen inside the app to go back to. Used by the
+ * Android hardware Back button, which closes the app at the top level
+ * instead of leaving the person on a blank page.
+ */
+export function canGoBack(): boolean {
+  return depth() > 0;
+}
+
 // Back goes to the previous screen in the app, or Home if the person
 // arrived here directly (for example from a bookmark).
 export function goBack() {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '../components/Button';
 import { RouteLink } from '../router';
 import { useStore } from '../store/StoreContext';
+import { isNative } from '../platform';
 
 // "Keep Say It Once on your phone" on Home, with Not now. Hidden once
 // dismissed on this device, and when already opened from the home screen.
@@ -9,6 +10,8 @@ import { useStore } from '../store/StoreContext';
 
 function isStandalone(): boolean {
   return (
+    // Already an app from the App Store or Play Store: there is nothing to add.
+    isNative() ||
     window.matchMedia?.('(display-mode: standalone)').matches === true ||
     (navigator as Navigator & { standalone?: boolean }).standalone === true
   );

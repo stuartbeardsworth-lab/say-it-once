@@ -4,3 +4,20 @@ test-results/
 playwright-report/
 *.tsbuildinfo
 .DS_Store
+
+# Capacitor. The ios/ and android/ projects are committed, but everything
+# generated into them is not: the web assets are rebuilt by `npm run cap:sync`
+# from dist/, and the rest is build output and local Xcode state.
+ios/App/App/public/
+ios/App/Pods/
+ios/App/build/
+ios/App/output/
+android/app/src/main/assets/public/
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+*.xcuserstate
+
+# JetBrains IDE settings (Android Studio), personal to each machine.
+.idea/

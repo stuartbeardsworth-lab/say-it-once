@@ -394,6 +394,21 @@ Done when:
   request: they prefer the way it was. Add something keeps its eight
   choices and forms keep their own fold-outs. Don't suggest that change
   again unless testers' use shows a need.
+- 24 October 2026, iPhone and Android apps (proposed, needs the owner's
+  agreement): Say It Once is wrapped with Capacitor so the same `src/` runs
+  as the website, a home-screen web app and two store apps. This replaces
+  the Trusted Web Activity plan of 26 September for Android and adds iPhone,
+  which a TWA can't do. New dependencies, outside the approved list and
+  needing a decision: `@capacitor/core`, `cli`, `ios`, `android`, `share`,
+  `filesystem`, `app`. No wrapper of the old kind and no change to what the
+  app does: `capacitor.config.ts` has no `server.url`, so the app runs
+  entirely from bundled files, and no analytics, account or network call is
+  added. Everything that must differ on a phone goes through
+  `src/platform/`, with tests that prove a browser still takes the web path.
+  Costs the owner refused on 26 September still apply here: the Apple
+  Developer Program is £79 a year (Google Play is $25 once). Neither is
+  needed to run the app on your own phone, which is as far as this goes.
+  See `docs/native.md`.
 - 2 October 2026, the one part kept: check-ins no longer ask for a pulse
   (the owner asked). A record-keeping app shouldn't look like a medical
   one. A pulse saved before is kept, and still shows on Changes over time

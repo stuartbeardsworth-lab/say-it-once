@@ -1531,3 +1531,26 @@ td {
     scroll-behavior: auto !important;
   }
 }
+
+/* Safe areas on a phone app.
+
+   Inside the iPhone and Android apps the web view fills the whole screen
+   (capacitor.config.ts sets contentInset: 'never'), so the navy header runs
+   up under the status bar and notch and the footer sits under the home
+   indicator. These rules add the phone's own margins back as padding, so
+   nothing is hidden behind the hardware.
+
+   In a browser env() resolves to 0px, so every one of these is a no-op and
+   the website is unchanged. */
+.site-header-inner {
+  padding-top: calc(var(--space-3) + env(safe-area-inset-top));
+}
+
+.container {
+  padding-left: calc(var(--space-3) + env(safe-area-inset-left));
+  padding-right: calc(var(--space-3) + env(safe-area-inset-right));
+}
+
+.site-footer {
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom));
+}

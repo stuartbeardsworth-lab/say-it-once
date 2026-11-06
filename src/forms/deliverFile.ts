@@ -2,10 +2,15 @@
 // browser offers it, otherwise as a download. The result says honestly what
 // is known, because a download can't be confirmed from inside the page.
 
+import { isNative } from '../platform';
+import { shareFileNative } from '../platform/shareNative';
+
 export type Delivery = 'shared' | 'cancelled' | 'downloading' | 'failed';
 
 export async function deliverFile(contents: string, fileName: string, type: string): Promise<Delivery> {
   const file = new File([contents], fileName, { type });
+  // Inside the iPhone and Android apps, always the phone's own share sheet.
+  if (isNative()) return (await shareFileNative(file, fileName)).outcome;
   if (typeof navigator.canShare === 'function' && navigator.canShare({ files: [file] })) {
     try {
       await navigator.share({ files: [file] });

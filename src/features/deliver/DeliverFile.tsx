@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../../components/Button';
 import { canShareFile, downloadFile, isAppleHomeScreenApp, shareFile, type DeliveryResult } from './deliver';
+import { isNative } from '../../platform';
 
 // Share or save a finished file, and say only what is known about what
 // happened (see deliver.ts). Used for reports and for backups.
@@ -19,8 +20,9 @@ export function DeliverFile({ file, name, title, onSent }: DeliverFileProps) {
   const [result, setResult] = useState<DeliveryResult | null>(null);
   const [dismissed, setDismissed] = useState(false);
   const share = canShareFile(file);
-  // A home-screen app on an iPhone saves through the share options instead.
-  const download = !(share && isAppleHomeScreenApp());
+  // A home-screen app on an iPhone, and both phone apps, save through the
+  // share options instead: a download link does nothing there.
+  const download = !isNative() && !(share && isAppleHomeScreenApp());
 
   async function deliver(how: 'share' | 'download') {
     setDismissed(false);

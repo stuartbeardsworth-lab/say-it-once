@@ -1,6 +1,7 @@
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { Button } from '../components/Button';
 import { watchForUpdates } from './watchForUpdates';
+import { isNative } from '../platform';
 
 // Registers the service worker that keeps the app on this device for use
 // offline. When a new version has been downloaded, it waits: this notice
@@ -13,11 +14,12 @@ export function UpdateNotice() {
     updateServiceWorker,
   } = useRegisterSW({
     onRegisteredSW(_url, registration) {
-      if (registration) watchForUpdates(registration);
+      // The phone apps update through the App Store and Play Store.
+      if (registration && !isNative()) watchForUpdates(registration);
     },
   });
 
-  if (!needRefresh) return null;
+  if (isNative() || !needRefresh) return null;
   return (
     <div className="notice notice-info" role="status">
       <p className="notice-title">A new version of Say It Once is ready</p>

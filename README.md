@@ -34,6 +34,12 @@ Before running `test:e2e` for the first time, install the browsers with
 
 All of these run on every push in GitHub Actions (`.github/workflows/ci.yml`).
 
+## The iPhone and Android apps
+
+`npm run cap:ios` and `npm run cap:android` build the app and open it in
+Xcode or Android Studio. The same `src/` runs there as on the website; see
+`docs/native.md` for the one-off setup and what differs inside an app.
+
 ## The server
 
 `server/` is the sync server (Stage 8), with its own `package.json`. See
